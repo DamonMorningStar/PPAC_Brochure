@@ -6,6 +6,7 @@
   --color-gold: #c5a059;
   --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
   --font-display: "Playfair Display", serif;
+  --font-aptos: "Aptos", "Inter", sans-serif;
 }
 
 @layer base {
