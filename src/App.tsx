@@ -3,7 +3,8 @@ import { motion } from 'motion/react';
 import { 
   BookOpen, GraduationCap, Globe, Users, CheckCircle2, 
   Award, Clock, ShieldCheck, Briefcase, Zap, MapPin,
-  Star, Search, Phone, Mail, ChevronRight, Shield, Copy
+  Star, Search, Phone, Mail, ChevronRight, Shield, Copy,
+  Languages, BarChart3, Monitor, Brain, Lightbulb
 } from 'lucide-react';
 
 const UNIVERSITY_DATA = [
@@ -133,7 +134,7 @@ const UniversityModule = () => {
               onClick={() => setExpandedMajor(expandedMajor === idx ? null : idx)}
               className="w-full px-4 py-3 flex justify-between items-center hover:bg-white/5 transition-colors text-left"
             >
-              <span className="text-[11px] md:text-[12px] font-bold text-white/90 group-hover:text-gold transition-colors">{major.cn}</span>
+              <span className="text-[14px] md:text-[16px] font-bold text-white/90 group-hover:text-gold transition-colors">{major.cn}</span>
               <div className={`w-5 h-5 rounded-full flex items-center justify-center transition-all ${expandedMajor === idx ? "bg-gold text-blue-900" : "bg-white/10 text-gold"}`}>
                 <ChevronRight 
                   className={`transition-transform duration-300 ${expandedMajor === idx ? "rotate-90" : ""}`} 
@@ -150,8 +151,8 @@ const UniversityModule = () => {
               <div className="px-4 pb-4 pt-1 space-y-3 border-t border-white/5 bg-white/5">
                 <div className="flex justify-between items-start gap-2 p-2.5 bg-white/5 rounded-lg border border-white/5">
                   <div className="flex-1">
-                    <div className="text-[7px] text-white/40 uppercase tracking-[0.2em] mb-1 font-bold">English Name</div>
-                    <div className="text-[10px] text-white/80 font-display font-medium leading-tight">{major.en}</div>
+                    <div className="text-[10px] md:text-[12px] text-white/40 uppercase tracking-[0.2em] mb-1 font-bold">English Name</div>
+                    <div className="text-[12px] md:text-[14px] text-white/80 font-display font-medium leading-tight">{major.en}</div>
                   </div>
                   <button 
                     onClick={() => copyToClipboard(major.en)}
@@ -164,16 +165,16 @@ const UniversityModule = () => {
                 
                 <div className="grid grid-cols-10 gap-2">
                   <div className="col-span-3 p-2 bg-white/5 rounded-lg border border-white/5">
-                    <div className="text-[6px] text-white/40 uppercase tracking-[0.1em] mb-0.5 font-bold">Duration</div>
-                    <div className="text-[8px] md:text-[9px] text-gold font-black">{major.duration}</div>
+                    <div className="text-[10px] md:text-[12px] text-white/40 uppercase tracking-[0.1em] mb-0.5 font-bold">Duration</div>
+                    <div className="text-[12px] md:text-[14px] text-gold font-black">{major.duration}</div>
                   </div>
                   <div className="col-span-3 p-2 bg-white/5 rounded-lg border border-white/5">
-                    <div className="text-[6px] text-white/40 uppercase tracking-[0.1em] mb-0.5 font-bold">Intake</div>
-                    <div className="text-[8px] md:text-[9px] text-white/80 font-bold">{major.intake}</div>
+                    <div className="text-[10px] md:text-[12px] text-white/40 uppercase tracking-[0.1em] mb-0.5 font-bold">Intake</div>
+                    <div className="text-[12px] md:text-[14px] text-white/80 font-bold">{major.intake}</div>
                   </div>
                   <div className="col-span-4 p-2 bg-white/5 rounded-lg border border-white/5">
-                    <div className="text-[6px] text-white/40 uppercase tracking-[0.1em] mb-0.5 font-bold">Tuition Fee</div>
-                    <div className="text-[8px] md:text-[9px] text-white/80 font-bold leading-tight">{major.fee}</div>
+                    <div className="text-[10px] md:text-[12px] text-white/40 uppercase tracking-[0.1em] mb-0.5 font-bold">Tuition Fee</div>
+                    <div className="text-[12px] md:text-[14px] text-white/80 font-bold leading-tight">{major.fee}</div>
                   </div>
                 </div>
               </div>
@@ -250,9 +251,10 @@ export default function App() {
             <motion.h4 
               initial={{ opacity: 0, x: -20 }}
               whileInView={{ opacity: 1, x: 0 }}
-              className="font-display text-[28px] md:text-[36px] font-bold text-impact mb-6"
+              className="font-display text-[36px] md:text-[52px] font-black mb-6 text-transparent bg-clip-text bg-gradient-to-b from-white via-gold to-gold/80 drop-shadow-[0_10px_10px_rgba(0,0,0,0.4)] filter contrast-125 tracking-tight"
+              style={{ WebkitTextStroke: '1px rgba(255,215,0,0.1)' }}
             >
-              本科升学
+              世界名校本、硕、博留学
             </motion.h4>
             <motion.p 
               initial={{ opacity: 0, y: 20 }}
@@ -295,9 +297,102 @@ export default function App() {
               transition={{ delay: 0.6 }}
               className="text-[15px] md:text-[17px] text-white/80 leading-relaxed font-light italic border-l-4 border-gold/50 pl-6 py-2"
             >
-              TopUni Academic Framework 不仅是一套升学方案，更是一套培养未来领袖的成长系统。我们与您和您的家庭结成紧密伙伴，共同致力于实现进入世界顶尖学府的梦想，并为长远成功奠定坚实基础。
+              TopUni Academic Framework 不仅是一套升学方案，更是一套培养未来<span className="text-gold font-bold bg-clip-text text-transparent bg-gradient-to-b from-gold via-gold/80 to-gold/60 drop-shadow-sm">精英</span>的成长系统。我们与您和您的家庭结成紧密伙伴，共同致力于实现进入世界顶尖学府的梦想，并为长远成功奠定坚实基础。
             </motion.p>
           </div>
+        </div>
+      </Slide>
+
+      {/* Slide 3: Advantages (MOVED) */}
+      <Slide accentColor="#60a5fa">
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-12 md:gap-16">
+          <div className="col-span-1 md:col-span-4">
+            <SectionTitle title="核心竞争优势" subtitle="项目优势 / Key Advantages" />
+            <div className="space-y-4 md:space-y-8">
+              {[
+                { t: "高水平国际化师资", d: "由全球QS综合排名前50的院校教学专家领衔设计并全程参与指导。", i: <Users className="w-5 h-5 md:w-6 md:h-6" /> },
+                { t: "专业机构与院校认证", d: "接受新加坡、澳大利亚、英国、中国香港等多国院校广泛认证。", i: <ShieldCheck className="w-5 h-5 md:w-6 md:h-6" /> },
+                { t: "全流程入学后服务", d: "指派班主任全程跟进，提供签证、学分认证、入学注册等一站式保障。", i: <Briefcase className="w-5 h-5 md:w-6 md:h-6" /> }
+              ].map((a, i) => (
+                <div key={i} className="flex gap-4 md:gap-6 p-4 md:p-8 glass-card rounded-xl md:rounded-2xl">
+                  <div className="text-gold shrink-0">{a.i}</div>
+                  <div>
+                    <h4 className="font-display text-[18px] md:text-[22px] font-bold mb-1 md:mb-3 text-white">{a.t}</h4>
+                    <p className="text-[14px] md:text-[15px] text-white/50 leading-relaxed font-light">{a.d}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+            
+            <motion.a
+              href="https://p.topuni.com.cn/"
+              target="_blank"
+              rel="noopener noreferrer"
+              whileHover={{ scale: 1.02, y: -2 }}
+              whileTap={{ scale: 0.98 }}
+              className="mt-8 md:mt-12 w-full py-4 md:py-6 rounded-xl md:rounded-2xl bg-gradient-to-r from-gold via-gold/80 to-gold font-display text-[18px] md:text-[20px] font-black text-blue-900 text-center shadow-[0_10px_30px_rgba(212,175,55,0.2)] flex items-center justify-center gap-3 group border border-white/20"
+            >
+              <span>院校信息查询</span>
+              <ChevronRight size={20} className="group-hover:translate-x-1 transition-transform" />
+            </motion.a>
+          </div>
+          <div className="col-span-1 md:col-span-8">
+            <div className="glass-card rounded-xl md:rounded-[3rem] p-4 md:p-10 h-full">
+              <div className="flex justify-between items-center mb-6 md:mb-10">
+                <h4 className="font-display text-[18px] md:text-[38px] font-bold text-impact">全球主要合作院校分布</h4>
+                <Globe className="text-gold animate-slow-spin w-6 h-6 md:w-10 md:h-10" />
+              </div>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-8">
+                {[
+                  { r: "🇸🇬 新加坡", s: ["新加坡国立大学 (QS 8)", "南洋理工大学 (QS 26)", "新加坡管理大学 (QS 560)", "新加坡理工大学 (QS 559)", "都柏林大学学院 (QS 171)", "科廷大学 (QS 183)", "考文垂大学 (QS 580)", "纽卡斯尔大学 (QS 173)", "詹姆斯库克大学 (QS 415)", "伦敦城市大学 (QS 328)", "伯明翰大学 (QS 84)", "皇家墨尔本理工大学 (QS 140)", "东伦敦大学 (QS 1000)", "格林威治大学 (QS 690)"] },
+                  { r: "🇭🇰 中国香港", s: ["香港大学 (QS 17)", "香港中文大学 (QS 36)", "香港科技大学 (QS 47)", "香港城市大学 (QS 62)", "香港理工大学 (QS 57)", "香港浸会大学 (QS 252)", "香港教育大学 (QS 1000+)", "岭南大学 (QS 1000+)", "香港都会大学 (QS 1000+)", "香港树仁大学 (QS 1000+)", "香港恒生大学 (QS 1000+)", "香港珠海学院 (QS 1000+)", "东华学院 (QS 1000+)", "香港高等教育科技学院 (QS 1000+)"] },
+                  { r: "🇲🇴 澳门", s: ["澳门大学 (QS 285)", "澳门科技大学 (QS 440)", "澳门理工大学 (QS 900)", "澳门城市大学 (QS 1000+)", "澳门旅游大学 (QS 1000+)"] },
+                  { r: "🇨🇳 中国内地", s: ["上海交通大学 3+1", "上海对外经贸 + RMIT 3+1", "上海对外经贸 + 英国中央兰开夏大学", "西交利物浦大学 - 蒙纳士 2+2 (定向班)", "西交利物浦大学 - 利物浦 2+2 (交换生)", "华东师范大学 3+1", "华东师范大学 2+2 伯明翰", "华东师范大学 2+2 麦考瑞", "上海财经大学 3+1", "上海财经大学 2+2", "武汉理工大学 3+1 (艺术)", "上海交通大学 - 诺丁汉 2+2", "四川大学 3+1", "中央财经大学 3+1", "首都师范大学 3+1", "对外经贸大学 3+1", "上海立信金融 3+1", "上外贤达 3+1", "上海立信金融 2+1", "上外贤达 2+1", "上大温哥华电影学院 2+2", "南京传媒学院 2+2", "华东政法大学 2+2", "上海大学 4+0", "上海理工大学中英 4+0", "北京理工大学 3+0", "沈阳师范大学 4+0", "北京理工大学 4+0"] },
+                  { r: "🇦🇺 澳大利亚", s: ["墨尔本大学 (QS 14)", "悉尼大学 (QS 19)", "新南威尔士大学 (QS 19)", "澳国立大学 (QS 34)", "莫纳什大学 (QS 42)", "昆士兰大学 (QS 43)", "阿德莱德大学 (QS 89)", "西澳大学 (QS 72)", "悉尼科技大学 (QS 90)", "科廷大学 (QS 183)", "纽卡斯尔大学 (QS 173)", "皇家墨尔本理工大学 (QS 140)"] },
+                  { r: "🇬🇧 英国", s: ["伦敦大学学院 (QS 9)", "爱丁堡大学 (QS 22)", "曼彻斯特大学 (QS 32)", "伦敦国王学院 (QS 40)", "布里斯托大学 (QS 55)", "华威大学 (QS 67)", "格拉斯哥大学 (QS 76)", "南安普顿大学 (QS 81)", "伯明翰大学 (QS 84)", "杜伦大学 (QS 78)", "利兹大学 (QS 75)", "诺丁汉大学 (QS 100)"] },
+                  { r: "🇲🇾 马来西亚", s: ["马来亚大学 (QS 60)", "马来西亚理科大学 (QS 137)", "马来西亚国立大学 (QS 159)", "马来西亚博特拉大学 (QS 158)", "思特雅大学 (QS 260)", "马来西亚城市大学 (QS 680)", "泰莱大学 (QS 284)", "双威大学 (QS 1000)", "世纪大学 (QS 1000)"] }
+                ].map((item, idx) => (
+                  <div key={idx} className="space-y-2">
+                    <h5 className="font-display text-gold text-[18px] md:text-[24px] font-bold border-b border-white/10 pb-1 md:pb-2 tracking-wider">{item.r}</h5>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-0.5">
+                      {item.s.map((school, sIdx) => {
+                        const match = school.match(/(.*)\s\((QS\s.*)\)/);
+                        if (match) {
+                          const [, name, rank] = match;
+                          return (
+                            <div key={sIdx} className="text-[14px] md:text-[14px] text-white/70 flex items-center gap-1.5 md:gap-2 font-light leading-tight">
+                              <div className="w-0.5 h-0.5 md:w-1 md:h-1 bg-gold rounded-full shrink-0"></div> 
+                              <span>{name}</span>
+                              <span className="text-gold/60 font-mono text-[11px] md:text-[10px] ml-1">({rank})</span>
+                            </div>
+                          );
+                        }
+                        return (
+                          <div key={sIdx} className="text-[14px] md:text-[14px] text-white/70 flex items-center gap-1.5 md:gap-2 font-light leading-tight">
+                            <div className="w-0.5 h-0.5 md:w-1 md:h-1 bg-gold rounded-full shrink-0"></div> {school}
+                          </div>
+                        );
+                      })}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      </Slide>
+
+      {/* Slide: Hot Undergraduate Direct Entry */}
+      <Slide accentColor="#0ea5e9" className="!py-5 md:!py-5">
+        <div className="max-w-6xl mx-auto">
+          <SectionTitle title="新港热门本科直通项目" subtitle="热门项目 / Hot Projects" />
+          <motion.p 
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            className="text-[18px] md:text-[22px] text-white/90 leading-relaxed font-light"
+          >
+            香港和新加坡作为主流热门留学目标选择，我们推出PPAC精英规划学术课程，针对<span className="text-gold font-bold">高二</span>在读及以上的学生，通过在线灵活学习完成后入读世界名校新加坡校区，如<span className="text-white font-bold">爱尔兰都柏林大学新加坡校区</span>QS118名，<span className="text-white font-bold">科廷大学新加坡分校</span>QS170名，<span className="text-white font-bold">英国考文垂大学新加坡校区</span>，<span className="text-gold font-bold">100%减免120学分</span>直接入读本科大二，<span className="text-gold font-bold">最快1.5年</span>本科毕业，节省一年的海外学费和生活费<span className="text-gold font-bold">至少25万</span>。有意向赴香港的学生，可选择多所知名学府，如<span className="text-white font-bold">岭南大学、都会大学、树仁大学、香港高等教育科技学院</span>等。
+          </motion.p>
         </div>
       </Slide>
 
@@ -340,13 +435,13 @@ export default function App() {
 
       {/* New Slide: Core Value */}
       <Slide accentColor="#0ea5e9">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-center">
           <div>
             <SectionTitle title="快、准、稳、省" subtitle="核心价值 / Core Value" />
-            <p className="text-white/90 text-[20px] md:text-[24px] leading-relaxed mb-8 font-medium">
+            <p className="text-white/90 text-[18px] md:text-[24px] leading-relaxed mb-4 md:mb-8 font-medium">
               高中在读期间学习本课程，完成后即可赴新加坡诸多名校学习本科。
             </p>
-            <div className="space-y-6">
+            <div className="space-y-3 md:space-y-6">
               {[
                 "免语言入学要求，减免最多120学分直入大二，最快1.5年本科毕业",
                 "18岁入读本科，19.5岁毕业，21岁研究生毕业！",
@@ -358,44 +453,44 @@ export default function App() {
                   initial={{ opacity: 0, x: -20 }}
                   whileInView={{ opacity: 1, x: 0 }}
                   transition={{ delay: i * 0.1 }}
-                  className="flex items-start gap-4"
+                  className="flex items-start gap-2 md:gap-4"
                 >
-                  <div className="w-8 h-8 rounded-full bg-cyan-400/20 flex items-center justify-center border border-cyan-400/30 shrink-0 mt-1">
-                    <Zap size={18} className="text-gold" />
+                  <div className="w-5 h-5 md:w-8 md:h-8 rounded-full bg-cyan-400/20 flex items-center justify-center border border-cyan-400/30 shrink-0 mt-0.5 md:mt-1">
+                    <Zap size={12} className="text-gold md:w-[18px] md:h-[18px]" />
                   </div>
-                  <span className="text-[18px] md:text-[20px] text-white/80 leading-snug">{text}</span>
+                  <span className="text-[16px] md:text-[20px] text-white/80 leading-snug">{text}</span>
                 </motion.div>
               ))}
             </div>
           </div>
           <div className="relative">
-            <div className="grid grid-cols-2 gap-4 md:gap-6">
+            <div className="grid grid-cols-2 gap-3 md:gap-6">
               <motion.div 
                 whileHover={{ y: -10 }}
-                className="col-span-2 glass-card p-8 md:p-10 rounded-[2.5rem] border-cyan-400/20 relative overflow-hidden group"
+                className="col-span-2 glass-card p-5 md:p-10 rounded-[1.5rem] md:rounded-[2.5rem] border-cyan-400/20 relative overflow-hidden group"
               >
-                <div className="absolute -right-10 -bottom-10 w-40 h-40 bg-cyan-400/10 rounded-full blur-3xl group-hover:bg-cyan-400/20 transition-colors"></div>
+                <div className="absolute -right-10 -bottom-10 w-24 md:w-40 h-24 md:h-40 bg-cyan-400/10 rounded-full blur-2xl md:blur-3xl group-hover:bg-cyan-400/20 transition-colors"></div>
                 <div className="relative z-10">
-                  <div className="text-[56px] md:text-[84px] font-black text-impact leading-none mb-2">1.5年</div>
-                  <div className="text-gold text-[16px] md:text-[18px] uppercase tracking-[0.3em] font-bold">最快本科毕业</div>
-                  <p className="text-white/40 text-[14px] mt-4 font-light">大幅缩短学制，抢占职场先机</p>
+                  <div className="text-[34px] md:text-[50px] font-black text-impact leading-none mb-1 md:mb-2">1.5年</div>
+                  <div className="text-gold text-[10px] md:text-[11px] uppercase tracking-[0.3em] font-bold">最快本科毕业</div>
+                  <p className="text-white/40 text-[8px] md:text-[9px] mt-2 md:mt-4 font-light">大幅缩短学制，抢占职场先机</p>
                 </div>
               </motion.div>
               
               <motion.div 
                 whileHover={{ y: -10 }}
-                className="glass-card p-6 md:p-8 rounded-[2rem] border-white/10"
+                className="glass-card p-4 md:p-8 rounded-[1.2rem] md:rounded-[2rem] border-white/10"
               >
-                <div className="text-[36px] md:text-[48px] font-black text-impact mb-1">21岁</div>
-                <div className="text-white/60 text-[12px] md:text-[14px] uppercase tracking-widest font-medium">研究生毕业</div>
+                <div className="text-[22px] md:text-[29px] font-black text-impact mb-0.5 md:mb-1">21岁</div>
+                <div className="text-white/60 text-[8px] md:text-[9px] uppercase tracking-widest font-medium">研究生毕业</div>
               </motion.div>
               
               <motion.div 
                 whileHover={{ y: -10 }}
-                className="glass-card p-6 md:p-8 rounded-[2rem] border-white/10"
+                className="glass-card p-4 md:p-8 rounded-[1.2rem] md:rounded-[2rem] border-white/10"
               >
-                <div className="text-[36px] md:text-[48px] font-black text-impact mb-1">25万+</div>
-                <div className="text-white/60 text-[12px] md:text-[14px] uppercase tracking-widest font-medium">节省留学费用</div>
+                <div className="text-[22px] md:text-[29px] font-black text-impact mb-0.5 md:mb-1">25万+</div>
+                <div className="text-white/60 text-[8px] md:text-[9px] uppercase tracking-widest font-medium">节省留学费用</div>
               </motion.div>
             </div>
           </div>
@@ -407,7 +502,7 @@ export default function App() {
         <div className="grid grid-cols-1 md:grid-cols-12 gap-12 md:gap-16 items-center">
           <div className="col-span-1 md:col-span-5">
             <SectionTitle title="什么是 PPAC 国际升学课程？" subtitle="项目介绍 / Project Introduction" />
-            <p className="text-white/80 text-[11px] md:text-[20px] leading-relaxed mb-6 md:mb-10 font-light">
+            <p className="text-white/80 text-[18px] md:text-[20px] leading-relaxed mb-6 md:mb-10 font-light">
               PPAC 是一项基于全球认证资历框架的一站式国际升学课程。通过“认证课程+学术技能+实践训练”的三维框架，致力于帮助学生在获得权威文凭的同时，全面发展在英语学术环境中所必需的核心竞争力。
             </p>
             <div className="space-y-3 md:space-y-6">
@@ -421,7 +516,7 @@ export default function App() {
                   initial={{ opacity: 0, x: -20 }}
                   whileInView={{ opacity: 1, x: 0 }}
                   transition={{ delay: i * 0.1 }}
-                  className="flex items-center gap-2 md:gap-4 text-[10px] md:text-[18px] font-medium text-white/90"
+                  className="flex items-center gap-2 md:gap-4 text-[16px] md:text-[18px] font-medium text-white/90"
                 >
                   <div className="w-5 h-5 md:w-8 md:h-8 rounded-full bg-white/10 flex items-center justify-center border border-white/20">
                     <CheckCircle2 size={12} className="text-gold md:w-[18px] md:h-[18px]" />
@@ -431,74 +526,29 @@ export default function App() {
               ))}
             </div>
           </div>
-          <div className="col-span-1 md:col-span-7 grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-6">
+          <div className="col-span-1 md:col-span-7 grid grid-cols-2 md:grid-cols-4 gap-2 md:gap-4">
             {[
-              { t: "学术写作与学术英语", d: "训练符合高等教育规范的英文写作与表达，提升文献综述、论文撰写能力。", i: <BookOpen className="w-5 h-5 md:w-8 md:h-8" /> },
-              { t: "协作与洞察", d: "通过小组课题与案例研讨，培养团队协作及对商业环境的深度洞察力。", i: <Users className="w-5 h-5 md:w-8 md:h-8" /> },
-              { t: "分析方法论与批判思维", d: "引导学生掌握数据与信息分析基本方法，建立逻辑严谨、独立批判的思考模式。", i: <Zap className="w-5 h-5 md:w-8 md:h-8" /> },
-              { t: "Academic Workshop", d: "提供定制化课题研讨、学术演讲模拟及研究方法指导，提升解决复杂问题能力。", i: <GraduationCap className="w-5 h-5 md:w-8 md:h-8" /> }
+              { t: "学术写作", d: "训练英文学术规范，提升文献综述与论文撰写能力。", i: <BookOpen className="w-4 h-4 md:w-6 md:h-6" /> },
+              { t: "学术英语", d: "强化英语学术表达，适应全英文高等教育教学环境。", i: <Languages className="w-4 h-4 md:w-6 md:h-6" /> },
+              { t: "分析与洞察", d: "掌握商业数据分析方法，培养敏锐的市场洞察力。", i: <BarChart3 className="w-4 h-4 md:w-6 md:h-6" /> },
+              { t: "协作与洞察", d: "强化团队协作能力，通过案例研讨洞察商业本质。", i: <Users className="w-4 h-4 md:w-6 md:h-6" /> },
+              { t: "实用计算机技能", d: "掌握高效办公与科研工具，提升数字化时代竞争力。", i: <Monitor className="w-4 h-4 md:w-6 md:h-6" /> },
+              { t: "批判性思维", d: "建立严谨逻辑体系，培养独立思考与问题解决能力。", i: <Brain className="w-4 h-4 md:w-6 md:h-6" /> },
+              { t: "学术工作坊", d: "定制化课题研讨，模拟学术演讲，提升综合素养。", i: <Lightbulb className="w-4 h-4 md:w-6 md:h-6" /> },
+              { t: "本科专业复盘课", d: "优秀学长学姐分享，助力入学后GPA管理与规划。", i: <GraduationCap className="w-4 h-4 md:w-6 md:h-6" /> }
             ].map((m, i) => (
-              <div key={i} className="p-4 md:p-10 glass-card rounded-xl md:rounded-[2rem]">
-                <div className="text-gold mb-3 md:mb-6">{m.i}</div>
-                <h4 className="font-display text-[13px] md:text-[24px] font-bold text-white mb-2 md:mb-4">{m.t}</h4>
-                <p className="text-[9px] md:text-[16px] text-white/60 leading-relaxed font-light">{m.d}</p>
+              <div key={i} className="p-3 md:p-5 glass-card rounded-lg md:rounded-2xl flex flex-col items-center text-center">
+                <div className="text-gold mb-2 md:mb-4">{m.i}</div>
+                <h4 className="font-display text-[13px] md:text-[16px] font-bold text-white mb-1 md:mb-2">{m.t}</h4>
+                <p className="text-[10px] md:text-[12px] text-white/60 leading-tight font-light">{m.d}</p>
               </div>
             ))}
           </div>
         </div>
       </Slide>
 
-      {/* Slide 3: Advantages */}
-      <Slide accentColor="#60a5fa">
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-12 md:gap-16">
-          <div className="col-span-1 md:col-span-4">
-            <SectionTitle title="核心竞争优势" subtitle="项目优势 / Key Advantages" />
-            <div className="space-y-4 md:space-y-8">
-              {[
-                { t: "高水平国际化师资", d: "由全球QS综合排名前50的院校教学专家领衔设计并全程参与指导。", i: <Users className="w-5 h-5 md:w-6 md:h-6" /> },
-                { t: "专业机构与院校认证", d: "接受新加坡、澳大利亚、英国、中国香港等多国院校广泛认证。", i: <ShieldCheck className="w-5 h-5 md:w-6 md:h-6" /> },
-                { t: "全流程入学后服务", d: "指派班主任全程跟进，提供签证、学分认证、入学注册等一站式保障。", i: <Briefcase className="w-5 h-5 md:w-6 md:h-6" /> }
-              ].map((a, i) => (
-                <div key={i} className="flex gap-4 md:gap-6 p-4 md:p-8 glass-card rounded-xl md:rounded-2xl">
-                  <div className="text-gold shrink-0">{a.i}</div>
-                  <div>
-                    <h4 className="font-display text-[12px] md:text-[22px] font-bold mb-1 md:mb-3 text-white">{a.t}</h4>
-                    <p className="text-[9px] md:text-[15px] text-white/50 leading-relaxed font-light">{a.d}</p>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-          <div className="col-span-1 md:col-span-8">
-            <div className="glass-card rounded-xl md:rounded-[3rem] p-4 md:p-10 h-full">
-              <div className="flex justify-between items-center mb-6 md:mb-10">
-                <h4 className="font-display text-[15px] md:text-[32px] font-bold text-impact">全球主要合作院校分布</h4>
-                <Globe className="text-gold animate-slow-spin w-5 h-5 md:w-8 md:h-8" />
-              </div>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-8">
-                {[
-                  { r: "🇸🇬 新加坡", s: ["新加坡国立大学 (QS 8)", "南洋理工大学 (QS 26)", "新加坡管理大学 (QS 560)", "新加坡理工大学 (QS 559)", "都柏林大学学院 (QS 171)", "科廷大学 (QS 183)", "考文垂大学 (QS 580)", "纽卡斯尔大学 (QS 173)", "詹姆斯库克大学 (QS 415)", "伦敦城市大学 (QS 328)", "伯明翰大学 (QS 84)", "皇家墨尔本理工大学 (QS 140)", "东伦敦大学 (QS 1000)", "格林威治大学 (QS 690)"] },
-                  { r: "🇭🇰 中国香港", s: ["香港大学 (QS 17)", "香港中文大学 (QS 36)", "香港科技大学 (QS 47)", "香港城市大学 (QS 62)", "香港理工大学 (QS 57)", "香港浸会大学 (QS 252)", "香港教育大学 (QS 1000+)", "岭南大学 (QS 1000+)", "香港都会大学 (QS 1000+)", "香港树仁大学 (QS 1000+)", "香港恒生大学 (QS 1000+)", "香港珠海学院 (QS 1000+)", "东华学院 (QS 1000+)", "香港高等教育科技学院 (QS 1000+)"] },
-                  { r: "🇦🇺 澳大利亚", s: ["墨尔本大学 (QS 14)", "悉尼大学 (QS 19)", "新南威尔士大学 (QS 19)", "澳国立大学 (QS 34)", "莫纳什大学 (QS 42)", "昆士兰大学 (QS 43)", "阿德莱德大学 (QS 89)", "西澳大学 (QS 72)", "悉尼科技大学 (QS 90)", "科廷大学 (QS 183)", "纽卡斯尔大学 (QS 173)", "皇家墨尔本理工大学 (QS 140)"] },
-                  { r: "🇬🇧 英国", s: ["伦敦大学学院 (QS 9)", "爱丁堡大学 (QS 22)", "曼彻斯特大学 (QS 32)", "伦敦国王学院 (QS 40)", "布里斯托大学 (QS 55)", "华威大学 (QS 67)", "格拉斯哥大学 (QS 76)", "南安普顿大学 (QS 81)", "伯明翰大学 (QS 84)", "杜伦大学 (QS 78)", "利兹大学 (QS 75)", "诺丁汉大学 (QS 100)"] },
-                  { r: "🇲🇾 马来西亚", s: ["马来亚大学 (QS 60)", "马来西亚理科大学 (QS 137)", "马来西亚国立大学 (QS 159)", "马来西亚博特拉大学 (QS 158)", "思特雅大学 (QS 260)", "马来西亚城市大学 (QS 680)", "泰莱大学 (QS 284)", "双威大学 (QS 1000)", "世纪大学 (QS 1000)"] }
-                ].map((item, idx) => (
-                  <div key={idx} className="space-y-2">
-                    <h5 className="font-display text-gold text-[11px] md:text-[20px] font-bold border-b border-white/10 pb-1 md:pb-2 tracking-wider">{item.r}</h5>
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-0.5">
-                      {item.s.map((school, sIdx) => (
-                        <div key={sIdx} className="text-[9px] md:text-[14px] text-white/70 flex items-center gap-1.5 md:gap-2 font-light leading-tight">
-                          <div className="w-0.5 h-0.5 md:w-1 md:h-1 bg-gold rounded-full shrink-0"></div> {school}
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-        </div>
-      </Slide>
+      {/* Slide 3: Advantages (REMOVED FROM HERE) */}
+
 
       {/* Singapore Recommended Universities Module */}
       <UniversityModule />
@@ -527,9 +577,9 @@ export default function App() {
               <div className="w-10 h-10 md:w-24 md:h-24 bg-white/10 rounded-full mx-auto mb-2 md:mb-6 overflow-hidden border border-white/20 shadow-xl">
                 <img src={`https://picsum.photos/seed/faculty${i}/200/200`} className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500" referrerPolicy="no-referrer" />
               </div>
-              <div className="font-display text-[11px] md:text-[22px] font-bold text-white mb-0.5 md:mb-2">{p.n}</div>
-              <div className="text-[8px] md:text-[14px] text-gold font-bold mb-0.5 md:mb-2 tracking-widest uppercase">{p.s}</div>
-              <div className="text-[7px] md:text-[12px] text-white/40 font-light">{p.t}</div>
+              <div className="font-display text-[18px] md:text-[22px] font-bold text-white mb-0.5 md:mb-2">{p.n}</div>
+              <div className="text-[14px] md:text-[14px] text-gold font-bold mb-0.5 md:mb-2 tracking-widest uppercase">{p.s}</div>
+              <div className="text-[12px] md:text-[12px] text-white/40 font-light">{p.t}</div>
             </motion.div>
           ))}
         </div>
@@ -609,13 +659,13 @@ export default function App() {
                 { t: "活动与技能提升", s: ["节日活动", "学习深造", "实习就业"] }
               ].map((cat, i) => (
                 <div key={i} className="p-4 md:p-10 glass-card rounded-xl md:rounded-[2.5rem] border border-white/10">
-                  <h4 className="font-display text-gold text-[13px] md:text-[28px] font-bold mb-4 md:mb-8 flex items-center gap-2 md:gap-4">
+                  <h4 className="font-display text-gold text-[18px] md:text-[28px] font-bold mb-4 md:mb-8 flex items-center gap-2 md:gap-4">
                     <div className="w-2 h-2 md:w-3 md:h-3 bg-cyan-400 rounded-full shadow-[0_0_10px_rgba(34,211,238,0.5)]"></div>
                     {cat.t}
                   </h4>
                   <div className="flex flex-wrap gap-2 md:gap-4">
                     {cat.s.map((item, idx) => (
-                      <span key={idx} className="text-[9px] md:text-[16px] bg-white/10 px-2 md:px-6 py-1 md:py-3 rounded-lg md:rounded-2xl border border-white/10 text-white/90 font-medium hover:bg-white/20 transition-all hover:scale-105 cursor-default shadow-sm">{item}</span>
+                      <span key={idx} className="text-[14px] md:text-[16px] bg-white/10 px-2 md:px-6 py-1 md:py-3 rounded-lg md:rounded-2xl border border-white/10 text-white/90 font-medium hover:bg-white/20 transition-all hover:scale-105 cursor-default shadow-sm">{item}</span>
                     ))}
                   </div>
                 </div>
@@ -638,12 +688,90 @@ export default function App() {
                 >
                   <div className="w-10 h-10 md:w-14 md:h-14 bg-white/10 text-gold flex items-center justify-center rounded-xl md:rounded-2xl shrink-0 border border-white/10">{item.i}</div>
                   <div>
-                    <h5 className="font-display text-[12px] md:text-[20px] font-bold text-white mb-0.5 md:mb-1">{item.t}</h5>
-                    <p className="text-[9px] md:text-[15px] text-white/50 font-light">{item.d}</p>
+                    <h5 className="font-display text-[18px] md:text-[20px] font-bold text-white mb-0.5 md:mb-1">{item.t}</h5>
+                    <p className="text-[14px] md:text-[15px] text-white/50 font-light">{item.d}</p>
                   </div>
                 </motion.div>
               ))}
+
+              <motion.a
+                href="https://p.topuni.com.cn/"
+                target="_blank"
+                rel="noopener noreferrer"
+                whileHover={{ scale: 1.02, y: -2 }}
+                whileTap={{ scale: 0.98 }}
+                className="mt-8 w-full py-5 px-8 rounded-2xl font-display font-black text-[20px] tracking-[0.2em] text-[#003366] 
+                           bg-gradient-to-b from-[#ffffff] via-[#e2e8f0] to-[#cbd5e1]
+                           shadow-[0_10px_25px_rgba(0,0,0,0.4),inset_0_2px_1px_rgba(255,255,255,1)]
+                           border border-white/40 flex items-center justify-center gap-3
+                           relative overflow-hidden group"
+              >
+                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/60 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000 ease-in-out"></div>
+                <Search size={22} className="text-[#003366]/70" />
+                费用查询
+              </motion.a>
             </div>
+          </div>
+        </div>
+      </Slide>
+
+      {/* New Slide: Language Exams & Certificates */}
+      <Slide accentColor="#8b5cf6">
+        <div className="max-w-6xl mx-auto">
+          <SectionTitle title="语言考试与国际证书" subtitle="学术加持 / Language & Certificates" />
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-center">
+            <div className="space-y-6">
+              <motion.div 
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                className="p-6 glass-card rounded-2xl border-l-4 border-gold"
+              >
+                <p className="text-[18px] md:text-[22px] text-white font-medium leading-relaxed">
+                  我们不做交付不了结果的培训，我们是让学生努力了就有结果！
+                </p>
+                <p className="text-[16px] md:text-[18px] text-white/70 mt-4">
+                  多种语言考试管理和国际证书为学生的战力加码！
+                </p>
+              </motion.div>
+              
+              <div className="space-y-4">
+                {[
+                  { t: "🇨🇦 OSSD", d: "白名单实体加高，证书+成绩单+推荐信，OEN学籍正规可查" },
+                  { t: "🇺🇸 美高", d: "线上/线下，完整AP成绩单+推荐信，CEEB CODE可查" },
+                  { t: "🇬🇧 英高", d: "A level预估分+成绩单+推荐信" }
+                ].map((item, i) => (
+                  <motion.div 
+                    key={i}
+                    initial={{ opacity: 0, x: -20 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    transition={{ delay: i * 0.1 }}
+                    className="flex gap-4 p-4 glass-card rounded-xl border border-white/5"
+                  >
+                    <div className="text-gold font-bold text-[18px] shrink-0">{item.t}</div>
+                    <div className="text-[14px] md:text-[16px] text-white/60 leading-relaxed">{item.d}</div>
+                  </motion.div>
+                ))}
+              </div>
+            </div>
+            
+            <motion.div 
+              initial={{ opacity: 0, scale: 0.9 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              className="p-8 glass-card rounded-[2.5rem] border border-white/10 text-center relative overflow-hidden"
+            >
+              <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-gold to-transparent"></div>
+              <h4 className="font-display text-[24px] md:text-[32px] font-bold text-impact mb-8">考试辅助团队助力出分</h4>
+              <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+                {["雅思", "托福", "Duolingo", "GRE", "ACT", "SAT"].map((exam, i) => (
+                  <div key={i} className="py-4 bg-white/5 rounded-xl border border-white/5 text-gold font-bold text-[18px] md:text-[20px] shadow-sm">
+                    {exam}
+                  </div>
+                ))}
+              </div>
+              <p className="text-[14px] md:text-[16px] text-white/40 mt-8 italic font-light">
+                Professional Support Team for Guaranteed Success
+              </p>
+            </motion.div>
           </div>
         </div>
       </Slide>
@@ -672,11 +800,11 @@ export default function App() {
                 whileHover={{ scale: 1.01 }}
                 className="p-3 md:p-6 glass-card rounded-xl md:rounded-2xl relative group border border-white/5 hover:border-gold/30 transition-all"
               >
-                <h5 className="font-display text-[13px] md:text-[22px] font-bold text-gold mb-2 md:mb-3 flex items-center gap-2">
+                <h5 className="font-display text-[18px] md:text-[22px] font-bold text-gold mb-2 md:mb-3 flex items-center gap-2">
                   {c.n}
                   <div className="h-px flex-1 bg-gold/20"></div>
                 </h5>
-                <p className="text-[9px] md:text-[15px] text-white/80 leading-relaxed font-light">{c.d}</p>
+                <p className="text-[14px] md:text-[15px] text-white/80 leading-relaxed font-light">{c.d}</p>
               </motion.div>
             ))}
           </div>
