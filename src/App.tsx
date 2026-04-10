@@ -126,18 +126,18 @@ const UniversityModule = () => {
         ))}
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 items-start">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-2.5 items-start">
         {UNIVERSITY_DATA[activeUni].majors.map((major, idx) => (
-          <div key={idx} className="glass-card rounded-2xl overflow-hidden border border-white/5 group">
+          <div key={idx} className="glass-card rounded-xl overflow-hidden border border-white/5 group">
             <button
               onClick={() => setExpandedMajor(expandedMajor === idx ? null : idx)}
-              className="w-full px-6 py-5 flex justify-between items-center hover:bg-white/5 transition-colors text-left"
+              className="w-full px-4 py-3 flex justify-between items-center hover:bg-white/5 transition-colors text-left"
             >
-              <span className="text-[18px] md:text-[20px] font-bold text-white/90 group-hover:text-gold transition-colors">{major.cn}</span>
-              <div className={`w-8 h-8 rounded-full flex items-center justify-center transition-all ${expandedMajor === idx ? "bg-gold text-blue-900" : "bg-white/10 text-gold"}`}>
+              <span className="text-[11px] md:text-[12px] font-bold text-white/90 group-hover:text-gold transition-colors">{major.cn}</span>
+              <div className={`w-5 h-5 rounded-full flex items-center justify-center transition-all ${expandedMajor === idx ? "bg-gold text-blue-900" : "bg-white/10 text-gold"}`}>
                 <ChevronRight 
                   className={`transition-transform duration-300 ${expandedMajor === idx ? "rotate-90" : ""}`} 
-                  size={18} 
+                  size={12} 
                 />
               </div>
             </button>
@@ -147,33 +147,33 @@ const UniversityModule = () => {
               animate={{ height: expandedMajor === idx ? "auto" : 0, opacity: expandedMajor === idx ? 1 : 0 }}
               className="overflow-hidden"
             >
-              <div className="px-6 pb-6 pt-2 space-y-5 border-t border-white/5 bg-white/5">
-                <div className="flex justify-between items-start gap-4 p-4 bg-white/5 rounded-xl border border-white/5">
+              <div className="px-4 pb-4 pt-1 space-y-3 border-t border-white/5 bg-white/5">
+                <div className="flex justify-between items-start gap-2 p-2.5 bg-white/5 rounded-lg border border-white/5">
                   <div className="flex-1">
-                    <div className="text-[10px] text-white/40 uppercase tracking-[0.2em] mb-2 font-bold">English Name</div>
-                    <div className="text-[16px] text-white/80 font-display font-medium leading-tight">{major.en}</div>
+                    <div className="text-[7px] text-white/40 uppercase tracking-[0.2em] mb-1 font-bold">English Name</div>
+                    <div className="text-[10px] text-white/80 font-display font-medium leading-tight">{major.en}</div>
                   </div>
                   <button 
                     onClick={() => copyToClipboard(major.en)}
-                    className="p-2.5 bg-white/10 hover:bg-gold hover:text-blue-900 rounded-lg transition-all text-gold shrink-0 shadow-sm"
+                    className="p-1.5 bg-white/10 hover:bg-gold hover:text-blue-900 rounded-md transition-all text-gold shrink-0 shadow-sm"
                     title="Copy English Name"
                   >
-                    <Copy size={14} />
+                    <Copy size={10} />
                   </button>
                 </div>
                 
-                <div className="grid grid-cols-10 gap-4">
-                  <div className="col-span-3 p-3 bg-white/5 rounded-xl border border-white/5">
-                    <div className="text-[9px] text-white/40 uppercase tracking-[0.1em] mb-1 font-bold">Duration</div>
-                    <div className="text-[13px] md:text-[14px] text-gold font-black">{major.duration}</div>
+                <div className="grid grid-cols-10 gap-2">
+                  <div className="col-span-3 p-2 bg-white/5 rounded-lg border border-white/5">
+                    <div className="text-[6px] text-white/40 uppercase tracking-[0.1em] mb-0.5 font-bold">Duration</div>
+                    <div className="text-[8px] md:text-[9px] text-gold font-black">{major.duration}</div>
                   </div>
-                  <div className="col-span-3 p-3 bg-white/5 rounded-xl border border-white/5">
-                    <div className="text-[9px] text-white/40 uppercase tracking-[0.1em] mb-1 font-bold">Intake</div>
-                    <div className="text-[13px] md:text-[14px] text-white/80 font-bold">{major.intake}</div>
+                  <div className="col-span-3 p-2 bg-white/5 rounded-lg border border-white/5">
+                    <div className="text-[6px] text-white/40 uppercase tracking-[0.1em] mb-0.5 font-bold">Intake</div>
+                    <div className="text-[8px] md:text-[9px] text-white/80 font-bold">{major.intake}</div>
                   </div>
-                  <div className="col-span-4 p-3 bg-white/5 rounded-xl border border-white/5">
-                    <div className="text-[9px] text-white/40 uppercase tracking-[0.1em] mb-1 font-bold">Tuition Fee</div>
-                    <div className="text-[13px] md:text-[14px] text-white/80 font-bold leading-tight">{major.fee}</div>
+                  <div className="col-span-4 p-2 bg-white/5 rounded-lg border border-white/5">
+                    <div className="text-[6px] text-white/40 uppercase tracking-[0.1em] mb-0.5 font-bold">Tuition Fee</div>
+                    <div className="text-[8px] md:text-[9px] text-white/80 font-bold leading-tight">{major.fee}</div>
                   </div>
                 </div>
               </div>
@@ -233,7 +233,74 @@ const SectionTitle = ({ title, subtitle }: { title: string, subtitle: string }) 
 
 export default function App() {
   return (
-    <div className="no-scrollbar font-sans">
+    <div className="no-scrollbar font-sans overflow-x-hidden bg-[#003366]">
+      {/* Slide 0: Introduction */}
+      <Slide accentColor="#0ea5e9">
+        <div className="max-w-6xl mx-auto">
+          <SectionTitle title="TopUni Global Academy" subtitle="精英留学规划 / Elite Education Planning" />
+          <motion.p 
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            className="text-[18px] md:text-[22px] text-white/90 leading-relaxed mb-12 font-light"
+          >
+            覆盖全球近百所知名高校，打破传统留学申请服务，结合当下经济大环境与就业趋势为学子量身打造高性价比的精英留学规划路径，为诸多“疑难杂症”提供合理有效的解决方法。
+          </motion.p>
+          
+          <div className="mt-12">
+            <motion.h4 
+              initial={{ opacity: 0, x: -20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              className="font-display text-[28px] md:text-[36px] font-bold text-impact mb-6"
+            >
+              本科升学
+            </motion.h4>
+            <motion.p 
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.1 }}
+              className="text-[16px] md:text-[18px] text-white/80 mb-8 leading-relaxed"
+            >
+              我们致力于通过 <span className="text-gold font-bold">TopUni Academic Framework</span>，为每一位有潜力进入世界一流学府的学生提供量身定制的精英升学规划。整个服务体系以您为核心，围绕五大支柱系统展开：
+            </motion.p>
+            
+            <div className="grid grid-cols-1 gap-4 mb-10">
+              {[
+                { t: "顶层设计与精准定位", d: "基于您的学术兴趣、个性与家庭愿景，我们共同锚定美国、英国、新加坡、香港等顶尖目的地，并精确筛选匹配的院校清单，制定清晰的申请策略。" },
+                { t: "个性化能力蓝图构建", d: "这不仅是选专业，更是探索未来。我们将专业选择与长远的职业生涯规划深度结合，系统规划包括背景提升、夏校与科研、领导力项目在内的独特个人档案，打造不可复制的申请竞争力。" },
+                { t: "学术与标化考试管理", d: "我们提供科学的国际课程、标化考试全程规划与督导，并与顶尖语言培训机构合作，确保您在申请季前达成优异的语言成绩目标。" },
+                { t: "全周期财务与时间规划", d: "我们将协助家庭进行透明的留学预算规划，并制定从启动到入学的详细时间表，确保每一步都高效、经济、从容不迫。" },
+                { t: "申请与生涯启航", d: "在申请季，我们的专家团队将亲自指导文书、面试等关键环节。在您获得录取后，我们还将提供职业启航辅导，助力您顺利过渡，赢在大学生涯的起点。" }
+              ].map((item, i) => (
+                <motion.div 
+                  key={i}
+                  initial={{ opacity: 0, x: -20 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  transition={{ delay: i * 0.1 }}
+                  className="flex gap-4 md:gap-6 p-5 md:p-6 glass-card rounded-2xl border border-white/10"
+                >
+                  <div className="w-10 h-10 rounded-full bg-gold/20 flex items-center justify-center border border-gold/30 shrink-0 text-gold font-bold">
+                    {i + 1}
+                  </div>
+                  <div>
+                    <h5 className="font-display text-[18px] md:text-[20px] font-bold text-white mb-1 md:mb-2">{item.t}</h5>
+                    <p className="text-[14px] md:text-[15px] text-white/60 leading-relaxed font-light">{item.d}</p>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+            
+            <motion.p 
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              transition={{ delay: 0.6 }}
+              className="text-[15px] md:text-[17px] text-white/80 leading-relaxed font-light italic border-l-4 border-gold/50 pl-6 py-2"
+            >
+              TopUni Academic Framework 不仅是一套升学方案，更是一套培养未来领袖的成长系统。我们与您和您的家庭结成紧密伙伴，共同致力于实现进入世界顶尖学府的梦想，并为长远成功奠定坚实基础。
+            </motion.p>
+          </div>
+        </div>
+      </Slide>
+
       {/* Slide 1: Hero */}
       <Slide className="relative" accentColor="#0ea5e9">
         <div className="absolute inset-0 opacity-5 mix-blend-overlay">
@@ -340,10 +407,10 @@ export default function App() {
         <div className="grid grid-cols-1 md:grid-cols-12 gap-12 md:gap-16 items-center">
           <div className="col-span-1 md:col-span-5">
             <SectionTitle title="什么是 PPAC 国际升学课程？" subtitle="项目介绍 / Project Introduction" />
-            <p className="text-white/80 text-[18px] md:text-[20px] leading-relaxed mb-10 font-light">
+            <p className="text-white/80 text-[11px] md:text-[20px] leading-relaxed mb-6 md:mb-10 font-light">
               PPAC 是一项基于全球认证资历框架的一站式国际升学课程。通过“认证课程+学术技能+实践训练”的三维框架，致力于帮助学生在获得权威文凭的同时，全面发展在英语学术环境中所必需的核心竞争力。
             </p>
-            <div className="space-y-6">
+            <div className="space-y-3 md:space-y-6">
               {[
                 "系统性学习商业管理核心知识 (Global Qualification)",
                 "完成可获得国际广泛认可的 120 学分文凭",
@@ -354,27 +421,27 @@ export default function App() {
                   initial={{ opacity: 0, x: -20 }}
                   whileInView={{ opacity: 1, x: 0 }}
                   transition={{ delay: i * 0.1 }}
-                  className="flex items-center gap-4 text-[16px] md:text-[18px] font-medium text-white/90"
+                  className="flex items-center gap-2 md:gap-4 text-[10px] md:text-[18px] font-medium text-white/90"
                 >
-                  <div className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center border border-white/20">
-                    <CheckCircle2 size={18} className="text-gold" />
+                  <div className="w-5 h-5 md:w-8 md:h-8 rounded-full bg-white/10 flex items-center justify-center border border-white/20">
+                    <CheckCircle2 size={12} className="text-gold md:w-[18px] md:h-[18px]" />
                   </div>
                   <span>{t}</span>
                 </motion.div>
               ))}
             </div>
           </div>
-          <div className="col-span-1 md:col-span-7 grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="col-span-1 md:col-span-7 grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-6">
             {[
-              { t: "学术写作与学术英语", d: "训练符合高等教育规范的英文写作与表达，提升文献综述、论文撰写能力。", i: <BookOpen size={32} /> },
-              { t: "协作与洞察", d: "通过小组课题与案例研讨，培养团队协作及对商业环境的深度洞察力。", i: <Users size={32} /> },
-              { t: "分析方法论与批判思维", d: "引导学生掌握数据与信息分析基本方法，建立逻辑严谨、独立批判的思考模式。", i: <Zap size={32} /> },
-              { t: "Academic Workshop", d: "提供定制化课题研讨、学术演讲模拟及研究方法指导，提升解决复杂问题能力。", i: <GraduationCap size={32} /> }
+              { t: "学术写作与学术英语", d: "训练符合高等教育规范的英文写作与表达，提升文献综述、论文撰写能力。", i: <BookOpen className="w-5 h-5 md:w-8 md:h-8" /> },
+              { t: "协作与洞察", d: "通过小组课题与案例研讨，培养团队协作及对商业环境的深度洞察力。", i: <Users className="w-5 h-5 md:w-8 md:h-8" /> },
+              { t: "分析方法论与批判思维", d: "引导学生掌握数据与信息分析基本方法，建立逻辑严谨、独立批判的思考模式。", i: <Zap className="w-5 h-5 md:w-8 md:h-8" /> },
+              { t: "Academic Workshop", d: "提供定制化课题研讨、学术演讲模拟及研究方法指导，提升解决复杂问题能力。", i: <GraduationCap className="w-5 h-5 md:w-8 md:h-8" /> }
             ].map((m, i) => (
-              <div key={i} className="p-8 md:p-10 glass-card rounded-[2rem]">
-                <div className="text-gold mb-6">{m.i}</div>
-                <h4 className="font-display text-[22px] md:text-[24px] font-bold text-white mb-4">{m.t}</h4>
-                <p className="text-[14px] md:text-[16px] text-white/60 leading-relaxed font-light">{m.d}</p>
+              <div key={i} className="p-4 md:p-10 glass-card rounded-xl md:rounded-[2rem]">
+                <div className="text-gold mb-3 md:mb-6">{m.i}</div>
+                <h4 className="font-display text-[13px] md:text-[24px] font-bold text-white mb-2 md:mb-4">{m.t}</h4>
+                <p className="text-[9px] md:text-[16px] text-white/60 leading-relaxed font-light">{m.d}</p>
               </div>
             ))}
           </div>
@@ -386,29 +453,29 @@ export default function App() {
         <div className="grid grid-cols-1 md:grid-cols-12 gap-12 md:gap-16">
           <div className="col-span-1 md:col-span-4">
             <SectionTitle title="核心竞争优势" subtitle="项目优势 / Key Advantages" />
-            <div className="space-y-6 md:space-y-8">
+            <div className="space-y-4 md:space-y-8">
               {[
-                { t: "高水平国际化师资", d: "由全球QS综合排名前50的院校教学专家领衔设计并全程参与指导。", i: <Users /> },
-                { t: "专业机构与院校认证", d: "接受新加坡、澳大利亚、英国、中国香港等多国院校广泛认证。", i: <ShieldCheck /> },
-                { t: "全流程入学后服务", d: "指派班主任全程跟进，提供签证、学分认证、入学注册等一站式保障。", i: <Briefcase /> }
+                { t: "高水平国际化师资", d: "由全球QS综合排名前50的院校教学专家领衔设计并全程参与指导。", i: <Users className="w-5 h-5 md:w-6 md:h-6" /> },
+                { t: "专业机构与院校认证", d: "接受新加坡、澳大利亚、英国、中国香港等多国院校广泛认证。", i: <ShieldCheck className="w-5 h-5 md:w-6 md:h-6" /> },
+                { t: "全流程入学后服务", d: "指派班主任全程跟进，提供签证、学分认证、入学注册等一站式保障。", i: <Briefcase className="w-5 h-5 md:w-6 md:h-6" /> }
               ].map((a, i) => (
-                <div key={i} className="flex gap-6 p-6 md:p-8 glass-card rounded-2xl">
+                <div key={i} className="flex gap-4 md:gap-6 p-4 md:p-8 glass-card rounded-xl md:rounded-2xl">
                   <div className="text-gold shrink-0">{a.i}</div>
                   <div>
-                    <h4 className="font-display text-[20px] md:text-[22px] font-bold mb-3 text-white">{a.t}</h4>
-                    <p className="text-[14px] md:text-[15px] text-white/50 leading-relaxed font-light">{a.d}</p>
+                    <h4 className="font-display text-[12px] md:text-[22px] font-bold mb-1 md:mb-3 text-white">{a.t}</h4>
+                    <p className="text-[9px] md:text-[15px] text-white/50 leading-relaxed font-light">{a.d}</p>
                   </div>
                 </div>
               ))}
             </div>
           </div>
           <div className="col-span-1 md:col-span-8">
-            <div className="glass-card rounded-[2rem] md:rounded-[3rem] p-6 md:p-10 h-full">
-              <div className="flex justify-between items-center mb-8 md:mb-10">
-                <h4 className="font-display text-[24px] md:text-[32px] font-bold text-impact">全球主要合作院校分布</h4>
-                <Globe className="text-gold animate-slow-spin" size={32} />
+            <div className="glass-card rounded-xl md:rounded-[3rem] p-4 md:p-10 h-full">
+              <div className="flex justify-between items-center mb-6 md:mb-10">
+                <h4 className="font-display text-[15px] md:text-[32px] font-bold text-impact">全球主要合作院校分布</h4>
+                <Globe className="text-gold animate-slow-spin w-5 h-5 md:w-8 md:h-8" />
               </div>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-8">
                 {[
                   { r: "🇸🇬 新加坡", s: ["新加坡国立大学 (QS 8)", "南洋理工大学 (QS 26)", "新加坡管理大学 (QS 560)", "新加坡理工大学 (QS 559)", "都柏林大学学院 (QS 171)", "科廷大学 (QS 183)", "考文垂大学 (QS 580)", "纽卡斯尔大学 (QS 173)", "詹姆斯库克大学 (QS 415)", "伦敦城市大学 (QS 328)", "伯明翰大学 (QS 84)", "皇家墨尔本理工大学 (QS 140)", "东伦敦大学 (QS 1000)", "格林威治大学 (QS 690)"] },
                   { r: "🇭🇰 中国香港", s: ["香港大学 (QS 17)", "香港中文大学 (QS 36)", "香港科技大学 (QS 47)", "香港城市大学 (QS 62)", "香港理工大学 (QS 57)", "香港浸会大学 (QS 252)", "香港教育大学 (QS 1000+)", "岭南大学 (QS 1000+)", "香港都会大学 (QS 1000+)", "香港树仁大学 (QS 1000+)", "香港恒生大学 (QS 1000+)", "香港珠海学院 (QS 1000+)", "东华学院 (QS 1000+)", "香港高等教育科技学院 (QS 1000+)"] },
@@ -416,12 +483,12 @@ export default function App() {
                   { r: "🇬🇧 英国", s: ["伦敦大学学院 (QS 9)", "爱丁堡大学 (QS 22)", "曼彻斯特大学 (QS 32)", "伦敦国王学院 (QS 40)", "布里斯托大学 (QS 55)", "华威大学 (QS 67)", "格拉斯哥大学 (QS 76)", "南安普顿大学 (QS 81)", "伯明翰大学 (QS 84)", "杜伦大学 (QS 78)", "利兹大学 (QS 75)", "诺丁汉大学 (QS 100)"] },
                   { r: "🇲🇾 马来西亚", s: ["马来亚大学 (QS 60)", "马来西亚理科大学 (QS 137)", "马来西亚国立大学 (QS 159)", "马来西亚博特拉大学 (QS 158)", "思特雅大学 (QS 260)", "马来西亚城市大学 (QS 680)", "泰莱大学 (QS 284)", "双威大学 (QS 1000)", "世纪大学 (QS 1000)"] }
                 ].map((item, idx) => (
-                  <div key={idx} className="space-y-3">
-                    <h5 className="font-display text-gold text-[18px] md:text-[20px] font-bold border-b border-white/10 pb-2 tracking-wider">{item.r}</h5>
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-1">
+                  <div key={idx} className="space-y-2">
+                    <h5 className="font-display text-gold text-[11px] md:text-[20px] font-bold border-b border-white/10 pb-1 md:pb-2 tracking-wider">{item.r}</h5>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-0.5">
                       {item.s.map((school, sIdx) => (
-                        <div key={sIdx} className="text-[14px] text-white/70 flex items-center gap-2 font-light leading-tight">
-                          <div className="w-1 h-1 bg-gold rounded-full shrink-0"></div> {school}
+                        <div key={sIdx} className="text-[9px] md:text-[14px] text-white/70 flex items-center gap-1.5 md:gap-2 font-light leading-tight">
+                          <div className="w-0.5 h-0.5 md:w-1 md:h-1 bg-gold rounded-full shrink-0"></div> {school}
                         </div>
                       ))}
                     </div>
@@ -439,7 +506,7 @@ export default function App() {
       {/* Slide 4: Faculty */}
       <Slide accentColor="#1e40af">
         <SectionTitle title="顶尖名校教授领衔指导" subtitle="师资力量 / World-Class Faculty" />
-        <div className="grid grid-cols-2 md:grid-cols-5 gap-4 md:gap-6">
+        <div className="grid grid-cols-2 md:grid-cols-5 gap-2 md:gap-6">
           {[
             { n: "Helen Haste", s: "哈佛大学", t: "荣誉终身教授" },
             { n: "Samuel Kunes", s: "哈佛大学", t: "分子与细胞生物学教授" },
@@ -455,14 +522,14 @@ export default function App() {
             <motion.div 
               key={i} 
               whileHover={{ scale: 1.05 }}
-              className="p-6 md:p-8 glass-card rounded-2xl md:rounded-3xl text-center group"
+              className="p-3 md:p-8 glass-card rounded-xl md:rounded-3xl text-center group"
             >
-              <div className="w-16 h-16 md:w-24 md:h-24 bg-white/10 rounded-full mx-auto mb-4 md:mb-6 overflow-hidden border-2 border-white/20 shadow-xl">
+              <div className="w-10 h-10 md:w-24 md:h-24 bg-white/10 rounded-full mx-auto mb-2 md:mb-6 overflow-hidden border border-white/20 shadow-xl">
                 <img src={`https://picsum.photos/seed/faculty${i}/200/200`} className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500" referrerPolicy="no-referrer" />
               </div>
-              <div className="font-display text-[18px] md:text-[22px] font-bold text-white mb-1 md:mb-2">{p.n}</div>
-              <div className="text-[12px] md:text-[14px] text-gold font-bold mb-1 md:mb-2 tracking-widest uppercase">{p.s}</div>
-              <div className="text-[10px] md:text-[12px] text-white/40 font-light">{p.t}</div>
+              <div className="font-display text-[11px] md:text-[22px] font-bold text-white mb-0.5 md:mb-2">{p.n}</div>
+              <div className="text-[8px] md:text-[14px] text-gold font-bold mb-0.5 md:mb-2 tracking-widest uppercase">{p.s}</div>
+              <div className="text-[7px] md:text-[12px] text-white/40 font-light">{p.t}</div>
             </motion.div>
           ))}
         </div>
@@ -534,21 +601,21 @@ export default function App() {
         <div className="grid grid-cols-1 md:grid-cols-12 gap-12 md:gap-16">
           <div className="col-span-1 md:col-span-7">
             <SectionTitle title="全流程管家式服务清单" subtitle="服务体系 / Service Ecosystem" />
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-10">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-10">
               {[
                 { t: "入学准备", s: ["选校规划", "选课规划", "课程跟进", "递交申请", "办理签证", "学分认证"] },
                 { t: "学习支持", s: ["入学报到与注册", "建立沟通群组", "学业咨询", "邮箱托管"] },
                 { t: "生活保障", s: ["接机服务", "本地顾问", "特殊协助"] },
                 { t: "活动与技能提升", s: ["节日活动", "学习深造", "实习就业"] }
               ].map((cat, i) => (
-                <div key={i} className="p-8 md:p-10 glass-card rounded-[2rem] md:rounded-[2.5rem] border border-white/10">
-                  <h4 className="font-display text-gold text-[22px] md:text-[28px] font-bold mb-6 md:mb-8 flex items-center gap-4">
-                    <div className="w-3 h-3 bg-cyan-400 rounded-full shadow-[0_0_10px_rgba(34,211,238,0.5)]"></div>
+                <div key={i} className="p-4 md:p-10 glass-card rounded-xl md:rounded-[2.5rem] border border-white/10">
+                  <h4 className="font-display text-gold text-[13px] md:text-[28px] font-bold mb-4 md:mb-8 flex items-center gap-2 md:gap-4">
+                    <div className="w-2 h-2 md:w-3 md:h-3 bg-cyan-400 rounded-full shadow-[0_0_10px_rgba(34,211,238,0.5)]"></div>
                     {cat.t}
                   </h4>
-                  <div className="flex flex-wrap gap-3 md:gap-4">
+                  <div className="flex flex-wrap gap-2 md:gap-4">
                     {cat.s.map((item, idx) => (
-                      <span key={idx} className="text-[14px] md:text-[16px] bg-white/10 px-4 md:px-6 py-2 md:py-3 rounded-xl md:rounded-2xl border border-white/10 text-white/90 font-medium hover:bg-white/20 transition-all hover:scale-105 cursor-default shadow-sm">{item}</span>
+                      <span key={idx} className="text-[9px] md:text-[16px] bg-white/10 px-2 md:px-6 py-1 md:py-3 rounded-lg md:rounded-2xl border border-white/10 text-white/90 font-medium hover:bg-white/20 transition-all hover:scale-105 cursor-default shadow-sm">{item}</span>
                     ))}
                   </div>
                 </div>
@@ -559,20 +626,20 @@ export default function App() {
             <SectionTitle title="申请要求" subtitle="准入标准 / Requirements" />
             <div className="space-y-4 md:space-y-6">
               {[
-                { t: "学历背景", d: "高中在读或同等学历及以上学生", i: <GraduationCap /> },
-                { t: "综合素质", d: "身体健康，学习成绩良好，有较好团队合作精神", i: <Users /> },
-                { t: "语言能力", d: "英语能够进行沟通交流", i: <Globe /> },
-                { t: "独立能力", d: "有良好的学习能力和独立自主的生活能力", i: <Zap /> }
+                { t: "学历背景", d: "高中在读或同等学历及以上学生", i: <GraduationCap className="w-5 h-5 md:w-6 md:h-6" /> },
+                { t: "综合素质", d: "身体健康，学习成绩良好，有较好团队合作精神", i: <Users className="w-5 h-5 md:w-6 md:h-6" /> },
+                { t: "语言能力", d: "英语能够进行沟通交流", i: <Globe className="w-5 h-5 md:w-6 md:h-6" /> },
+                { t: "独立能力", d: "有良好的学习能力和独立自主的生活能力", i: <Zap className="w-5 h-5 md:w-6 md:h-6" /> }
               ].map((item, i) => (
                 <motion.div 
                   key={i} 
                   whileHover={{ x: 10 }}
-                  className="flex items-center gap-4 md:gap-6 p-5 md:p-6 glass-card rounded-xl md:rounded-2xl"
+                  className="flex items-center gap-4 md:gap-6 p-4 md:p-6 glass-card rounded-xl md:rounded-2xl"
                 >
-                  <div className="w-12 h-12 md:w-14 md:h-14 bg-white/10 text-gold flex items-center justify-center rounded-xl md:rounded-2xl shrink-0 border border-white/10">{item.i}</div>
+                  <div className="w-10 h-10 md:w-14 md:h-14 bg-white/10 text-gold flex items-center justify-center rounded-xl md:rounded-2xl shrink-0 border border-white/10">{item.i}</div>
                   <div>
-                    <h5 className="font-display text-[18px] md:text-[20px] font-bold text-white mb-1">{item.t}</h5>
-                    <p className="text-[14px] md:text-[15px] text-white/50 font-light">{item.d}</p>
+                    <h5 className="font-display text-[12px] md:text-[20px] font-bold text-white mb-0.5 md:mb-1">{item.t}</h5>
+                    <p className="text-[9px] md:text-[15px] text-white/50 font-light">{item.d}</p>
                   </div>
                 </motion.div>
               ))}
@@ -581,71 +648,37 @@ export default function App() {
         </div>
       </Slide>
 
-      {/* Slide 7: Fees & Cases */}
+      {/* Slide 7: Cases */}
       <Slide accentColor="#1f2937">
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-12 md:gap-16">
-          <div className="col-span-1 md:col-span-6">
-            <SectionTitle title="费用明细" subtitle="投资未来 / Expense Detail" />
-            <div className="glass-card rounded-[1.5rem] md:rounded-[2rem] overflow-x-auto">
-              <table className="w-full text-left text-[14px] md:text-[16px] min-w-[350px]">
-                <thead>
-                  <tr className="bg-white/5 text-white/40">
-                    <th className="p-4 md:p-6 font-medium uppercase tracking-widest text-[10px] md:text-[12px]">名称/地区</th>
-                    <th className="p-4 md:p-6 font-medium uppercase tracking-widest text-[10px] md:text-[12px]">课程费</th>
-                    <th className="p-4 md:p-6 font-medium uppercase tracking-widest text-[10px] md:text-[12px]">合计</th>
-                  </tr>
-                </thead>
-                <tbody className="divide-y divide-white/5">
-                  {[
-                    ["🇸🇬 新加坡(直入大二)", "138,000元", "198,000元"],
-                    ["🇦🇺 澳大利亚(QS前100)", "138,000元", "198,000元"],
-                    ["🇬🇧 英国A类(QS前50)", "138,000元", "398,000元"],
-                    ["🇬🇧 英国B类", "138,000元", "198,000元"],
-                    ["🇭🇰 香港B类", "138,000元", "298,000元"],
-                    ["🇲🇾 马来西亚(英澳分校)", "138,000元", "198,000元"],
-                    ["🇲🇾 马来西亚B类", "138,000元", "168,000元"]
-                  ].map((row, i) => (
-                    <tr key={i} className="hover:bg-white/5 transition-colors">
-                      <td className="p-4 md:p-6 font-bold text-white/90">{row[0]}</td>
-                      <td className="p-4 md:p-6 text-white/50 font-light">{row[1]}</td>
-                      <td className="p-4 md:p-6 text-impact font-black text-[18px] md:text-[20px]">{row[2]}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-            <p className="mt-6 text-[12px] md:text-[14px] text-white/30 italic font-light">* 成绩优秀者可减免学分直入大二，节省 1.5 年毕业时间。</p>
-          </div>
-          <div className="col-span-1 md:col-span-6">
-            <SectionTitle title="学生案例" subtitle="成功见证 / Student Success" />
-            <div className="grid grid-cols-2 gap-3 md:gap-4">
-              {[
-                { n: "Z同学", d: "女，18岁入读爱尔兰都柏林大学学院（新加坡校区）商业分析专业，现20岁新加坡南洋理工大学硕士在读。" },
-                { n: "T同学", d: "男，19岁入读爱尔兰都柏林大学学院（新加坡校区）商业分析专业，获得GPA3.7/4.2，现21岁香港大学硕士在读。" },
-                { n: "W同学", d: "国际学校高二弃学加入本项目，在爱尔兰都柏林大学学院（新加坡校区）获得GPA3.3录取到南洋理工大学分析学硕士现已毕业获得新加坡EP就业准证新加坡工作。" },
-                { n: "L同学", d: "女，初中毕业17岁加入本项目，现爱尔兰都柏林大学学院（新加坡校区）本科在读，已获得悉尼大学硕士录取。" },
-                { n: "X同学", d: "男，18岁加入本项目，在爱尔兰都柏林大学学院（新加坡校区）就读，获得香港城市大学、香港理工大学录取，20岁已入学香港城市大学硕士。" },
-                { n: "L同学", d: "高一弃学后加入本项目爱尔兰都柏林大学学院（新加坡校区）获得GPA3.8，录取到香港大学、南洋理工大学、新加坡国立大学硕士，现21岁已港大毕业获得IANG留港工作。" },
-                { n: "H同学", d: "H同学，初中毕业后加入本项目国际预科完成后，18岁入学1.5年爱尔兰都柏林大学学院（新加坡校区），现在读已获得GPA3.2，已录取2026年墨尔本大学硕士。" },
-                { n: "P同学", d: "男，国内3+1项目弃学入读本项目，GPA3.0申请到悉尼大学、新南威尔士大学硕士现22岁悉尼大学金融硕士毕业，留澳工作年薪11万澳币。" },
-                { n: "Y同学", d: "女，中央民族大学2+2国际项目弃学后入读爱尔兰都柏林大学学院（新加坡校区），21岁毕业获得GPA3.3，现英国UCL（G5，伦敦大学学院）硕士在读。" },
-                { n: "S同学", d: "高中毕业后在英国利兹大学就读国际大一，挂科退学后入读本项目，现21岁英国爱丁堡大学硕士在读。" },
-                { n: "Y同学", d: "女，国内3+1项目入学英国金史密斯大学，遗憾退学后加入本项目，科廷大学新加坡校区在读中，现已录取到墨尔本大学、悉尼大学硕士。" },
-                { n: "Y同学", d: "男，国内民办大学大一弃学后加入本项目 爱尔兰都柏林大学学院（新加坡校区），获得GPA3.2，现已毕业并录取到香港理工大学硕士在读，并且已落户上海。" }
-              ].map((c, i) => (
-                <motion.div 
-                  key={i} 
-                  whileHover={{ scale: 1.01 }}
-                  className="p-6 glass-card rounded-2xl relative group border border-white/5 hover:border-gold/30 transition-all"
-                >
-                  <h5 className="font-display text-[22px] font-bold text-gold mb-3 flex items-center gap-2">
-                    {c.n}
-                    <div className="h-px flex-1 bg-gold/20"></div>
-                  </h5>
-                  <p className="text-[14px] md:text-[15px] text-white/80 leading-relaxed font-light">{c.d}</p>
-                </motion.div>
-              ))}
-            </div>
+        <div className="max-w-6xl mx-auto">
+          <SectionTitle title="学生案例" subtitle="成功见证 / Student Success" />
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-6">
+            {[
+              { n: "Z同学", d: "女，18岁入读爱尔兰都柏林大学学院（新加坡校区）商业分析专业，现20岁新加坡南洋理工大学硕士在读。" },
+              { n: "T同学", d: "男，19岁入读爱尔兰都柏林大学学院（新加坡校区）商业分析专业，获得GPA3.7/4.2，现21岁香港大学硕士在读。" },
+              { n: "W同学", d: "国际学校高二弃学加入本项目，在爱尔兰都柏林大学学院（新加坡校区）获得GPA3.3录取到南洋理工大学分析学硕士现已毕业获得新加坡EP就业准证新加坡工作。" },
+              { n: "L同学", d: "女，初中毕业17岁加入本项目，现爱尔兰都柏林大学学院（新加坡校区）本科在读，已获得悉尼大学硕士录取。" },
+              { n: "X同学", d: "男，18岁加入本项目，在爱尔兰都柏林大学学院（新加坡校区）就读，获得香港城市大学、香港理工大学录取，20岁已入学香港城市大学硕士。" },
+              { n: "L同学", d: "高一弃学后加入本项目爱尔兰都柏林大学学院（新加坡校区）获得GPA3.8，录取到香港大学、南洋理工大学、新加坡国立大学硕士，现21岁已港大毕业获得IANG留港工作。" },
+              { n: "H同学", d: "H同学，初中毕业后加入本项目国际预科完成后，18岁入学1.5年爱尔兰都柏林大学学院（新加坡校区），现在读已获得GPA3.2，已录取2026年墨尔本大学硕士。" },
+              { n: "P同学", d: "男，国内3+1项目弃学入读本项目，GPA3.0申请到悉尼大学、新南威尔士大学硕士现22岁悉尼大学金融硕士毕业，留澳工作年薪11万澳币。" },
+              { n: "Y同学", d: "女，中央民族大学2+2国际项目弃学后入读爱尔兰都柏林大学学院（新加坡校区），21岁毕业获得GPA3.3，现英国UCL（G5，伦敦大学学院）硕士在读。" },
+              { n: "S同学", d: "高中毕业后在英国利兹大学就读国际大一，挂科退学后入读本项目，现21岁英国爱丁堡大学硕士在读。" },
+              { n: "Y同学", d: "女，国内3+1项目入学英国金史密斯大学，遗憾退学后加入本项目，科廷大学新加坡校区在读中，现已录取到墨尔本大学、悉尼大学硕士。" },
+              { n: "Y同学", d: "男，国内民办大学大一弃学后加入本项目 爱尔兰都柏林大学学院（新加坡校区），获得GPA3.2，现已毕业并录取到香港理工大学硕士在读，并且已落户上海。" }
+            ].map((c, i) => (
+              <motion.div 
+                key={i} 
+                whileHover={{ scale: 1.01 }}
+                className="p-3 md:p-6 glass-card rounded-xl md:rounded-2xl relative group border border-white/5 hover:border-gold/30 transition-all"
+              >
+                <h5 className="font-display text-[13px] md:text-[22px] font-bold text-gold mb-2 md:mb-3 flex items-center gap-2">
+                  {c.n}
+                  <div className="h-px flex-1 bg-gold/20"></div>
+                </h5>
+                <p className="text-[9px] md:text-[15px] text-white/80 leading-relaxed font-light">{c.d}</p>
+              </motion.div>
+            ))}
           </div>
         </div>
       </Slide>
@@ -656,9 +689,13 @@ export default function App() {
           <motion.div 
             initial={{ scale: 0.9, opacity: 0 }} 
             whileInView={{ scale: 1, opacity: 1 }} 
-            className="inline-block bg-white/10 backdrop-blur-xl border border-white/20 text-white font-display font-black text-[48px] md:text-[100px] px-8 md:px-16 py-4 md:py-6 mb-8 md:mb-12 shadow-2xl rounded-[1.5rem] md:rounded-[3rem]"
+            className="inline-block bg-white/5 backdrop-blur-2xl border border-white/10 px-10 md:px-20 py-6 md:py-10 mb-8 md:mb-12 shadow-[0_20px_50px_rgba(0,0,0,0.3)] rounded-[2rem] md:rounded-[4rem] relative group overflow-hidden"
           >
-            PPAC
+            <div className="absolute inset-0 bg-gradient-to-br from-gold/20 via-transparent to-cyan-400/20 opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
+            <span className="relative z-10 font-display font-black text-[56px] md:text-[120px] leading-none tracking-tighter text-transparent bg-clip-text bg-gradient-to-b from-white via-gold to-gold/80 drop-shadow-[0_10px_10px_rgba(0,0,0,0.5)] filter contrast-125">
+              TopUni
+            </span>
+            <div className="absolute -bottom-2 left-1/2 -translate-x-1/2 w-1/2 h-1 bg-gold/30 blur-sm rounded-full"></div>
           </motion.div>
           <h2 className="font-display text-[32px] md:text-[64px] font-bold mb-6 md:mb-10 text-impact">开启你的国际名校之旅</h2>
           <p className="text-[18px] md:text-[24px] text-white/70 max-w-3xl mx-auto mb-12 md:mb-20 leading-relaxed font-light">
@@ -669,9 +706,9 @@ export default function App() {
               href="https://topuni.com.cn" 
               target="_blank" 
               rel="noopener noreferrer"
-              className="flex flex-col items-center gap-4 text-white hover:text-gold transition-colors cursor-pointer"
+              className="flex flex-col items-center gap-4 text-white hover:text-gold transition-colors cursor-pointer group"
             >
-              <div className="w-16 h-16 md:w-20 md:h-20 glass-card rounded-full flex items-center justify-center border-white/20 shadow-2xl"><Globe size={32} className="text-gold" /></div>
+              <div className="w-16 h-16 md:w-20 md:h-20 glass-card rounded-full flex items-center justify-center border-white/20 shadow-2xl group-hover:scale-110 transition-transform"><Globe size={32} className="text-gold" /></div>
               <span className="tracking-widest">www.topuni.com.cn</span>
             </a>
           </div>
