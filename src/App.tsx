@@ -5,13 +5,14 @@ import {
   Award, Clock, ShieldCheck, Briefcase, Zap, MapPin,
   Star, Search, Phone, Mail, ChevronRight, Shield, Copy,
   Languages, BarChart3, Monitor, Brain, Lightbulb,
-  ChevronLeft, Menu, X
+  ChevronLeft, Menu, X, ExternalLink
 } from 'lucide-react';
 
 const UNIVERSITY_DATA = [
   {
     name: "都柏林大学学院(新加坡校区)",
     englishName: "University College Dublin (Singapore Campus)",
+    description: "爱尔兰都柏林大学（UCD）是享誉世界的顶尖学府，2025年QS世界排名第126位。其新加坡校区通过与Kaplan合作，提供全球顶尖的商科教育。UCD商学院拥有AACSB、AMBA和EQUIS“三皇冠”权威认证，全球仅有不到1%的商学院获此殊荣，其学位含金量极高，深受国际名企认可。",
     majors: [
       { cn: "商业分析", en: "Bachelor of Business Studies (Honours) (Business Analytics)", duration: "18 months", intake: "April & October", fee: "S$42,837 (payable in 2 instalments)" },
       { cn: "数字商业", en: "Bachelor of Business Studies (Honours) (Digital Business)", duration: "18 months", intake: "April & October", fee: "S$42,837 (payable in 2 instalments)" },
@@ -27,6 +28,7 @@ const UNIVERSITY_DATA = [
   {
     name: "科廷大学(新加坡分校)",
     englishName: "Curtin University Singapore",
+    description: "科廷大学是全球顶尖的1%名校，2025年QS世界排名第174位。新加坡分校作为其直属校区，提供与澳洲主校区完全一致的教学大纲和学位证书。学校以商科、传媒及IT专业见长，教学高度契合行业需求，为学生提供国际化的学习环境及卓越的职业发展前景。",
     majors: [
       { cn: "传播学学士", en: "Bachelor of Communications", duration: "20 months", intake: "February, July, November", fee: "S$46,325 (payable in 2 instalments)" },
       { cn: "信息技术学士", en: "Bachelor of Information Technology", duration: "20 months", intake: "February, July, November", fee: "S$46,325 (payable in 2 instalments)" },
@@ -42,6 +44,7 @@ const UNIVERSITY_DATA = [
   {
     name: "考文垂大学(新加坡校区)",
     englishName: "Coventry University Singapore",
+    description: "考文垂大学是一所极具前瞻性的现代化大学，2025年QS世界排名第531位。其新加坡校区专注于提升学生的就业竞争力，与行业紧密挂钩。课程设计紧跟全球市场脉搏，特别是在工程、计算机及商科领域，通过实践导向的教学模式，助力学生在国际职场中脱颖而出。",
     majors: [
       { cn: "商业与市场营销", en: "Bachelor of Arts with Honours in Business and Marketing", duration: "12-24 months", intake: "March, July, November", fee: "S$28,500" },
       { cn: "会计与金融", en: "Bachelor of Arts with Honours in Accounting and Finance", duration: "12-24 months", intake: "March, July, November", fee: "S$28,500" },
@@ -56,6 +59,7 @@ const UNIVERSITY_DATA = [
   {
     name: "詹姆斯库克大学(新加坡校区)",
     englishName: "James Cook University Singapore",
+    description: "詹姆斯库克大学（JCU）是澳洲顶尖公立大学，2025年QS世界排名第445位。新加坡校区是其首个海外直属分校，也是新加坡第一所获得EduTrust Star最高星级认证的院校。学校在心理学、商科、IT及环境科学领域表现卓越，学位受中外教育部双重认可，学术地位稳固。",
     majors: [
       { cn: "心理学学士", en: "Bachelor of Psychological Science", duration: "24 months", intake: "March, July, November", fee: "S$62,400" },
       { cn: "商业管理学士", en: "Bachelor of Business", duration: "24 months", intake: "March, July, November", fee: "S$60,000" },
@@ -67,6 +71,7 @@ const UNIVERSITY_DATA = [
   {
     name: "东伦敦大学(新加坡校区)",
     englishName: "University of East London Singapore",
+    description: "东伦敦大学（UEL）是一所充满活力的现代化大学，2025年QS世界排名第851-900位。其新加坡校区致力于培养数字经济时代的专业人才，特别是在计算机科学与网络安全领域。学校强调实践学习与行业连接，为学生提供前沿的技能培训，助力其在快速发展的科技领域开启职业生涯。",
     majors: [
       { cn: "计算机科学", en: "Bachelor of Science (Honours) in Computer Science", duration: "12-24 months", intake: "Jan, May, Sep", fee: "S$22,000" },
       { cn: "网络安全与网络", en: "Bachelor of Science (Honours) in Cyber Security and Networks", duration: "12-24 months", intake: "Jan, May, Sep", fee: "S$22,000" },
@@ -76,6 +81,7 @@ const UNIVERSITY_DATA = [
   {
     name: "格林威治大学(新加坡校区)",
     englishName: "University of Greenwich Singapore",
+    description: "格林威治大学拥有悠久的办学历史，2025年QS世界排名第691-700位。其新加坡校区提供优质的商科及酒店管理课程。学校以卓越的教学质量和强有力的行业联系著称，致力于为学生创造支持性的学习环境，通过丰富的实践机会提升学生的专业素养和全球视野。",
     majors: [
       { cn: "商业管理", en: "Bachelor of Arts (Honours) in Business Management", duration: "12-24 months", intake: "Jan, May, Sep", fee: "S$18,500" },
       { cn: "会计与金融", en: "Bachelor of Arts (Honours) in Accounting and Finance", duration: "12-24 months", intake: "Jan, May, Sep", fee: "S$18,500" },
@@ -86,6 +92,7 @@ const UNIVERSITY_DATA = [
   {
     name: "纽卡斯尔大学(新加坡校区)",
     englishName: "The University of Newcastle, Australia",
+    description: "澳洲纽卡斯尔大学是世界一流的研究型大学，2025年QS世界排名第179位。其新加坡校区让学生在亚洲即可获得高质量的澳洲教育。学校在工程、商科及IT领域享有盛誉，教学注重创新与实践，毕业生深受全球雇主青睐，是追求高性价比名校教育的理想选择。",
     majors: [
       { cn: "商学学士 (会计/金融)", en: "Bachelor of Commerce", duration: "12-28 months", intake: "Jan, May, Aug", fee: "S$25,506 - S$51,012" },
       { cn: "商业学士", en: "Bachelor of Business", duration: "12-28 months", intake: "Jan, May, Aug", fee: "S$25,506 - S$51,012" },
@@ -117,16 +124,36 @@ const UniversityModule = () => {
           <button
             key={idx}
             onClick={() => { setActiveUni(idx); setExpandedMajor(null); }}
-            className={`px-6 py-3 rounded-full font-bold transition-all text-[14px] md:text-[16px] whitespace-nowrap shrink-0 ${
+            className={`px-6 py-3 rounded-full font-bold transition-all text-[14px] md:text-[16px] whitespace-nowrap shrink-0 border shadow-sm ${
               activeUni === idx 
-                ? "bg-gold text-blue-900 shadow-lg scale-105" 
-                : "bg-white/10 text-white hover:bg-white/20 border border-white/10"
+                ? "bg-gradient-to-b from-[#ffffff] via-[#d4af37] to-[#8b6508] text-blue-900 border-white/40 shadow-[0_8px_20px_rgba(212,175,55,0.3)] scale-105" 
+                : "bg-gradient-to-b from-[#475569] via-[#1e293b] to-[#0f172a] text-white/60 border-white/5 hover:border-white/20"
             }`}
           >
             {uni.name}
           </button>
         ))}
       </div>
+
+      <motion.div 
+        key={activeUni}
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        className="mb-8 p-6 md:p-8 glass-card rounded-2xl md:rounded-3xl border border-white/10 bg-gradient-to-br from-gold/5 to-transparent"
+      >
+        <div className="flex items-center gap-4 mb-4">
+          <div className="w-10 h-10 md:w-12 md:h-12 bg-gold/20 text-gold rounded-xl flex items-center justify-center border border-gold/30">
+            <Award className="w-6 h-6 md:w-7 md:h-7" />
+          </div>
+          <div>
+            <h4 className="text-[18px] md:text-[22px] font-bold text-white">{UNIVERSITY_DATA[activeUni].name}</h4>
+            <p className="text-gold/60 text-xs md:text-sm font-mono uppercase tracking-widest">{UNIVERSITY_DATA[activeUni].englishName}</p>
+          </div>
+        </div>
+        <p className="text-[15px] md:text-[17px] text-white/80 leading-relaxed font-light">
+          {UNIVERSITY_DATA[activeUni].description}
+        </p>
+      </motion.div>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-2.5 items-start">
         {UNIVERSITY_DATA[activeUni].majors.map((major, idx) => (
@@ -225,7 +252,8 @@ const SectionTitle = ({ title, subtitle }: { title: string, subtitle: string }) 
       initial={{ opacity: 0, x: -20 }}
       whileInView={{ opacity: 1, x: 0 }}
       transition={{ delay: 0.1 }}
-      className="font-display text-[32px] md:text-[48px] font-bold leading-tight text-impact"
+      className="font-display text-[32px] md:text-[42px] font-black leading-tight text-transparent bg-clip-text bg-gradient-to-b from-white via-gold to-gold/80 drop-shadow-[0_10px_10px_rgba(0,0,0,0.4)] filter contrast-125 tracking-tight"
+      style={{ WebkitTextStroke: '1px rgba(255,215,0,0.1)' }}
     >
       {title}
     </motion.h3>
@@ -238,19 +266,24 @@ const FloatingNav = () => {
 
   const navItems = [
     { name: "Home", id: "top" },
-    { name: "TopUni 本科", id: "undergrad-advantages" },
-    { name: "合作院校", id: "global-partners" },
-    { name: "新港本科项目", id: "hk-sg-projects" },
-    { name: "PPAC新加坡本科直入大二", id: "premium-planning" },
-    { name: "新加坡推荐院校", id: "sg-universities" },
+    { name: "全球合作院校", id: "global-partners" },
+    { name: "TopUni本科升学", id: "undergrad-path" },
+    { name: "TopUni硕士升学", id: "masters-path" },
+    { name: "TopUni语言保分", id: "exams-certs" },
+    { name: "新加坡本科直入大二", id: "premium-planning" },
+    { name: "新加坡本科推荐院校", id: "sg-universities" },
     { name: "服务流程", id: "service-flow" },
-    { name: "申请要求", id: "admission-reqs" },
-    { name: "TopUni 硕士", id: "masters-path" },
-    { name: "TopUni保分", id: "exams-certs" },
+    { name: "本科申请要求", id: "admission-reqs" },
+    { name: "费用查询", id: "https://p.topuni.com.cn/", isExternal: true },
     { name: "学生案例", id: "student-cases" },
   ];
 
-  const scrollTo = (id: string) => {
+  const scrollTo = (id: string, isExternal?: boolean) => {
+    if (isExternal) {
+      window.open(id, '_blank');
+      setIsOpen(false);
+      return;
+    }
     const element = document.getElementById(id);
     if (element) {
       element.scrollIntoView({ behavior: 'smooth' });
@@ -278,38 +311,50 @@ const FloatingNav = () => {
       {/* Sidebar */}
       <AnimatePresence>
         {isOpen && (
-          <motion.div
-            initial={{ x: "100%" }}
-            animate={{ x: 0 }}
-            exit={{ x: "100%" }}
-            transition={{ type: "spring", damping: 25, stiffness: 200 }}
-            className="fixed right-0 top-[5%] bottom-[10%] w-[80%] md:w-[55%] z-[90] bg-gradient-to-br from-[#2c3e50] via-[#bdc3c7] to-[#2c3e50] backdrop-blur-3xl border-l border-white/40 shadow-[-30px_0_60px_rgba(0,0,0,0.4)] flex flex-col p-8 md:p-16 overflow-y-auto no-scrollbar rounded-l-[3rem]"
-          >
-            <div className="mb-4 border-b border-blue-950/20 pb-2">
-              <h3 className="font-display text-[24px] md:text-[32px] font-black text-[#1a2a3a] tracking-tighter">
-                导航 Navigation
+          <>
+            {/* Overlay for clicking outside */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setIsOpen(false)}
+              className="fixed inset-0 z-[85] bg-black/20 backdrop-blur-[2px]"
+            />
+            <motion.div
+              initial={{ x: "100%" }}
+              animate={{ x: 0 }}
+              exit={{ x: "100%" }}
+              transition={{ type: "spring", damping: 25, stiffness: 200 }}
+              className="fixed right-0 top-[5%] bottom-[10%] w-[80%] md:w-[55%] z-[90] bg-gradient-to-br from-[#2c3e50] via-[#bdc3c7] to-[#2c3e50] backdrop-blur-3xl border-l border-white/40 shadow-[-30px_0_60px_rgba(0,0,0,0.4)] flex flex-col p-8 md:p-16 overflow-y-auto no-scrollbar rounded-l-[3rem]"
+            >
+            <div className="mb-2 border-b border-blue-950/20 pb-2 pt-2 md:pt-4">
+              <h3 className="font-display text-[24px] md:text-[32px] font-black text-[#1a2a3a] tracking-tighter flex flex-col">
+                导航
+                <span className="text-[12px] md:text-[14px] text-[#1a2a3a]/40 uppercase tracking-[0.2em] font-bold -mt-1">Navigation</span>
               </h3>
             </div>
-            <div className="flex flex-col gap-1 md:gap-2">
+            <div className="flex flex-col gap-0.5 md:gap-1">
               {navItems.map((item, idx) => (
                 <motion.button
                   key={idx}
-                  onClick={() => scrollTo(item.id)}
+                  onClick={() => scrollTo(item.id, item.isExternal)}
                   initial={{ opacity: 0, x: 20 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: idx * 0.05 }}
                   className="text-left group flex items-center gap-4 py-1"
                 >
                   <div className="w-2 h-2 rounded-full bg-[#1a2a3a]/20 group-hover:bg-[#1a2a3a] transition-all group-hover:scale-125 shadow-[0_0_10px_rgba(0,0,0,0)] group-hover:shadow-[0_0_15px_rgba(0,0,0,0.3)]"></div>
-                  <span className="text-[18px] md:text-[24px] font-display font-bold text-[#1a2a3a]/80 group-hover:text-[#1a2a3a] group-hover:translate-x-2 transition-all tracking-tight">
+                  <span className="text-[16px] md:text-[22px] font-display font-bold text-[#1a2a3a]/80 group-hover:text-[#1a2a3a] group-hover:translate-x-2 transition-all tracking-tight flex items-center gap-2">
                     {item.name}
+                    {item.isExternal && <ExternalLink size={14} className="opacity-50 group-hover:opacity-100 transition-opacity" />}
                   </span>
                 </motion.button>
               ))}
             </div>
           </motion.div>
-        )}
-      </AnimatePresence>
+        </>
+      )}
+    </AnimatePresence>
     </>
   );
 };
@@ -468,195 +513,6 @@ export default function App() {
         </div>
       </Slide>
 
-      {/* Slide: Hot Undergraduate Direct Entry */}
-      <Slide id="hk-sg-projects" accentColor="#0ea5e9" className="!py-5 md:!py-5">
-        <div className="max-w-6xl mx-auto">
-          <SectionTitle title="新港热门本科直通项目" subtitle="热门项目 / Hot Projects" />
-          <motion.p 
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            className="text-[18px] md:text-[22px] text-white/90 leading-relaxed font-light"
-          >
-            香港和新加坡作为主流热门留学目标选择，我们推出PPAC精英规划学术课程，针对<span className="text-gold font-bold">高二</span>在读及以上的学生，通过在线灵活学习完成后入读世界名校新加坡校区，如<span className="text-white font-bold">爱尔兰都柏林大学新加坡校区</span>QS118名，<span className="text-white font-bold">科廷大学新加坡分校</span>QS170名，<span className="text-white font-bold">英国考文垂大学新加坡校区</span>，<span className="text-gold font-bold">100%减免120学分</span>直接入读本科大二，<span className="text-gold font-bold">最快1.5年</span>本科毕业，节省一年的海外学费和生活费<span className="text-gold font-bold">至少25万</span>。有意向赴香港的学生，可选择多所知名学府，如<span className="text-white font-bold">岭南大学、都会大学、树仁大学、香港高等教育科技学院</span>等。
-          </motion.p>
-        </div>
-      </Slide>
-
-      {/* Slide 1: Hero */}
-      <Slide id="premium-planning" className="relative" accentColor="#0ea5e9">
-        <div className="absolute inset-0 opacity-5 mix-blend-overlay">
-          <img src="https://images.unsplash.com/photo-1541339907198-e08756ebafe1?auto=format&fit=crop&q=80&w=2000" className="w-full h-full object-cover" referrerPolicy="no-referrer" />
-        </div>
-        <motion.div 
-          initial={{ opacity: 0, y: 30 }} 
-          animate={{ opacity: 1, y: 0 }} 
-          transition={{ duration: 0.8 }}
-          className="relative z-10 text-center max-w-5xl mx-auto"
-        >
-          <h1 className="font-display text-[48px] md:text-[84px] font-black leading-[1.1] md:leading-[1] mb-2 text-impact">
-            精英卓越规划<br/>
-            <span className="text-[36px] md:text-[64px] font-bold opacity-90">国际本科升学课程</span>
-          </h1>
-          <div className="font-display italic text-white text-[24px] md:text-[32px] mb-4 tracking-widest uppercase font-light">Premium Planning Academic Curriculum</div>
-          <p className="text-[16px] md:text-[22px] text-white/80 max-w-4xl mx-auto mb-16 leading-relaxed font-light tracking-wide">
-            基于全球认证资历框架一站式国际升学课程<br/>
-            <span className="font-medium text-white">注重培养综合学术能力与思维素养，助力直升世界名校本科</span>
-          </p>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-12 border-t border-white/10 pt-12">
-            {[["3-9个月", "快速完成课程"], ["免语言", "无需另考IELTS"], ["120学分", "国际广泛认可"], ["100%", "名校升学衔接"]].map(([v, t], i) => (
-              <motion.div 
-                key={i} 
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.4 + i * 0.1 }}
-                className="text-center"
-              >
-                <div className="font-display text-[32px] md:text-[52px] font-bold text-impact mb-2">{v}</div>
-                <div className="text-[10px] md:text-[12px] text-white/50 uppercase tracking-[0.2em] md:tracking-[0.3em] font-semibold">{t}</div>
-              </motion.div>
-            ))}
-          </div>
-        </motion.div>
-      </Slide>
-
-      {/* New Slide: Core Value */}
-      <Slide accentColor="#0ea5e9">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-center">
-          <div>
-            <SectionTitle title="快、准、稳、省" subtitle="核心价值 / Core Value" />
-            <p className="text-white/90 text-[18px] md:text-[24px] leading-relaxed mb-4 md:mb-8 font-medium">
-              高中在读期间学习本课程，完成后即可赴新加坡诸多名校学习本科。
-            </p>
-            <div className="space-y-3 md:space-y-6">
-              {[
-                "免语言入学要求，减免最多120学分直入大二，最快1.5年本科毕业",
-                "18岁入读本科，19.5岁毕业，21岁研究生毕业！",
-                "节省至少25万费用（省掉大一学费和生活费）",
-                "精准指定即录取，无需多选、不赌概率。"
-              ].map((text, i) => (
-                <motion.div 
-                  key={i}
-                  initial={{ opacity: 0, x: -20 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  transition={{ delay: i * 0.1 }}
-                  className="flex items-start gap-2 md:gap-4"
-                >
-                  <div className="w-5 h-5 md:w-8 md:h-8 rounded-full bg-cyan-400/20 flex items-center justify-center border border-cyan-400/30 shrink-0 mt-0.5 md:mt-1">
-                    <Zap size={12} className="text-gold md:w-[18px] md:h-[18px]" />
-                  </div>
-                  <span className="text-[16px] md:text-[20px] text-white/80 leading-snug">{text}</span>
-                </motion.div>
-              ))}
-            </div>
-          </div>
-          <div className="relative">
-            <div className="grid grid-cols-2 gap-3 md:gap-6">
-              <motion.div 
-                whileHover={{ y: -10 }}
-                className="col-span-2 glass-card p-5 md:p-10 rounded-[1.5rem] md:rounded-[2.5rem] border-cyan-400/20 relative overflow-hidden group"
-              >
-                <div className="absolute -right-10 -bottom-10 w-24 md:w-40 h-24 md:h-40 bg-cyan-400/10 rounded-full blur-2xl md:blur-3xl group-hover:bg-cyan-400/20 transition-colors"></div>
-                <div className="relative z-10">
-                  <div className="text-[34px] md:text-[50px] font-black text-impact leading-none mb-1 md:mb-2">1.5年</div>
-                  <div className="text-gold text-[10px] md:text-[11px] uppercase tracking-[0.3em] font-bold">最快本科毕业</div>
-                  <p className="text-white/40 text-[8px] md:text-[9px] mt-2 md:mt-4 font-light">大幅缩短学制，抢占职场先机</p>
-                </div>
-              </motion.div>
-              
-              <motion.div 
-                whileHover={{ y: -10 }}
-                className="glass-card p-4 md:p-8 rounded-[1.2rem] md:rounded-[2rem] border-white/10"
-              >
-                <div className="text-[22px] md:text-[29px] font-black text-impact mb-0.5 md:mb-1">21岁</div>
-                <div className="text-white/60 text-[8px] md:text-[9px] uppercase tracking-widest font-medium">研究生毕业</div>
-              </motion.div>
-              
-              <motion.div 
-                whileHover={{ y: -10 }}
-                className="glass-card p-4 md:p-8 rounded-[1.2rem] md:rounded-[2rem] border-white/10"
-              >
-                <div className="text-[22px] md:text-[29px] font-black text-impact mb-0.5 md:mb-1">25万+</div>
-                <div className="text-white/60 text-[8px] md:text-[9px] uppercase tracking-widest font-medium">节省留学费用</div>
-              </motion.div>
-            </div>
-          </div>
-        </div>
-      </Slide>
-
-      {/* Slide 2: Introduction */}
-      <Slide id="ppac-intro" accentColor="#38bdf8">
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-12 md:gap-16 items-center">
-          <div className="col-span-1 md:col-span-5">
-            <div className="mb-10">
-              <motion.h2 
-                initial={{ opacity: 0, x: -20 }}
-                whileInView={{ opacity: 0.8, x: 0 }}
-                className="font-display text-gold italic text-[18px] md:text-[20px] mb-2 tracking-[0.2em] uppercase font-bold"
-              >
-                项目介绍 / Project Introduction
-              </motion.h2>
-              <motion.h3 
-                initial={{ opacity: 0, x: -20 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                transition={{ delay: 0.1 }}
-                className="font-display text-[32px] md:text-[42px] font-black leading-tight text-transparent bg-clip-text bg-gradient-to-b from-white via-gold to-gold/80 drop-shadow-[0_10px_10px_rgba(0,0,0,0.4)] filter contrast-125 tracking-tight"
-                style={{ WebkitTextStroke: '1px rgba(255,215,0,0.1)' }}
-              >
-                什么是 PPAC 国际升学课程？
-              </motion.h3>
-              <div className="w-20 h-1 bg-gold/50 mt-4 rounded-full"></div>
-            </div>
-            <p className="text-white/80 text-[18px] md:text-[20px] leading-relaxed mb-6 md:mb-10 font-light">
-              PPAC 是一项基于全球认证资历框架的一站式国际升学课程。通过“认证课程+学术技能+实践训练”的三维框架，致力于帮助学生在获得权威文凭的同时，全面发展在英语学术环境中所必需的核心竞争力。
-            </p>
-            <div className="space-y-3 md:space-y-6">
-              {[
-                "系统性学习商业管理核心知识 (Global Qualification)",
-                "完成可获得国际广泛认可的 120 学分文凭",
-                "为学生升学提供有力的学术资质支持"
-              ].map((t, i) => (
-                <motion.div 
-                  key={i} 
-                  initial={{ opacity: 0, x: -20 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  transition={{ delay: i * 0.1 }}
-                  className="flex items-center gap-2 md:gap-4 text-[16px] md:text-[18px] font-medium text-white/90"
-                >
-                  <div className="w-5 h-5 md:w-8 md:h-8 rounded-full bg-white/10 flex items-center justify-center border border-white/20">
-                    <CheckCircle2 size={12} className="text-gold md:w-[18px] md:h-[18px]" />
-                  </div>
-                  <span>{t}</span>
-                </motion.div>
-              ))}
-            </div>
-          </div>
-          <div className="col-span-1 md:col-span-7 grid grid-cols-2 md:grid-cols-4 gap-2 md:gap-4">
-            {[
-              { t: "学术写作", d: "训练英文学术规范，提升文献综述与论文撰写能力。", i: <BookOpen className="w-4 h-4 md:w-6 md:h-6" /> },
-              { t: "学术英语", d: "强化英语学术表达，适应全英文高等教育教学环境。", i: <Languages className="w-4 h-4 md:w-6 md:h-6" /> },
-              { t: "分析与洞察", d: "掌握商业数据分析方法，培养敏锐的市场洞察力。", i: <BarChart3 className="w-4 h-4 md:w-6 md:h-6" /> },
-              { t: "协作与洞察", d: "强化团队协作能力，通过案例研讨洞察商业本质。", i: <Users className="w-4 h-4 md:w-6 md:h-6" /> },
-              { t: "实用计算机技能", d: "掌握高效办公与科研工具，提升数字化时代竞争力。", i: <Monitor className="w-4 h-4 md:w-6 md:h-6" /> },
-              { t: "批判性思维", d: "建立严谨逻辑体系，培养独立思考与问题解决能力。", i: <Brain className="w-4 h-4 md:w-6 md:h-6" /> },
-              { t: "学术工作坊", d: "定制化课题研讨，模拟学术演讲，提升综合素养。", i: <Lightbulb className="w-4 h-4 md:w-6 md:h-6" /> },
-              { t: "本科专业复盘课", d: "优秀学长学姐分享，助力入学后GPA管理与规划。", i: <GraduationCap className="w-4 h-4 md:w-6 md:h-6" /> }
-            ].map((m, i) => (
-              <div key={i} className="p-3 md:p-5 glass-card rounded-lg md:rounded-2xl flex flex-col items-center text-center">
-                <div className="text-gold mb-2 md:mb-4">{m.i}</div>
-                <h4 className="font-display text-[13px] md:text-[16px] font-bold text-white mb-1 md:mb-2">{m.t}</h4>
-                <p className="text-[10px] md:text-[12px] text-white/60 leading-tight font-light">{m.d}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </Slide>
-
-      {/* Slide 3: Advantages (REMOVED FROM HERE) */}
-
-
-      {/* Singapore Recommended Universities Module */}
-      <UniversityModule />
-
       {/* Slide 4: Faculty */}
       <Slide accentColor="#1e40af">
         <SectionTitle title="顶尖名校教授领衔指导" subtitle="师资力量 / World-Class Faculty" />
@@ -666,7 +522,7 @@ export default function App() {
             { n: "Samuel Kunes", s: "哈佛大学", t: "分子与细胞生物学教授" },
             { n: "John Emerson", s: "耶鲁大学", t: "统计和数据科学教授" },
             { n: "Manolis Kellis", s: "麻省理工学院", t: "计算机体系终身教授" },
-            { n: "Pradeep Ravikumar", s: "卡内基梅隆大学", t: "计算机科学教授" },
+            { n: "Pradeep Ravikumar", s: "卡内基萌隆大学", t: "计算机科学教授" },
             { n: "Ronaldo Borja", s: "斯坦福大学", t: "土木工程终身教授" },
             { n: "Nemit Shroff", s: "麻省理工学院", t: "终身教授" },
             { n: "Alexander Ploss", s: "普林斯顿大学", t: "分子生物学教授" },
@@ -749,6 +605,251 @@ export default function App() {
           </div>
         </div>
       </Slide>
+
+      {/* New Slide: TopUni Undergraduate Path */}
+      <Slide id="undergrad-path" accentColor="#0ea5e9">
+        <div className="max-w-6xl mx-auto">
+          <SectionTitle title="" subtitle="本科升学规划 / Undergraduate Degree Planning" />
+          
+          <div className="mb-12">
+            <motion.h4 
+              initial={{ opacity: 0, x: -20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              className="font-display text-[36px] md:text-[46px] font-black mb-6 text-transparent bg-clip-text bg-gradient-to-b from-white via-gold to-gold/80 drop-shadow-[0_10px_10px_rgba(0,0,0,0.4)] filter contrast-125 tracking-tight"
+              style={{ WebkitTextStroke: '1px rgba(255,215,0,0.1)' }}
+            >
+              TopUni 本科升学路径
+            </motion.h4>
+            <motion.p 
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              className="text-[18px] md:text-[22px] text-white/90 leading-relaxed font-light mb-8"
+            >
+              TopUni 为广大学子提供全维度、多元化的本科升学路径解决方案，覆盖不同学业基础、升学需求与家庭预算的学生群体，助力学子精准锁定适配赛道，圆梦理想本科院校。
+            </motion.p>
+            <motion.p 
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.1 }}
+              className="text-[16px] md:text-[18px] text-white/70 leading-relaxed font-light mb-6"
+            >
+              我们搭建双轨并行的升学体系：一方面深耕体制内高考升学赛道，以高考成绩为核心，提供志愿填报精准规划、海内外院校高考直申全流程服务，对标国内优质本科与全球知名院校；另一方面打造国际标化考试升学体系，围绕雅思、托福、A-Level、AP 等主流标化考试，提供定制化备考与申请规划，无缝衔接世界顶尖大学本科项目。
+            </motion.p>
+            <motion.p 
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.2 }}
+              className="text-[16px] md:text-[18px] text-white/70 leading-relaxed font-light"
+            >
+              同时我们布局教育部备案的正规国内联合办学项目，涵盖 4+0、2+2、3+1 等多元培养模式，满足学生差异化就读需求。我们始终坚持 “规划先行” 的升学理念，以筛选高性价比、高适配度的本科升学方案为核心宗旨，为学生的本科升学之路全程保驾护航。
+            </motion.p>
+          </div>
+
+          <div className="grid grid-cols-3 md:grid-cols-3 gap-2 md:gap-6 mb-16">
+            {[
+              { t: "打破信息差", d: "深度解析全球名校录取规则，消除升学盲区。", i: <Search className="w-4 h-4 md:w-6 md:h-6" /> },
+              { t: "最优性价比", d: "量身定制高适配方案，实现教育投资价值最大化。", i: <Zap className="w-4 h-4 md:w-6 md:h-6" /> },
+              { t: "陪跑到目的地", d: "全流程管家式服务，从规划到录取全程护航。", i: <Users className="w-4 h-4 md:w-6 md:h-6" /> }
+            ].map((item, i) => (
+              <motion.div 
+                key={i}
+                whileHover={{ y: -5 }}
+                className="p-3 md:p-8 glass-card rounded-xl md:rounded-3xl border-t-2 border-gold/30 bg-gradient-to-br from-gold/5 to-transparent text-center"
+              >
+                <div className="w-8 h-8 md:w-16 md:h-16 bg-gold/20 rounded-lg md:rounded-2xl flex items-center justify-center text-gold mx-auto mb-3 md:mb-6 border border-gold/30">
+                  {item.i}
+                </div>
+                <h5 className="text-white font-bold text-[14px] md:text-2xl mb-1 md:mb-4">{item.t}</h5>
+                <p className="text-white/60 text-[10px] md:text-sm leading-tight md:leading-relaxed">{item.d}</p>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </Slide>
+
+      {/* Slide 2: Introduction */}
+      <Slide id="premium-planning" className="relative" accentColor="#0ea5e9">
+        <div className="absolute inset-0 opacity-5 mix-blend-overlay">
+          <img src="https://images.unsplash.com/photo-1541339907198-e08756ebafe1?auto=format&fit=crop&q=80&w=2000" className="w-full h-full object-cover" referrerPolicy="no-referrer" />
+        </div>
+        <motion.div 
+          initial={{ opacity: 0, y: 30 }} 
+          animate={{ opacity: 1, y: 0 }} 
+          transition={{ duration: 0.8 }}
+          className="relative z-10 text-center max-w-5xl mx-auto"
+        >
+          <h1 className="font-display text-[48px] md:text-[84px] font-black leading-[1.1] md:leading-[1] mb-2 text-impact">
+            精英卓越规划<br/>
+            <span className="text-[36px] md:text-[64px] font-bold opacity-90">国际本科升学课程</span>
+          </h1>
+          <div className="font-display italic text-transparent bg-clip-text bg-gradient-to-b from-[#b8860b] via-[#d4af37] to-[#8b6508] text-[24px] md:text-[32px] mb-4 tracking-widest uppercase font-bold drop-shadow-sm">Premium Planning Academic Curriculum</div>
+          <p className="text-[16px] md:text-[22px] text-white/80 max-w-4xl mx-auto mb-16 leading-relaxed font-light tracking-wide">
+            基于全球认证资历框架一站式国际升学课程<br/>
+            <span className="font-medium text-white">注重培养综合学术能力与思维素养，助力直升世界名校本科</span>
+          </p>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-12 border-t border-white/10 pt-12">
+            {[["3-9个月", "快速完成课程"], ["免语言", "无需另考IELTS"], ["120学分", "国际广泛认可"], ["100%", "名校升学衔接"]].map(([v, t], i) => (
+              <motion.div 
+                key={i} 
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.4 + i * 0.1 }}
+                className="text-center"
+              >
+                <div className="font-display text-[32px] md:text-[52px] font-bold text-impact mb-2">{v}</div>
+                <div className="text-[10px] md:text-[12px] text-white/50 uppercase tracking-[0.2em] md:tracking-[0.3em] font-semibold">{t}</div>
+              </motion.div>
+            ))}
+          </div>
+        </motion.div>
+      </Slide>
+
+      {/* New Slide: Core Value */}
+      <Slide accentColor="#0ea5e9">
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-16 items-center">
+          <div className="md:col-span-8">
+            <SectionTitle title="快、准、稳、省" subtitle="核心价值 / Core Value" />
+            <div className="mb-6">
+              <h4 className="font-display text-gold font-bold text-[20px] md:text-[28px] mb-3">新港热门本科直通项目</h4>
+              <p className="text-white/70 text-[14px] md:text-[16px] leading-relaxed font-light">
+                香港和新加坡作为主流热门留学目标选择，我们推出PPAC精英规划学术课程，针对高二在读及以上的学生，通过在线灵活学习完成后入读世界名校新加坡校区，如爱尔兰都柏林大学新加坡校区QS118名，科廷大学新加坡分校QS170名，英国考文垂大学新加坡校区。有意向赴香港的学生，可选择多所知名学府，如岭南大学、都会大学、树仁大学、香港高等教育科技学院等。
+              </p>
+            </div>
+            <p className="text-white/90 text-[18px] md:text-[24px] leading-relaxed mb-4 md:mb-8 font-medium">
+              高中在读期间学习本课程，完成后即可赴新加坡诸多名校学习本科。
+            </p>
+            <div className="space-y-3 md:space-y-6">
+              {[
+                "免语言入学要求，减免最多120学分直入大二，最快1.5年本科毕业",
+                "18岁入读本科，19.5岁毕业，21岁研究生毕业！",
+                "节省至少25万费用（省掉大一学费和生活费）",
+                "精准指定即录取，无需多选、不赌概率。"
+              ].map((text, i) => (
+                <motion.div 
+                  key={i}
+                  initial={{ opacity: 0, x: -20 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  transition={{ delay: i * 0.1 }}
+                  className="flex items-start gap-2 md:gap-4"
+                >
+                  <div className="w-5 h-5 md:w-8 md:h-8 rounded-full bg-cyan-400/20 flex items-center justify-center border border-cyan-400/30 shrink-0 mt-0.5 md:mt-1">
+                    <Zap size={12} className="text-gold md:w-[18px] md:h-[18px]" />
+                  </div>
+                  <span className="text-[16px] md:text-[20px] text-white/80 leading-snug">{text}</span>
+                </motion.div>
+              ))}
+            </div>
+          </div>
+          <div className="md:col-span-4 relative">
+            <div className="grid grid-cols-3 md:grid-cols-1 gap-2 md:gap-6">
+              <motion.div 
+                whileHover={{ y: -10 }}
+                className="glass-card p-3 md:p-10 rounded-xl md:rounded-[2.5rem] border-cyan-400/20 relative overflow-hidden group flex flex-col justify-center"
+              >
+                <div className="absolute -right-10 -bottom-10 w-24 md:w-40 h-24 md:h-40 bg-cyan-400/10 rounded-full blur-2xl md:blur-3xl group-hover:bg-cyan-400/20 transition-colors"></div>
+                <div className="relative z-10">
+                  <div className="text-[20px] md:text-[50px] font-black text-impact leading-none mb-1 md:mb-2 text-center md:text-left">1.5年</div>
+                  <div className="text-gold text-[8px] md:text-[11px] uppercase tracking-[0.1em] md:tracking-[0.3em] font-bold text-center md:text-left">最快本科毕业</div>
+                </div>
+              </motion.div>
+              
+              <motion.div 
+                whileHover={{ y: -10 }}
+                className="glass-card p-3 md:p-8 rounded-xl md:rounded-[2rem] border-white/10 flex flex-col justify-center"
+              >
+                <div className="text-[20px] md:text-[29px] font-black text-impact mb-0.5 md:mb-1 text-center md:text-left">21岁</div>
+                <div className="text-white/60 text-[8px] md:text-[9px] uppercase tracking-widest font-medium text-center md:text-left">研究生毕业</div>
+              </motion.div>
+              
+              <motion.div 
+                whileHover={{ y: -10 }}
+                className="glass-card p-3 md:p-8 rounded-xl md:rounded-[2rem] border-white/10 flex flex-col justify-center"
+              >
+                <div className="text-[20px] md:text-[29px] font-black text-impact mb-0.5 md:mb-1 text-center md:text-left">25万+</div>
+                <div className="text-white/60 text-[8px] md:text-[9px] uppercase tracking-widest font-medium text-center md:text-left">节省留学费用</div>
+              </motion.div>
+            </div>
+          </div>
+        </div>
+      </Slide>
+
+      {/* Slide 2: Introduction */}
+      <Slide id="ppac-intro" accentColor="#38bdf8">
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-12 md:gap-16 items-center">
+          <div className="col-span-1 md:col-span-5">
+            <div className="mb-10">
+              <motion.h2 
+                initial={{ opacity: 0, x: -20 }}
+                whileInView={{ opacity: 0.8, x: 0 }}
+                className="font-display text-gold italic text-[18px] md:text-[20px] mb-2 tracking-[0.2em] uppercase font-bold"
+              >
+                项目介绍 / Project Introduction
+              </motion.h2>
+              <motion.h3 
+                initial={{ opacity: 0, x: -20 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                transition={{ delay: 0.1 }}
+                className="font-display text-[32px] md:text-[42px] font-black leading-tight text-transparent bg-clip-text bg-gradient-to-b from-white via-gold to-gold/80 drop-shadow-[0_10px_10px_rgba(0,0,0,0.4)] filter contrast-125 tracking-tight"
+                style={{ WebkitTextStroke: '1px rgba(255,215,0,0.1)' }}
+              >
+                什么是 PPAC 国际升学课程？
+              </motion.h3>
+              <div className="w-20 h-1 bg-gold/50 mt-4 rounded-full"></div>
+            </div>
+            <p className="text-white/80 text-[18px] md:text-[20px] leading-relaxed mb-6 md:mb-10 font-light">
+              PPAC 是一项基于全球认证资历框架的一站式国际升学课程。通过“认证课程+学术技能+实践训练”的三维框架，致力于帮助学生在获得权威文凭的同时，全面发展在英语学术环境中所必需的核心竞争力。
+            </p>
+            <div className="space-y-3 md:space-y-6">
+              {[
+                "系统性学习商业管理核心知识 (Global Qualification)",
+                "完成可获得国际广泛认可的 120 学分文凭",
+                "为学生升学提供有力的学术资质支持"
+              ].map((t, i) => (
+                <motion.div 
+                  key={i} 
+                  initial={{ opacity: 0, x: -20 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  transition={{ delay: i * 0.1 }}
+                  className="flex items-center gap-2 md:gap-4 text-[16px] md:text-[18px] font-medium text-white/90"
+                >
+                  <div className="w-5 h-5 md:w-8 md:h-8 rounded-full bg-white/10 flex items-center justify-center border border-white/20">
+                    <CheckCircle2 size={12} className="text-gold md:w-[18px] md:h-[18px]" />
+                  </div>
+                  <span>{t}</span>
+                </motion.div>
+              ))}
+            </div>
+          </div>
+          <div className="col-span-1 md:col-span-7 grid grid-cols-2 md:grid-cols-4 gap-2 md:gap-4">
+            {[
+              { t: "学术写作", d: "训练英文学术规范，提升文献综述与论文撰写能力。", i: <BookOpen className="w-4 h-4 md:w-6 md:h-6" /> },
+              { t: "学术英语", d: "强化英语学术表达，适应全英文高等教育教学环境。", i: <Languages className="w-4 h-4 md:w-6 md:h-6" /> },
+              { t: "分析与洞察", d: "掌握商业数据分析方法，培养敏锐的市场洞察力。", i: <BarChart3 className="w-4 h-4 md:w-6 md:h-6" /> },
+              { t: "协作与洞察", d: "强化团队协作能力，通过案例研讨洞察商业本质。", i: <Users className="w-4 h-4 md:w-6 md:h-6" /> },
+              { t: "实用计算机技能", d: "掌握高效办公与科研工具，提升数字化时代竞争力。", i: <Monitor className="w-4 h-4 md:w-6 md:h-6" /> },
+              { t: "批判性思维", d: "建立严谨逻辑体系，培养独立思考与问题解决能力。", i: <Brain className="w-4 h-4 md:w-6 md:h-6" /> },
+              { t: "学术工作坊", d: "定制化课题研讨，模拟学术演讲，提升综合素养。", i: <Lightbulb className="w-4 h-4 md:w-6 md:h-6" /> },
+              { t: "本科专业复盘课", d: "优秀学长学姐分享，助力入学后GPA管理与规划。", i: <GraduationCap className="w-4 h-4 md:w-6 md:h-6" /> }
+            ].map((m, i) => (
+              <div key={i} className="p-3 md:p-5 glass-card rounded-lg md:rounded-2xl flex flex-col items-center text-center">
+                <div className="text-gold mb-2 md:mb-4">{m.i}</div>
+                <h4 className="font-display text-[13px] md:text-[16px] font-bold text-white mb-1 md:mb-2">{m.t}</h4>
+                <p className="text-[10px] md:text-[12px] text-white/60 leading-tight font-light">{m.d}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </Slide>
+
+      {/* Slide 3: Advantages (REMOVED FROM HERE) */}
+
+
+      {/* Singapore Recommended Universities Module */}
+      <UniversityModule />
+
+      {/* Slide 4: Faculty (MOVED) */}
+
+      {/* Slide 5: Curriculum Details (MOVED) */}
 
       {/* Slide 6: Service & Requirements */}
       <Slide id="service-reqs" accentColor="#0ea5e9">
@@ -1076,6 +1177,11 @@ export default function App() {
               <div className="w-16 h-16 md:w-20 md:h-20 glass-card rounded-full flex items-center justify-center border-white/20 shadow-2xl group-hover:scale-110 transition-transform"><Globe size={32} className="text-gold" /></div>
               <span className="tracking-widest">www.topuni.com.cn</span>
             </a>
+          </div>
+          <div className="mt-20 md:mt-32 pb-8 text-center">
+            <p className="text-[10px] md:text-[12px] text-white/30 font-light tracking-widest">
+              © 2026 TopUni Global Academy All rights Reserved. &nbsp;&nbsp; 鄂ICP备2026009611号
+            </p>
           </div>
         </div>
       </Slide>
