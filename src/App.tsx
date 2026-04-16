@@ -101,6 +101,17 @@ const UNIVERSITY_DATA = [
       { cn: "电气与电子工程 (荣誉)", en: "Bachelor of Engineering (Honours) (Electrical and Electronic)", duration: "24-48 months", intake: "Jan, May, Aug", fee: "S$40,000+" },
       { cn: "机械工程 (荣誉)", en: "Bachelor of Engineering (Honours) (Mechanical)", duration: "24-48 months", intake: "Jan, May, Aug", fee: "S$40,000+" },
     ]
+  },
+  {
+    name: "伯明翰大学(新加坡校区)",
+    englishName: "University of Birmingham Singapore",
+    description: "伯明翰大学（University of Birmingham）是英国老牌名校，“红砖大学”之一，位列2025年QS世界大学排名第80位。新加坡校区通过与SIM全球教育合作，提供原汁原味的英国名校教育。其商学院获得AACSB、AMBA及EQUIS三重认证，学术地位举世公认。新加坡校区的毕业生由英国校区直接授予学位，在新加坡即可享受世界级名校的优质教育资源，是中国教育部留服中心认证的高含金量名校。",
+    majors: [
+      { cn: "会计与金融", en: "BSc (Hons) Accounting and Finance", duration: "24 months", intake: "July & October", fee: "S$41,200" },
+      { cn: "商业管理", en: "BSc (Hons) Business Management", duration: "24 months", intake: "July & October", fee: "S$41,200" },
+      { cn: "商业管理与传播", en: "BSc (Hons) Business Management with Communications", duration: "24 months", intake: "July & October", fee: "S$41,200" },
+      { cn: "国际商务", en: "BSc (Hons) International Business", duration: "24 months", intake: "July & October", fee: "S$44,145" },
+    ]
   }
 ];
 
@@ -270,7 +281,8 @@ const FloatingNav = () => {
     { name: "TopUni本科升学", id: "undergrad-path" },
     { name: "TopUni硕士升学", id: "masters-path" },
     { name: "TopUni语言保分", id: "exams-certs" },
-    { name: "新加坡本科直入大二", id: "premium-planning" },
+    { name: "高中升本科大二(新加坡)", id: "premium-planning" },
+    { name: "初中毕业直升本科(新加坡)", id: "junior-undergrad-path" },
     { name: "新加坡本科推荐院校", id: "sg-universities" },
     { name: "服务流程", id: "service-flow" },
     { name: "本科申请要求", id: "admission-reqs" },
@@ -843,6 +855,102 @@ export default function App() {
 
       {/* Slide 3: Advantages (REMOVED FROM HERE) */}
 
+
+      {/* New Slide: Premium Planning Academic Curriculum */}
+      <Slide id="junior-undergrad-path" accentColor="#0ea5e9">
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-16 items-center">
+          <div className="md:col-span-8">
+            <SectionTitle title="初中毕业直升本科" subtitle="Academic Curriculum" />
+            <div className="mb-6">
+              <h4 className="font-display italic text-transparent bg-clip-text bg-gradient-to-b from-[#b8860b] via-[#d4af37] to-[#8b6508] font-black text-[24px] md:text-[32px] mb-3 tracking-wider uppercase drop-shadow-sm">Premium Planning</h4>
+              <div className="space-y-3 md:space-y-6">
+                {[
+                  { label: "学制", value: "3个月国内+6个月新加坡" },
+                  { label: "对象", value: "年满16周岁，英文基础良好" },
+                  { label: "优势", value: "中英双语教学，无需考雅思，100%升入本科" }
+                ].map((item, i) => (
+                  <motion.div 
+                    key={i}
+                    initial={{ opacity: 0, x: -20 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    transition={{ delay: i * 0.1 }}
+                    className="flex items-start gap-2 md:gap-4"
+                  >
+                    <div className="w-5 h-5 md:w-8 md:h-8 rounded-full bg-cyan-400/20 flex items-center justify-center border border-cyan-400/30 shrink-0 mt-0.5 md:mt-1">
+                      <Zap size={12} className="text-gold md:w-[18px] md:h-[18px]" />
+                    </div>
+                    <span className="text-[16px] md:text-[20px] text-white/80 leading-snug">
+                      <span className="text-gold font-bold mr-2">{item.label}：</span>{item.value}
+                    </span>
+                  </motion.div>
+                ))}
+              </div>
+            </div>
+
+            <div className="mt-8">
+              <h5 className="font-display text-white font-bold text-[18px] md:text-[22px] mb-4 flex items-center gap-3">
+                <div className="w-8 h-[2px] bg-gold"></div>
+                升学院校 (新加坡校区，学制 2-2.5年)
+              </h5>
+              <div className="grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-4">
+                {[
+                  { n: "伯明翰大学", r: "QS76" },
+                  { n: "都柏林大学学院", r: "QS118" },
+                  { n: "科廷大学", r: "QS170" },
+                  { n: "考文垂大学", r: "QS541" },
+                  { n: "格林威治大学", r: "QS630" },
+                  { n: "皇家墨尔本理工", r: "QS125" }
+                ].map((u, i) => (
+                  <motion.div 
+                    key={i}
+                    initial={{ opacity: 0, scale: 0.9 }}
+                    whileInView={{ opacity: 1, scale: 1 }}
+                    transition={{ delay: i * 0.05 }}
+                    className="glass-card p-3 md:p-4 rounded-xl border border-white/5 flex flex-col justify-center hover:border-gold/30 transition-all group"
+                  >
+                    <div className="text-white text-[14px] md:text-[16px] font-bold group-hover:text-gold transition-colors">{u.n}</div>
+                    <div className="text-gold font-mono text-[10px] md:text-[12px] opacity-80">{u.r}</div>
+                  </motion.div>
+                ))}
+              </div>
+            </div>
+          </div>
+
+          <div className="md:col-span-4 relative">
+            <div className="grid grid-cols-3 md:grid-cols-1 gap-2 md:gap-6">
+              <motion.div 
+                whileHover={{ y: -10 }}
+                className="glass-card p-3 md:p-10 rounded-xl md:rounded-[2.5rem] border-gold/20 relative overflow-hidden group flex flex-col justify-center"
+              >
+                <div className="absolute -right-10 -bottom-10 w-24 md:w-40 h-24 md:h-40 bg-gold/10 rounded-full blur-2xl md:blur-3xl group-hover:bg-gold/20 transition-colors"></div>
+                <div className="relative z-10">
+                  <div className="text-[20px] md:text-[40px] font-black text-impact leading-none mb-1 md:mb-2 text-center md:text-left">13.8万</div>
+                  <div className="text-gold text-[8px] md:text-[11px] uppercase tracking-[0.1em] md:tracking-[0.2em] font-bold text-center md:text-left">
+                    项目费用 (RMB) <br/>
+                    <span className="text-[7px] md:text-[9px] opacity-60 font-medium lowercase">(含国内3个月+新加坡6个月)</span>
+                  </div>
+                </div>
+              </motion.div>
+              
+              <motion.div 
+                whileHover={{ y: -10 }}
+                className="glass-card p-3 md:p-8 rounded-xl md:rounded-[2rem] border-white/10 flex flex-col justify-center"
+              >
+                <div className="text-[18px] md:text-[24px] font-black text-impact mb-0.5 md:mb-1 text-center md:text-left whitespace-nowrap">1, 4, 7, 10月</div>
+                <div className="text-white/60 text-[8px] md:text-[9px] uppercase tracking-widest font-medium text-center md:text-left">多批次灵活入学</div>
+              </motion.div>
+              
+              <motion.div 
+                whileHover={{ y: -10 }}
+                className="glass-card p-3 md:p-8 rounded-xl md:rounded-[2rem] border-white/10 flex flex-col justify-center"
+              >
+                <div className="text-[18px] md:text-[24px] font-black text-impact mb-0.5 md:mb-1 text-center md:text-left underline decoration-gold/30 underline-offset-4">中留服认证</div>
+                <div className="text-white/60 text-[8px] md:text-[9px] uppercase tracking-widest font-medium text-center md:text-left">教育部官方认证</div>
+              </motion.div>
+            </div>
+          </div>
+        </div>
+      </Slide>
 
       {/* Singapore Recommended Universities Module */}
       <UniversityModule />
