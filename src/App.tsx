@@ -5,7 +5,7 @@ import {
   Award, Clock, ShieldCheck, Briefcase, Zap, MapPin,
   Star, Search, Phone, Mail, ChevronRight, Shield, Copy,
   Languages, BarChart3, Monitor, Brain, Lightbulb,
-  ChevronLeft, Menu, X, ExternalLink
+  ChevronLeft, Menu, X, ExternalLink, Trophy, FileText, Home
 } from 'lucide-react';
 
 const UNIVERSITY_DATA = [
@@ -115,6 +115,122 @@ const UNIVERSITY_DATA = [
   }
 ];
 
+interface PricingCardProps {
+  tier: string;
+  title: string;
+  price: string;
+  tag?: string;
+  items: string[];
+  priceSub?: string;
+  isExpanded?: boolean;
+  onToggle?: () => void;
+}
+
+const PricingCard = ({ tier, title, price, tag, items, priceSub, isExpanded, onToggle }: PricingCardProps) => {
+  const renderPrice = (p: string) => {
+    if (p.includes('起')) {
+      return (
+        <>
+          {p.replace('起', '')}<span className="text-[0.5em] font-black">起</span>
+        </>
+      );
+    }
+    return p;
+  };
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 30 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      className={`p-5 md:p-6 glass-card rounded-[2rem] border transition-all duration-300 flex flex-col relative group overflow-hidden ${
+        isExpanded ? 'border-gold/50 shadow-[0_0_30px_rgba(212,175,55,0.15)] bg-white/5' : 'border-white/10 hover:border-white/20'
+      } md:cursor-default md:border-white/10 md:hover:border-gold/30 md:bg-white/5 md:shadow-none cursor-pointer`}
+      onClick={() => {
+        if (window.innerWidth < 768 && onToggle) {
+          onToggle();
+        }
+      }}
+    >
+      {tag && (
+        <div className="absolute top-4 right-4 px-2.5 py-0.5 bg-gold text-blue-950 text-[9px] font-black rounded-full tracking-widest z-10">
+          {tag}
+        </div>
+      )}
+      
+      <div className={`${isExpanded ? 'mb-5 md:mb-6' : 'mb-0 md:mb-6'}`}>
+        <div className="text-gold font-bold text-xs tracking-[0.2em] uppercase mb-1">{tier}</div>
+        <h4 className={`text-white font-black transition-all ${isExpanded ? 'text-xl md:text-2xl mb-3 md:mb-4' : 'text-lg md:text-2xl mb-0 md:mb-4'}`}>
+          {title}
+        </h4>
+        
+        {/* Mobile Accordion */}
+        <div className="md:hidden">
+          <AnimatePresence>
+            {isExpanded && (
+              <motion.div
+                initial={{ height: 0, opacity: 0 }}
+                animate={{ height: 'auto', opacity: 1 }}
+                exit={{ height: 0, opacity: 0 }}
+                className="overflow-hidden"
+              >
+                <div className="p-4 bg-white/5 rounded-xl border border-white/5 group-hover:bg-white/10 transition-colors mb-4">
+                  <div className="text-2xl font-black text-transparent bg-clip-text bg-gradient-to-r from-white via-gold to-white">
+                    {renderPrice(price)}
+                  </div>
+                  <div className="text-[9px] text-white/40 uppercase tracking-widest mt-0.5 font-bold">APPLICATION PRICE</div>
+                  {priceSub && <div className="text-gold/60 text-[9px] mt-0.5 font-bold">{priceSub}</div>}
+                </div>
+
+                <div className="space-y-2 flex-1 text-left">
+                  {items.map((item, idx) => (
+                    <div key={idx} className="flex items-center gap-2.5 text-white/70 text-sm font-medium group-hover:text-white transition-colors leading-tight">
+                      <div className="w-4 h-4 rounded-full border border-gold/40 flex items-center justify-center shrink-0">
+                        <div className="w-1 h-1 rounded-full bg-gold"></div>
+                      </div>
+                      {item}
+                    </div>
+                  ))}
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </div>
+
+        {/* Desktop Static Display */}
+        <div className="hidden md:block">
+          <div className="p-4 bg-white/5 rounded-xl border border-white/5 group-hover:bg-white/10 transition-colors mb-6">
+            <div className="text-3xl font-black text-transparent bg-clip-text bg-gradient-to-r from-white via-gold to-white">
+              {renderPrice(price)}
+            </div>
+            <div className="text-[11px] text-white/40 uppercase tracking-widest mt-0.5 font-bold">APPLICATION PRICE</div>
+            {priceSub && <div className="text-gold/60 text-[9px] mt-0.5 font-bold">{priceSub}</div>}
+          </div>
+
+          <div className="space-y-3 flex-1 text-left">
+            {items.map((item, idx) => (
+              <div key={idx} className="flex items-center gap-2.5 text-white/70 text-base font-medium group-hover:text-white transition-colors leading-tight">
+                <div className="w-4 h-4 rounded-full border border-gold/40 flex items-center justify-center shrink-0">
+                  <div className="w-1 h-1 rounded-full bg-gold"></div>
+                </div>
+                {item}
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      {!isExpanded && (
+        <div className="mt-2 flex md:hidden items-center justify-between text-gold/40 text-[10px] font-bold uppercase tracking-widest group-hover:text-gold transition-colors">
+          <span>点击查看详情</span>
+          <ChevronRight size={14} />
+        </div>
+      )}
+      
+      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-gold/5 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none"></div>
+    </motion.div>
+  );
+};
+
 const UniversityModule = () => {
   const [activeUni, setActiveUni] = React.useState(0);
   const [expandedMajor, setExpandedMajor] = React.useState<number | null>(null);
@@ -124,18 +240,18 @@ const UniversityModule = () => {
   };
 
   return (
-    <Slide id="sg-universities" accentColor="#10b981">
+    <Slide id="sg-universities" accentColor="#10b981" padding="px-4 pt-8 pb-4 md:px-8 md:pt-12 md:pb-6" minHeight="min-h-0">
       <SectionTitle 
         title="新加坡推荐院校" 
         subtitle="名校直通 / Recommended Universities" 
       />
       
-      <div className="flex flex-nowrap md:flex-wrap gap-3 mb-10 overflow-x-auto no-scrollbar pb-2 -mx-4 px-4 md:mx-0 md:px-0">
+      <div className="flex flex-nowrap md:flex-wrap gap-2.5 mb-8 overflow-x-auto no-scrollbar pb-2 -mx-4 px-4 md:mx-0 md:px-0">
         {UNIVERSITY_DATA.map((uni, idx) => (
           <button
             key={idx}
             onClick={() => { setActiveUni(idx); setExpandedMajor(null); }}
-            className={`px-6 py-3 rounded-full font-bold transition-all text-[14px] md:text-[16px] whitespace-nowrap shrink-0 border shadow-sm ${
+            className={`px-4 py-2 md:px-5 md:py-2.5 rounded-full font-bold transition-all text-[11px] md:text-[13px] whitespace-nowrap shrink-0 border shadow-sm ${
               activeUni === idx 
                 ? "bg-gradient-to-b from-[#ffffff] via-[#d4af37] to-[#8b6508] text-blue-900 border-white/40 shadow-[0_8px_20px_rgba(212,175,55,0.3)] scale-105" 
                 : "bg-gradient-to-b from-[#475569] via-[#1e293b] to-[#0f172a] text-white/60 border-white/5 hover:border-white/20"
@@ -166,67 +282,106 @@ const UniversityModule = () => {
         </p>
       </motion.div>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-2.5 items-start">
-        {UNIVERSITY_DATA[activeUni].majors.map((major, idx) => (
-          <div key={idx} className="glass-card rounded-xl overflow-hidden border border-white/5 group">
-            <button
-              onClick={() => setExpandedMajor(expandedMajor === idx ? null : idx)}
-              className="w-full px-4 py-3 flex justify-between items-center hover:bg-white/5 transition-colors text-left"
-            >
-              <span className="text-[14px] md:text-[16px] font-bold text-white/90 group-hover:text-gold transition-colors">{major.cn}</span>
-              <div className={`w-5 h-5 rounded-full flex items-center justify-center transition-all ${expandedMajor === idx ? "bg-gold text-blue-900" : "bg-white/10 text-gold"}`}>
-                <ChevronRight 
-                  className={`transition-transform duration-300 ${expandedMajor === idx ? "rotate-90" : ""}`} 
-                  size={12} 
-                />
-              </div>
-            </button>
-            
-            <motion.div
-              initial={false}
-              animate={{ height: expandedMajor === idx ? "auto" : 0, opacity: expandedMajor === idx ? 1 : 0 }}
-              className="overflow-hidden"
-            >
-              <div className="px-4 pb-4 pt-1 space-y-3 border-t border-white/5 bg-white/5">
-                <div className="flex justify-between items-start gap-2 p-2.5 bg-white/5 rounded-lg border border-white/5">
-                  <div className="flex-1">
-                    <div className="text-[10px] md:text-[12px] text-white/40 uppercase tracking-[0.2em] mb-1 font-bold">English Name</div>
-                    <div className="text-[12px] md:text-[14px] text-white/80 font-display font-medium leading-tight">{major.en}</div>
-                  </div>
-                  <button 
-                    onClick={() => copyToClipboard(major.en)}
-                    className="p-1.5 bg-white/10 hover:bg-gold hover:text-blue-900 rounded-md transition-all text-gold shrink-0 shadow-sm"
-                    title="Copy English Name"
-                  >
-                    <Copy size={10} />
-                  </button>
+      <div className="origin-top">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-2.5 items-start">
+          {UNIVERSITY_DATA[activeUni].majors.map((major, idx) => (
+            <div key={idx} className="glass-card rounded-xl overflow-hidden border border-white/5 group">
+              <button
+                onClick={() => setExpandedMajor(expandedMajor === idx ? null : idx)}
+                className="w-full px-5 py-4 flex justify-between items-center hover:bg-white/5 transition-colors text-left"
+              >
+                <span className="text-[17px] md:text-[20px] font-bold text-white/90 group-hover:text-gold transition-colors">{major.cn}</span>
+                <div className={`w-5 h-5 rounded-full flex items-center justify-center transition-all ${expandedMajor === idx ? "bg-gold text-blue-900" : "bg-white/10 text-gold"}`}>
+                  <ChevronRight 
+                    className={`transition-transform duration-300 ${expandedMajor === idx ? "rotate-90" : ""}`} 
+                    size={12} 
+                  />
                 </div>
-                
-                <div className="grid grid-cols-10 gap-2">
-                  <div className="col-span-3 p-2 bg-white/5 rounded-lg border border-white/5">
-                    <div className="text-[10px] md:text-[12px] text-white/40 uppercase tracking-[0.1em] mb-0.5 font-bold">Duration</div>
-                    <div className="text-[12px] md:text-[14px] text-gold font-black">{major.duration}</div>
+              </button>
+              
+              <motion.div
+                initial={false}
+                animate={{ height: expandedMajor === idx ? "auto" : 0, opacity: expandedMajor === idx ? 1 : 0 }}
+                className="overflow-hidden"
+              >
+                <div className="px-4 pb-4 pt-1 space-y-3 border-t border-white/5 bg-white/5">
+                  <div className="flex justify-between items-start gap-2 p-2.5 bg-white/5 rounded-lg border border-white/5">
+                    <div className="flex-1">
+                      <div className="text-[10px] md:text-[12px] text-white/40 uppercase tracking-[0.2em] mb-1 font-bold">English Name</div>
+                      <div className="text-[12px] md:text-[14px] text-white/80 font-display font-medium leading-tight">{major.en}</div>
+                    </div>
+                    <button 
+                      onClick={() => copyToClipboard(major.en)}
+                      className="p-1.5 bg-white/10 hover:bg-gold hover:text-blue-900 rounded-md transition-all text-gold shrink-0 shadow-sm"
+                      title="Copy English Name"
+                    >
+                      <Copy size={10} />
+                    </button>
                   </div>
-                  <div className="col-span-3 p-2 bg-white/5 rounded-lg border border-white/5">
-                    <div className="text-[10px] md:text-[12px] text-white/40 uppercase tracking-[0.1em] mb-0.5 font-bold">Intake</div>
-                    <div className="text-[12px] md:text-[14px] text-white/80 font-bold">{major.intake}</div>
-                  </div>
-                  <div className="col-span-4 p-2 bg-white/5 rounded-lg border border-white/5">
-                    <div className="text-[10px] md:text-[12px] text-white/40 uppercase tracking-[0.1em] mb-0.5 font-bold">Tuition Fee</div>
-                    <div className="text-[12px] md:text-[14px] text-white/80 font-bold leading-tight">{major.fee}</div>
+                  
+                  <div className="grid grid-cols-10 gap-2">
+                    <div className="col-span-3 p-2 bg-white/5 rounded-lg border border-white/5">
+                      <div className="text-[10px] md:text-[12px] text-white/40 uppercase tracking-[0.1em] mb-0.5 font-bold">Duration</div>
+                      <div className="text-[12px] md:text-[14px] text-gold font-black">{major.duration}</div>
+                    </div>
+                    <div className="col-span-3 p-2 bg-white/5 rounded-lg border border-white/5">
+                      <div className="text-[10px] md:text-[12px] text-white/40 uppercase tracking-[0.1em] mb-0.5 font-bold">Intake</div>
+                      <div className="text-[12px] md:text-[14px] text-white/80 font-bold">{major.intake}</div>
+                    </div>
+                    <div className="col-span-4 p-2 bg-white/5 rounded-lg border border-white/5">
+                      <div className="text-[10px] md:text-[12px] text-white/40 uppercase tracking-[0.1em] mb-0.5 font-bold">Tuition Fee</div>
+                      <div className="text-[12px] md:text-[14px] text-white/80 font-bold leading-tight">{major.fee}</div>
+                    </div>
                   </div>
                 </div>
-              </div>
-            </motion.div>
-          </div>
-        ))}
+              </motion.div>
+            </div>
+          ))}
+        </div>
       </div>
     </Slide>
   );
 };
 
-const Slide = ({ children, accentColor = "#c5a059", className = "", id }: { children: React.ReactNode, accentColor?: string, className?: string, id?: string }) => (
-  <section id={id} className={`presentation-section text-white bg-[#003366] ${className} relative overflow-hidden flex flex-col justify-center min-h-screen px-4 py-12 md:px-8 md:py-12`}>
+const PricingSection = ({ 
+  id, 
+  country, 
+  title, 
+  subtitle, 
+  tiers 
+}: { 
+  id: string; 
+  country: string; 
+  title: string; 
+  subtitle: string; 
+  tiers: any[] 
+}) => {
+  const [activeTier, setActiveTier] = React.useState<number | null>(null);
+
+  return (
+    <Slide id={id} accentColor="#0ea5e9">
+      <div className="max-w-7xl mx-auto">
+        <div className="text-center mb-16">
+          <span className="text-gold/60 text-sm font-mono tracking-[0.3em] uppercase mb-4 block">{country}</span>
+          <SectionTitle title={title} subtitle={subtitle} />
+        </div>
+        
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 items-start">
+          {tiers.map((tierData, i) => (
+            <PricingCard 
+              key={i} 
+              {...tierData}
+              isExpanded={activeTier === i}
+              onToggle={() => setActiveTier(activeTier === i ? null : i)}
+            />
+          ))}
+        </div>
+      </div>
+    </Slide>
+  );
+};
+const Slide = ({ children, accentColor = "#c5a059", className = "", id, padding = "px-4 py-12 md:px-8 md:py-12", minHeight = "min-h-screen" }: { children: React.ReactNode, accentColor?: string, className?: string, id?: string, padding?: string, minHeight?: string }) => (
+  <section id={id} className={`presentation-section text-white bg-[#003366] ${className} relative overflow-hidden flex flex-col justify-center ${minHeight} ${padding}`}>
     {/* High-end Background Layers */}
     <div className="absolute inset-0 mesh-gradient"></div>
     <div className="absolute inset-0 noise-bg"></div>
@@ -251,44 +406,109 @@ const Slide = ({ children, accentColor = "#c5a059", className = "", id }: { chil
 );
 
 const SectionTitle = ({ title, subtitle }: { title: string, subtitle: string }) => (
-  <div className="mb-10">
+  <div className="mb-10 text-center">
     <motion.h2 
-      initial={{ opacity: 0, x: -20 }}
-      whileInView={{ opacity: 0.8, x: 0 }}
+      initial={{ opacity: 0, y: 10 }}
+      whileInView={{ opacity: 0.8, y: 0 }}
       className="font-display text-gold italic text-[18px] md:text-[20px] mb-2 tracking-[0.2em] uppercase font-bold"
     >
       {subtitle}
     </motion.h2>
     <motion.h3 
-      initial={{ opacity: 0, x: -20 }}
-      whileInView={{ opacity: 1, x: 0 }}
+      initial={{ opacity: 0, y: 10 }}
+      whileInView={{ opacity: 1, y: 0 }}
       transition={{ delay: 0.1 }}
-      className="font-display text-[32px] md:text-[42px] font-black leading-tight text-transparent bg-clip-text bg-gradient-to-b from-white via-gold to-gold/80 drop-shadow-[0_10px_10px_rgba(0,0,0,0.4)] filter contrast-125 tracking-tight"
+      className="font-display text-[28px] md:text-[42px] font-black leading-tight text-transparent bg-clip-text bg-gradient-to-b from-white via-gold to-gold/80 drop-shadow-[0_10px_10px_rgba(0,0,0,0.4)] filter contrast-125 tracking-tight"
       style={{ WebkitTextStroke: '1px rgba(255,215,0,0.1)' }}
     >
       {title}
     </motion.h3>
-    <div className="w-20 h-1 bg-gold/50 mt-4 rounded-full"></div>
+    <div className="w-20 h-1 bg-gold/50 mt-4 rounded-full mx-auto"></div>
   </div>
 );
 
-const FloatingNav = () => {
+const TopHeader = ({ activeTab, setActiveTab }: { activeTab: string; setActiveTab: (tab: string) => void }) => {
+  const tabs = [
+    { id: 'intro', name: '总介', icon: <Home size={18} /> },
+    { id: 'undergrad', name: '本科项目' },
+    { id: 'masters', name: '硕士项目' },
+    { id: 'academic', name: '学术加持' },
+  ];
+
+  return (
+    <nav className="fixed top-0 left-0 right-0 z-[110] bg-[#003366]/80 backdrop-blur-xl border-b border-white/10 px-4 py-3 md:px-8">
+      <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-4">
+        <div className="flex flex-col items-center md:items-start">
+          <h1 className="font-display text-[18px] md:text-[24px] font-black text-transparent bg-clip-text bg-gradient-to-r from-gold via-white to-gold tracking-tight leading-tight drop-shadow-sm">
+            TopUni Global Academy
+          </h1>
+        </div>
+        
+        <div className="flex bg-white/5 p-1 rounded-xl border border-white/10">
+          {tabs.map((tab) => (
+            <button
+              key={tab.id}
+              onClick={() => {
+                setActiveTab(tab.id);
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+              }}
+              className={`px-4 md:px-8 py-1.5 md:py-2 rounded-lg text-sm md:text-base font-bold transition-all duration-300 flex items-center justify-center ${
+                activeTab === tab.id 
+                  ? 'bg-gold text-blue-900 shadow-[0_0_20px_rgba(212,175,55,0.4)] scale-105' 
+                  : 'text-white/60 hover:text-white hover:bg-white/5'
+              }`}
+            >
+              {tab.id === 'intro' ? tab.icon : tab.name}
+            </button>
+          ))}
+        </div>
+      </div>
+    </nav>
+  );
+};
+
+const FloatingNav = ({ activeTab }: { activeTab: string }) => {
   const [isOpen, setIsOpen] = React.useState(false);
 
-  const navItems = [
-    { name: "Home", id: "top" },
-    { name: "全球合作院校", id: "global-partners" },
-    { name: "TopUni本科升学", id: "undergrad-path" },
-    { name: "TopUni硕士升学", id: "masters-path" },
-    { name: "TopUni语言保分", id: "exams-certs" },
-    { name: "高中升本科大二(新加坡)", id: "premium-planning" },
-    { name: "初中毕业直升本科(新加坡)", id: "junior-undergrad-path" },
-    { name: "新加坡本科推荐院校", id: "sg-universities" },
-    { name: "服务流程", id: "service-flow" },
-    { name: "本科申请要求", id: "admission-reqs" },
-    { name: "费用查询", id: "https://p.topuni.com.cn/", isExternal: true },
-    { name: "学生案例", id: "student-cases" },
-  ];
+  if (activeTab === 'masters') return null;
+
+  const getNavItems = (): { name: React.ReactNode; id: string; isExternal?: boolean }[] => {
+    switch (activeTab) {
+      case 'intro':
+        return [
+          { name: <Home size={22} />, id: "top" },
+          { name: "核心竞争优势", id: "undergrad-advantages" },
+          { name: "合作院校", id: "global-partners" },
+          { name: "名师简介", id: "faculty" },
+          { name: "认证课程", id: "academic-qualification" },
+          { name: "科研训练", id: "research-training" },
+          { name: "学生案例", id: "student-cases" },
+        ];
+      case 'undergrad':
+        return [
+          { name: <Home size={22} />, id: "undergrad-path" },
+          { name: "精英规划PPAC", id: "premium-planning" },
+          { name: "高中升大二(新加坡)", id: "core-value" },
+          { name: "初中升本科(新加坡)", id: "junior-undergrad-path" },
+          { name: "新加坡推荐院校", id: "sg-universities" },
+          { name: "服务流程", id: "service-flow" },
+          { name: "申请要求", id: "admission-reqs" },
+        ];
+      case 'academic':
+        return [
+          { name: <Home size={22} />, id: "exams-certs" },
+          { name: "语言与竞赛", id: "exams-certs" },
+          { name: "英国", id: "pricing-uk" },
+          { name: "澳洲", id: "pricing-au" },
+          { name: "马来西亚", id: "pricing-my" },
+          { name: "新加坡&香港", id: "pricing-hk-sg" },
+        ];
+      default:
+        return [];
+    }
+  };
+
+  const navItems = getNavItems();
 
   const scrollTo = (id: string, isExternal?: boolean) => {
     if (isExternal) {
@@ -372,13 +592,19 @@ const FloatingNav = () => {
 };
 
 export default function App() {
+  const [activeTab, setActiveTab] = React.useState('intro');
+
   return (
-    <div className="no-scrollbar font-sans overflow-x-hidden bg-[#003366]">
-      <FloatingNav />
-      {/* Slide 0: Introduction */}
-      <Slide id="top" accentColor="#0ea5e9">
+    <div className="no-scrollbar font-sans overflow-x-hidden bg-[#003366] pt-[72px] md:pt-[84px]">
+      <TopHeader activeTab={activeTab} setActiveTab={setActiveTab} />
+      <FloatingNav activeTab={activeTab} />
+      
+      {activeTab === 'intro' && (
+        <>
+          {/* Slide 0: Introduction */}
+          <Slide id="top" accentColor="#0ea5e9">
         <div className="max-w-6xl mx-auto">
-          <SectionTitle title="TopUni Global Academy" subtitle="精英留学规划 / Elite Education Planning" />
+          <SectionTitle title="精英留学规划" subtitle="Elite Education Planning" />
           <motion.p 
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -391,7 +617,7 @@ export default function App() {
             <motion.h4 
               initial={{ opacity: 0, x: -20 }}
               whileInView={{ opacity: 1, x: 0 }}
-              className="font-display text-[36px] md:text-[46px] font-black mb-6 text-transparent bg-clip-text bg-gradient-to-b from-white via-gold to-gold/80 drop-shadow-[0_10px_10px_rgba(0,0,0,0.4)] filter contrast-125 tracking-tight"
+              className="font-display text-[32px] md:text-[42px] font-black mb-6 text-transparent bg-clip-text bg-gradient-to-b from-white via-gold to-gold/80 drop-shadow-[0_10px_10px_rgba(0,0,0,0.4)] filter contrast-125 tracking-tight leading-tight"
               style={{ WebkitTextStroke: '1px rgba(255,215,0,0.1)' }}
             >
               世界名校本、硕、博留学
@@ -441,10 +667,9 @@ export default function App() {
             </motion.p>
           </div>
         </div>
-      </Slide>
+          </Slide>
 
-      {/* Slide 3: Advantages (MOVED) */}
-      <Slide id="undergrad-advantages" accentColor="#60a5fa">
+          <Slide id="undergrad-advantages" accentColor="#60a5fa">
         <div className="grid grid-cols-1 md:grid-cols-12 gap-12 md:gap-16">
           <div className="col-span-1 md:col-span-4">
             <SectionTitle title="核心竞争优势" subtitle="项目优势 / Key Advantages" />
@@ -525,8 +750,7 @@ export default function App() {
         </div>
       </Slide>
 
-      {/* Slide 4: Faculty */}
-      <Slide accentColor="#1e40af">
+      <Slide id="faculty" accentColor="#1e40af">
         <SectionTitle title="顶尖名校教授领衔指导" subtitle="师资力量 / World-Class Faculty" />
         <div className="grid grid-cols-2 md:grid-cols-5 gap-2 md:gap-6">
           {[
@@ -557,10 +781,9 @@ export default function App() {
         </div>
       </Slide>
 
-      {/* Slide 5: Curriculum Details */}
-      <Slide accentColor="#f59e0b">
+      <Slide id="curriculum" accentColor="#f59e0b">
         <div className="grid grid-cols-1 md:grid-cols-12 gap-12 md:gap-16">
-          <div className="col-span-1 md:col-span-5">
+          <div id="academic-qualification" className="col-span-1 md:col-span-5">
             <SectionTitle title="学术资格认证课程" subtitle="课程模块 01 / Academic Qualification" />
             <div className="glass-card rounded-[1.5rem] md:rounded-[2rem] p-6 md:p-8 overflow-x-auto">
               <table className="w-full text-left text-[14px] md:text-[16px] min-w-[300px]">
@@ -588,7 +811,7 @@ export default function App() {
               </table>
             </div>
           </div>
-          <div className="col-span-1 md:col-span-7">
+          <div id="research-training" className="col-span-1 md:col-span-7">
             <SectionTitle title="科研训练提升课程" subtitle="课程模块 02 / Research Training" />
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {[
@@ -617,9 +840,12 @@ export default function App() {
           </div>
         </div>
       </Slide>
+        </>
+      )}
 
-      {/* New Slide: TopUni Undergraduate Path */}
-      <Slide id="undergrad-path" accentColor="#0ea5e9">
+      {activeTab === 'undergrad' && (
+        <>
+          <Slide id="undergrad-path" accentColor="#0ea5e9">
         <div className="max-w-6xl mx-auto">
           <SectionTitle title="" subtitle="本科升学规划 / Undergraduate Degree Planning" />
           
@@ -657,7 +883,7 @@ export default function App() {
             </motion.p>
           </div>
 
-          <div className="grid grid-cols-3 md:grid-cols-3 gap-2 md:gap-6 mb-16">
+          <div className="grid grid-cols-3 md:grid-cols-3 gap-2 md:gap-6 mb-8">
             {[
               { t: "打破信息差", d: "深度解析全球名校录取规则，消除升学盲区。", i: <Search className="w-4 h-4 md:w-6 md:h-6" /> },
               { t: "最优性价比", d: "量身定制高适配方案，实现教育投资价值最大化。", i: <Zap className="w-4 h-4 md:w-6 md:h-6" /> },
@@ -679,8 +905,7 @@ export default function App() {
         </div>
       </Slide>
 
-      {/* Slide 2: Introduction */}
-      <Slide id="premium-planning" className="relative" accentColor="#0ea5e9">
+      <Slide id="premium-planning" className="relative" accentColor="#0ea5e9" padding="px-4 py-6 md:px-8 md:py-10">
         <div className="absolute inset-0 opacity-5 mix-blend-overlay">
           <img src="https://images.unsplash.com/photo-1541339907198-e08756ebafe1?auto=format&fit=crop&q=80&w=2000" className="w-full h-full object-cover" referrerPolicy="no-referrer" />
         </div>
@@ -690,12 +915,12 @@ export default function App() {
           transition={{ duration: 0.8 }}
           className="relative z-10 text-center max-w-5xl mx-auto"
         >
-          <h1 className="font-display text-[48px] md:text-[84px] font-black leading-[1.1] md:leading-[1] mb-2 text-impact">
+          <h1 className="font-display text-[48px] md:text-[84px] font-black leading-[1.1] md:leading-[1] mb-1 text-impact">
             精英卓越规划<br/>
             <span className="text-[36px] md:text-[64px] font-bold opacity-90">国际本科升学课程</span>
           </h1>
-          <div className="font-display italic text-transparent bg-clip-text bg-gradient-to-b from-[#b8860b] via-[#d4af37] to-[#8b6508] text-[24px] md:text-[32px] mb-4 tracking-widest uppercase font-bold drop-shadow-sm">Premium Planning Academic Curriculum</div>
-          <p className="text-[16px] md:text-[22px] text-white/80 max-w-4xl mx-auto mb-16 leading-relaxed font-light tracking-wide">
+          <div className="font-display italic text-transparent bg-clip-text bg-gradient-to-b from-[#b8860b] via-[#d4af37] to-[#8b6508] text-[24px] md:text-[32px] mb-2 tracking-widest uppercase font-bold drop-shadow-sm">Premium Planning Academic Curriculum</div>
+          <p className="text-[16px] md:text-[22px] text-white/80 max-w-4xl mx-auto mb-8 leading-relaxed font-light tracking-wide">
             基于全球认证资历框架一站式国际升学课程<br/>
             <span className="font-medium text-white">注重培养综合学术能力与思维素养，助力直升世界名校本科</span>
           </p>
@@ -716,76 +941,6 @@ export default function App() {
         </motion.div>
       </Slide>
 
-      {/* New Slide: Core Value */}
-      <Slide accentColor="#0ea5e9">
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-16 items-center">
-          <div className="md:col-span-8">
-            <SectionTitle title="快、准、稳、省" subtitle="核心价值 / Core Value" />
-            <div className="mb-6">
-              <h4 className="font-display text-gold font-bold text-[20px] md:text-[28px] mb-3">新港热门本科直通项目</h4>
-              <p className="text-white/70 text-[14px] md:text-[16px] leading-relaxed font-light">
-                香港和新加坡作为主流热门留学目标选择，我们推出PPAC精英规划学术课程，针对高二在读及以上的学生，通过在线灵活学习完成后入读世界名校新加坡校区，如爱尔兰都柏林大学新加坡校区QS118名，科廷大学新加坡分校QS170名，英国考文垂大学新加坡校区。有意向赴香港的学生，可选择多所知名学府，如岭南大学、都会大学、树仁大学、香港高等教育科技学院等。
-              </p>
-            </div>
-            <p className="text-white/90 text-[18px] md:text-[24px] leading-relaxed mb-4 md:mb-8 font-medium">
-              高中在读期间学习本课程，完成后即可赴新加坡诸多名校学习本科。
-            </p>
-            <div className="space-y-3 md:space-y-6">
-              {[
-                "免语言入学要求，减免最多120学分直入大二，最快1.5年本科毕业",
-                "18岁入读本科，19.5岁毕业，21岁研究生毕业！",
-                "节省至少25万费用（省掉大一学费和生活费）",
-                "精准指定即录取，无需多选、不赌概率。"
-              ].map((text, i) => (
-                <motion.div 
-                  key={i}
-                  initial={{ opacity: 0, x: -20 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  transition={{ delay: i * 0.1 }}
-                  className="flex items-start gap-2 md:gap-4"
-                >
-                  <div className="w-5 h-5 md:w-8 md:h-8 rounded-full bg-cyan-400/20 flex items-center justify-center border border-cyan-400/30 shrink-0 mt-0.5 md:mt-1">
-                    <Zap size={12} className="text-gold md:w-[18px] md:h-[18px]" />
-                  </div>
-                  <span className="text-[16px] md:text-[20px] text-white/80 leading-snug">{text}</span>
-                </motion.div>
-              ))}
-            </div>
-          </div>
-          <div className="md:col-span-4 relative">
-            <div className="grid grid-cols-3 md:grid-cols-1 gap-2 md:gap-6">
-              <motion.div 
-                whileHover={{ y: -10 }}
-                className="glass-card p-3 md:p-10 rounded-xl md:rounded-[2.5rem] border-cyan-400/20 relative overflow-hidden group flex flex-col justify-center"
-              >
-                <div className="absolute -right-10 -bottom-10 w-24 md:w-40 h-24 md:h-40 bg-cyan-400/10 rounded-full blur-2xl md:blur-3xl group-hover:bg-cyan-400/20 transition-colors"></div>
-                <div className="relative z-10">
-                  <div className="text-[20px] md:text-[50px] font-black text-impact leading-none mb-1 md:mb-2 text-center md:text-left">1.5年</div>
-                  <div className="text-gold text-[8px] md:text-[11px] uppercase tracking-[0.1em] md:tracking-[0.3em] font-bold text-center md:text-left">最快本科毕业</div>
-                </div>
-              </motion.div>
-              
-              <motion.div 
-                whileHover={{ y: -10 }}
-                className="glass-card p-3 md:p-8 rounded-xl md:rounded-[2rem] border-white/10 flex flex-col justify-center"
-              >
-                <div className="text-[20px] md:text-[29px] font-black text-impact mb-0.5 md:mb-1 text-center md:text-left">21岁</div>
-                <div className="text-white/60 text-[8px] md:text-[9px] uppercase tracking-widest font-medium text-center md:text-left">研究生毕业</div>
-              </motion.div>
-              
-              <motion.div 
-                whileHover={{ y: -10 }}
-                className="glass-card p-3 md:p-8 rounded-xl md:rounded-[2rem] border-white/10 flex flex-col justify-center"
-              >
-                <div className="text-[20px] md:text-[29px] font-black text-impact mb-0.5 md:mb-1 text-center md:text-left">25万+</div>
-                <div className="text-white/60 text-[8px] md:text-[9px] uppercase tracking-widest font-medium text-center md:text-left">节省留学费用</div>
-              </motion.div>
-            </div>
-          </div>
-        </div>
-      </Slide>
-
-      {/* Slide 2: Introduction */}
       <Slide id="ppac-intro" accentColor="#38bdf8">
         <div className="grid grid-cols-1 md:grid-cols-12 gap-12 md:gap-16 items-center">
           <div className="col-span-1 md:col-span-5">
@@ -853,14 +1008,78 @@ export default function App() {
         </div>
       </Slide>
 
-      {/* Slide 3: Advantages (REMOVED FROM HERE) */}
+      <Slide id="core-value" accentColor="#0ea5e9">
+            <div className="grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-16 items-center">
+              <div className="md:col-span-8">
+                <SectionTitle title="高中先修学分，毕业直升大二" subtitle="核心价值 / Core Value" />
+                <div className="mb-6">
+                  <h4 className="font-display italic text-transparent bg-clip-text bg-gradient-to-b from-[#b8860b] via-[#d4af37] to-[#8b6508] font-black text-[24px] md:text-[32px] mb-3 tracking-wider uppercase drop-shadow-sm">快、准、稳、省</h4>
+                  <p className="text-white/70 text-[14px] md:text-[16px] leading-relaxed font-light">
+                香港和新加坡作为主流热门留学目标选择，我们推出PPAC精英规划学术课程，针对高二在读及以上的学生，通过在线灵活学习完成后入读世界名校新加坡校区，如爱尔兰都柏林大学新加坡校区QS118名，科廷大学新加坡分校QS170名，英国考文垂大学新加坡校区。有意向赴香港的学生，可选择多所知名学府，如岭南大学、都会大学、树仁大学、香港高等教育科技学院等。
+              </p>
+            </div>
+            <p className="text-white/90 text-[18px] md:text-[24px] leading-relaxed mb-4 md:mb-8 font-medium">
+              高中在读期间学习本课程获得120学分，赴新加坡继续攻读本科大二最快1.5年毕业。
+            </p>
+            <div className="space-y-3 md:space-y-6">
+              {[
+                "免语言、免高考、国内学习3-9个月",
+                "18岁上本科、20岁读硕士，领先同龄人3年入职场",
+                "节省至少25万费用（省掉大一学费和生活费）",
+                "精准指定即录取，无需多选、不赌概率。"
+              ].map((text, i) => (
+                <motion.div 
+                  key={i}
+                  initial={{ opacity: 0, x: -20 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  transition={{ delay: i * 0.1 }}
+                  className="flex items-start gap-2 md:gap-4"
+                >
+                  <div className="w-5 h-5 md:w-8 md:h-8 rounded-full bg-cyan-400/20 flex items-center justify-center border border-cyan-400/30 shrink-0 mt-0.5 md:mt-1">
+                    <Zap size={12} className="text-gold md:w-[18px] md:h-[18px]" />
+                  </div>
+                  <span className="text-[16px] md:text-[20px] text-white/80 leading-snug">{text}</span>
+                </motion.div>
+              ))}
+            </div>
+          </div>
+          <div className="md:col-span-4 relative">
+            <div className="grid grid-cols-3 md:grid-cols-1 gap-2 md:gap-6">
+              <motion.div 
+                whileHover={{ y: -10 }}
+                className="glass-card p-3 md:p-10 rounded-xl md:rounded-[2.5rem] border-cyan-400/20 relative overflow-hidden group flex flex-col justify-center"
+              >
+                <div className="absolute -right-10 -bottom-10 w-24 md:w-40 h-24 md:h-40 bg-cyan-400/10 rounded-full blur-2xl md:blur-3xl group-hover:bg-cyan-400/20 transition-colors"></div>
+                <div className="relative z-10">
+                  <div className="text-[20px] md:text-[50px] font-black text-impact leading-none mb-1 md:mb-2 text-center md:text-left">1.5年</div>
+                  <div className="text-gold text-[8px] md:text-[11px] uppercase tracking-[0.1em] md:tracking-[0.3em] font-bold text-center md:text-left">最快本科毕业</div>
+                </div>
+              </motion.div>
+              
+              <motion.div 
+                whileHover={{ y: -10 }}
+                className="glass-card p-3 md:p-8 rounded-xl md:rounded-[2rem] border-white/10 flex flex-col justify-center"
+              >
+                <div className="text-[20px] md:text-[29px] font-black text-impact mb-0.5 md:mb-1 text-center md:text-left">21岁</div>
+                <div className="text-white/60 text-[8px] md:text-[9px] uppercase tracking-widest font-medium text-center md:text-left">研究生毕业</div>
+              </motion.div>
+              
+              <motion.div 
+                whileHover={{ y: -10 }}
+                className="glass-card p-3 md:p-8 rounded-xl md:rounded-[2rem] border-white/10 flex flex-col justify-center"
+              >
+                <div className="text-[20px] md:text-[29px] font-black text-impact mb-0.5 md:mb-1 text-center md:text-left">25万+</div>
+                <div className="text-white/60 text-[8px] md:text-[9px] uppercase tracking-widest font-medium text-center md:text-left">节省留学费用</div>
+              </motion.div>
+            </div>
+          </div>
+        </div>
+      </Slide>
 
-
-      {/* New Slide: Premium Planning Academic Curriculum */}
       <Slide id="junior-undergrad-path" accentColor="#0ea5e9">
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-16 items-center">
-          <div className="md:col-span-8">
-            <SectionTitle title="初中毕业直升本科" subtitle="Academic Curriculum" />
+            <div className="grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-16 items-center">
+              <div className="md:col-span-8">
+                <SectionTitle title="初中毕业直升新加坡本科" subtitle="Academic Curriculum" />
             <div className="mb-6">
               <h4 className="font-display italic text-transparent bg-clip-text bg-gradient-to-b from-[#b8860b] via-[#d4af37] to-[#8b6508] font-black text-[24px] md:text-[32px] mb-3 tracking-wider uppercase drop-shadow-sm">Premium Planning</h4>
               <div className="space-y-3 md:space-y-6">
@@ -952,14 +1171,8 @@ export default function App() {
         </div>
       </Slide>
 
-      {/* Singapore Recommended Universities Module */}
       <UniversityModule />
 
-      {/* Slide 4: Faculty (MOVED) */}
-
-      {/* Slide 5: Curriculum Details (MOVED) */}
-
-      {/* Slide 6: Service & Requirements */}
       <Slide id="service-reqs" accentColor="#0ea5e9">
         <div className="grid grid-cols-1 md:grid-cols-12 gap-12 md:gap-16">
           <div id="service-flow" className="col-span-1 md:col-span-7">
@@ -1027,9 +1240,11 @@ export default function App() {
           </div>
         </div>
       </Slide>
+        </>
+      )}
 
-      {/* New Slide: Master's Degree Path */}
-      <Slide id="masters-path" accentColor="#f59e0b">
+      {activeTab === 'masters' && (
+        <Slide id="masters-path" accentColor="#f59e0b">
         <div className="max-w-6xl mx-auto">
           <SectionTitle title="" subtitle="硕士升学规划 / Master's Degree Planning" />
           
@@ -1037,7 +1252,7 @@ export default function App() {
             <motion.h4 
               initial={{ opacity: 0, x: -20 }}
               whileInView={{ opacity: 1, x: 0 }}
-              className="font-display text-[36px] md:text-[46px] font-black mb-6 text-transparent bg-clip-text bg-gradient-to-b from-white via-gold to-gold/80 drop-shadow-[0_10px_10px_rgba(0,0,0,0.4)] filter contrast-125 tracking-tight"
+              className="font-display text-[32px] md:text-[46px] font-black mb-6 text-transparent bg-clip-text bg-gradient-to-b from-white via-gold to-gold/80 drop-shadow-[0_10px_10px_rgba(0,0,0,0.4)] filter contrast-125 tracking-tight"
               style={{ WebkitTextStroke: '1px rgba(255,215,0,0.1)' }}
             >
               TopUni 硕士留学路径
@@ -1072,13 +1287,14 @@ export default function App() {
           </div>
 
           <div className="space-y-6 md:space-y-8 mb-16">
-            <div className="flex items-center gap-3 mb-6">
-              <div className="h-px flex-1 bg-gradient-to-r from-transparent to-gold/50"></div>
-              <h4 className="text-gold font-bold text-xl md:text-2xl flex items-center gap-2">
-                <span className="animate-pulse">🔥</span> 特别推荐直录项目
-              </h4>
-              <div className="h-px flex-1 bg-gradient-to-l from-transparent to-gold/50"></div>
-            </div>
+            <motion.h4 
+              initial={{ opacity: 0, x: -20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              className="font-display text-[32px] md:text-[46px] font-black mb-10 text-transparent bg-clip-text bg-gradient-to-b from-white via-gold to-gold/80 drop-shadow-[0_10px_10px_rgba(0,0,0,0.4)] filter contrast-125 tracking-tight"
+              style={{ WebkitTextStroke: '1px rgba(255,215,0,0.1)' }}
+            >
+              <span className="animate-pulse inline-block mr-2 text-white">🔥</span>特别推荐直录项目
+            </motion.h4>
 
             {[
               {
@@ -1151,79 +1367,246 @@ export default function App() {
             </p>
           </motion.div>
         </div>
-      </Slide>
+        </Slide>
+      )}
 
-      {/* New Slide: Language Exams & Certificates */}
-      <Slide id="exams-certs" accentColor="#8b5cf6">
-        <div className="max-w-6xl mx-auto">
-          <SectionTitle title="语言考试与国际证书" subtitle="学术加持 / Language & Certificates" />
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-center">
-            <div className="space-y-6">
-              <motion.div 
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                className="p-6 glass-card rounded-2xl border-l-4 border-gold"
+      {activeTab === 'academic' && (
+        <>
+          <Slide id="exams-certs" accentColor="#8b5cf6">
+            <div className="max-w-6xl mx-auto">
+              <SectionTitle title="语言考试与国际证书" subtitle="学术加持 / Language & Certificates" />
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-center">
+                <div className="space-y-6">
+                  <motion.div 
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    className="p-6 glass-card rounded-2xl border-l-4 border-gold"
+                  >
+                    <p className="text-[18px] md:text-[22px] text-white font-medium leading-relaxed">
+                      我们不做交付不了结果的培训，我们是让学生努力了就有结果！
+                    </p>
+                    <p className="text-[16px] md:text-[18px] text-white/70 mt-4">
+                      多种语言考试管理和国际证书为学生的战力加码！
+                    </p>
+                  </motion.div>
+                  
+                  <div className="space-y-4">
+                    {[
+                      { t: "🇨🇦 加高", d: "OSSD 白名单实体加高，证书+成绩单+推荐信，OEN学籍正规可查" },
+                      { t: "🇺🇸 美高", d: "线上/线下，完整AP成绩单+推荐信，CEEB CODE可查" },
+                      { t: "🇬🇧 英高", d: "A level预估分+成绩单+推荐信" }
+                    ].map((item, i) => (
+                      <motion.div 
+                        key={i}
+                        initial={{ opacity: 0, x: -20 }}
+                        whileInView={{ opacity: 1, x: 0 }}
+                        transition={{ delay: i * 0.1 }}
+                        className="flex gap-4 p-4 glass-card rounded-xl border border-white/5"
+                      >
+                        <div className="text-gold font-bold text-[18px] shrink-0">{item.t}</div>
+                        <div className="text-[14px] md:text-[16px] text-white/60 leading-relaxed">{item.d}</div>
+                      </motion.div>
+                    ))}
+                  </div>
+                </div>
+                
+                <motion.div 
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  whileInView={{ opacity: 1, scale: 1 }}
+                  className="p-8 glass-card rounded-[2.5rem] border border-white/10 text-center relative overflow-hidden"
+                >
+                  <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-gold to-transparent"></div>
+                  <h4 className="font-display text-[24px] md:text-[32px] font-bold text-impact mb-8">考试辅助团队助力出分</h4>
+                  <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+                    {[
+                      { n: "雅思", i: <Languages className="w-4 h-4 md:w-5 md:h-5" /> },
+                      { n: "托福", i: <Globe className="w-4 h-4 md:w-5 md:h-5" /> },
+                      { n: "Duolingo", i: <Zap className="w-4 h-4 md:w-5 md:h-5" /> },
+                      { n: "GRE", i: <BarChart3 className="w-4 h-4 md:w-5 md:h-5" /> },
+                      { n: "ACT", i: <Monitor className="w-4 h-4 md:w-5 md:h-5" /> },
+                      { n: "SAT", i: <BookOpen className="w-4 h-4 md:w-5 md:h-5" /> },
+                      { n: "MUET", i: <FileText className="w-4 h-4 md:w-5 md:h-5" /> },
+                      { n: "国际竞赛", i: <Trophy className="w-4 h-4 md:w-5 md:h-5" /> }
+                    ].map((exam, i) => (
+                      <div key={i} className="py-4 bg-white/5 rounded-xl border border-white/5 text-gold font-bold text-[16px] md:text-[20px] shadow-sm flex items-center justify-center gap-2 px-2">
+                        <div className="text-gold/70">{exam.i}</div>
+                        <span className="whitespace-nowrap">{exam.n}</span>
+                      </div>
+                    ))}
+                  </div>
+                  <p className="text-[14px] md:text-[16px] text-white/40 mt-8 italic font-light">
+                    Professional Support Team for Guaranteed Success
+                  </p>
+                </motion.div>
+              </div>
+            </div>
+          </Slide>
+
+          <Slide id="service-summary" accentColor="#0ea5e9" minHeight="min-h-0" padding="px-4 pt-4 pb-2 md:px-8 md:pt-6 md:pb-4">
+            <div className="text-center max-w-5xl mx-auto">
+              <motion.div
+                initial={{ opacity: 0, scale: 0.8 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gold/10 border border-gold/20 text-gold text-xs md:text-sm font-bold tracking-widest uppercase mb-6"
               >
-                <p className="text-[18px] md:text-[22px] text-white font-medium leading-relaxed">
-                  我们不做交付不了结果的培训，我们是让学生努力了就有结果！
-                </p>
-                <p className="text-[16px] md:text-[18px] text-white/70 mt-4">
-                  多种语言考试管理和国际证书为学生的战力加码！
-                </p>
+                <div className="w-2 h-2 rounded-full bg-gold animate-pulse"></div>
+                Global Excellence Since 2012
               </motion.div>
               
-              <div className="space-y-4">
+              <h2 className="font-display text-[28px] md:text-[72px] font-black leading-tight mb-4 text-impact">
+                拓宽视野 · 优化未来<br/>
+                <span className="text-[24px] md:text-[60px] text-transparent bg-clip-text bg-gradient-to-r from-gold via-white to-gold italic">TopUni Global Academy</span>
+              </h2>
+              <p className="text-[13px] md:text-[20px] text-white/70 mb-10 leading-relaxed max-w-3xl mx-auto">
+                致力于为卓越学子提供一站式国际化教育解决方案。<br/>
+                从学术背景提升到顶尖名校规划，以专业精神筑梦未来全球领袖。
+              </p>
+
+              <div className="grid grid-cols-4 md:grid-cols-4 gap-2 md:gap-8">
                 {[
-                  { t: "🇨🇦 加高", d: "OSSD 白名单实体加高，证书+成绩单+推荐信，OEN学籍正规可查" },
-                  { t: "🇺🇸 美高", d: "线上/线下，完整AP成绩单+推荐信，CEEB CODE可查" },
-                  { t: "🇬🇧 英高", d: "A level预估分+成绩单+推荐信" }
-                ].map((item, i) => (
-                  <motion.div 
+                  { v: "100+", t: "覆盖院校", s: "全球顶尖学府", i: <Globe size={20} className="text-gold" /> },
+                  { v: "99%", t: "申请成功率", s: "历届录取保障", i: <CheckCircle2 size={20} className="text-gold" /> },
+                  { v: "100+", t: "专业导师", s: "G5及名校背景", i: <Users size={20} className="text-gold" /> },
+                  { v: "2000+", t: "累积学员", s: "遍布全球各地", i: <Award size={20} className="text-gold" /> }
+                ].map((stat, i) => (
+                  <motion.div
                     key={i}
-                    initial={{ opacity: 0, x: -20 }}
-                    whileInView={{ opacity: 1, x: 0 }}
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
                     transition={{ delay: i * 0.1 }}
-                    className="flex gap-4 p-4 glass-card rounded-xl border border-white/5"
+                    className="p-2 md:p-6 glass-card rounded-xl md:rounded-2xl border border-white/5 hover:border-gold/20 transition-all group"
                   >
-                    <div className="text-gold font-bold text-[18px] shrink-0">{item.t}</div>
-                    <div className="text-[14px] md:text-[16px] text-white/60 leading-relaxed">{item.d}</div>
+                    <div className="w-8 h-8 md:w-12 md:h-12 rounded-lg md:rounded-xl bg-gold/10 flex items-center justify-center mb-2 md:mb-4 mx-auto group-hover:scale-110 transition-transform">
+                      {stat.i}
+                    </div>
+                    <div className="text-[16px] md:text-[36px] font-black text-impact mb-1 md:mb-2">{stat.v}</div>
+                    <div className="text-gold font-bold text-[10px] md:text-[16px] mb-1">{stat.t}</div>
+                    <div className="hidden md:block text-white/40 text-[10px] md:text-[12px]">{stat.s}</div>
                   </motion.div>
                 ))}
               </div>
             </div>
-            
-            <motion.div 
-              initial={{ opacity: 0, scale: 0.9 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              className="p-8 glass-card rounded-[2.5rem] border border-white/10 text-center relative overflow-hidden"
-            >
-              <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-gold to-transparent"></div>
-              <h4 className="font-display text-[24px] md:text-[32px] font-bold text-impact mb-8">考试辅助团队助力出分</h4>
-              <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-                {[
-                  { n: "雅思", i: <Languages className="w-4 h-4 md:w-5 md:h-5" /> },
-                  { n: "托福", i: <Globe className="w-4 h-4 md:w-5 md:h-5" /> },
-                  { n: "Duolingo", i: <Zap className="w-4 h-4 md:w-5 md:h-5" /> },
-                  { n: "GRE", i: <BarChart3 className="w-4 h-4 md:w-5 md:h-5" /> },
-                  { n: "ACT", i: <Monitor className="w-4 h-4 md:w-5 md:h-5" /> },
-                  { n: "SAT", i: <BookOpen className="w-4 h-4 md:w-5 md:h-5" /> }
-                ].map((exam, i) => (
-                  <div key={i} className="py-4 bg-white/5 rounded-xl border border-white/5 text-gold font-bold text-[16px] md:text-[20px] shadow-sm flex items-center justify-center gap-2 px-2">
-                    <div className="text-gold/70">{exam.i}</div>
-                    <span className="whitespace-nowrap">{exam.n}</span>
-                  </div>
-                ))}
-              </div>
-              <p className="text-[14px] md:text-[16px] text-white/40 mt-8 italic font-light">
-                Professional Support Team for Guaranteed Success
-              </p>
-            </motion.div>
-          </div>
-        </div>
-      </Slide>
+          </Slide>
 
-      {/* Slide 7: Cases */}
-      <Slide id="student-cases" accentColor="#1f2937">
+          <PricingSection 
+            id="pricing-uk"
+            country="UNITED KINGDOM"
+            title="英国名校申请星级报价"
+            subtitle="服务明细 / Service Pricing"
+            tiers={[
+              {
+                tier: "S 级梯队",
+                title: "G5 / 顶尖名校",
+                price: "35.0 万起",
+                tag: "TOP SELECTION",
+                items: ["剑桥大学", "牛津大学", "帝国理工学院", "伦敦大学学院"]
+              },
+              {
+                tier: "A 级梯队",
+                title: "王牌名校",
+                price: "25.0 万起",
+                items: ["爱丁堡大学", "曼彻斯特大学", "伦敦国王学院", "伦敦政治经济学院", "布里斯托大学", "华威大学"]
+              },
+              {
+                tier: "B 级梯队",
+                title: "优选名校",
+                price: "12.0 万起",
+                items: ["格拉斯哥大学", "伯明翰大学", "南安普顿大学", "利兹大学", "杜伦大学", "圣安德鲁斯大学", "谢菲尔德大学", "诺丁汉大学", "伦敦大学玛丽皇后学院"]
+              }
+            ]}
+          />
+
+          <PricingSection 
+            id="pricing-au"
+            country="AUSTRALIA"
+            title="澳洲名校及优选大学报价"
+            subtitle="服务明细 / Service Pricing"
+            tiers={[
+              {
+                tier: "S 级梯队",
+                title: "澳洲八大 / 极优名校",
+                price: "25.0 万起",
+                tag: "TOP SELECTION",
+                items: ["墨尔本大学", "悉尼大学", "新南威尔士大学", "蒙纳士大学", "昆士兰大学", "西澳大学"]
+              },
+              {
+                tier: "A 级梯队",
+                title: "王牌名校",
+                price: "22.0 万起",
+                items: ["澳大利亚国立大学", "阿德莱德大学"]
+              },
+              {
+                tier: "B 级梯队",
+                title: "优选名校",
+                price: "9.8 万起",
+                items: ["悉尼科技大学", "皇家墨尔本理工大学", "麦考瑞大学", "伍伦贡大学", "科廷大学", "纽卡斯尔大学", "迪肯大学"]
+              }
+            ]}
+          />
+
+          <PricingSection 
+            id="pricing-my"
+            country="MALAYSIA"
+            title="马来西亚公立与海外分校优选"
+            subtitle="服务明细 / Service Pricing"
+            tiers={[
+              {
+                tier: "公立梯队",
+                title: "性价比之王 | 免语言",
+                price: "15 万",
+                tag: "TOP SELECTION",
+                items: ["马来亚大学", "马来西亚理科大学", "马来西亚国民大学", "博特拉大学"]
+              },
+              {
+                tier: "海外分校梯队",
+                title: "英澳名校 | QS前100",
+                price: "18 万起",
+                items: ["南安普顿大学马来西亚校区", "诺丁汉大学马来西亚校区", "莫那什大学马来西亚校区"]
+              },
+              {
+                tier: "私立梯队",
+                title: "优选名校 | 免语言",
+                price: "4.8 万",
+                items: ["思特雅大学(UCSI)", "泰莱大学", "英迪大学", "亚太科技大学", "世纪大学", "马来西亚城市大学", "双威大学"]
+              }
+            ]}
+          />
+
+          <PricingSection 
+            id="pricing-hk-sg"
+            country="HONG KONG & SINGAPORE"
+            title="香港与新加坡热门优选大学报价"
+            subtitle="服务明细 / Service Pricing"
+            tiers={[
+              {
+                tier: "S 级梯队",
+                title: "港新硕士 / 极优选择",
+                price: "25 万",
+                tag: "TOP SELECTION",
+                items: ["香港中文大学(深圳)", "香港岭南大学", "新加坡科技与设计大学"]
+              },
+              {
+                tier: "A 级梯队",
+                title: "香港本科优选",
+                price: "18-25 万",
+                items: ["香港都会大学", "树仁大学", "恒生大学", "高等教育科技学院", "东华学院", "珠海学院", "VTC资助项目 (专+本)"]
+              },
+              {
+                tier: "B 级梯队",
+                title: "快、准、稳、省",
+                price: "13.8 万",
+                priceSub: "免语言直入本科大二",
+                items: ["都柏林大学学院 (18个月)", "科廷大学 (20个月)", "格林威治大学 (18个月)", "考文垂大学 (16个月)", "伦敦城市大学 (18个月)"]
+              }
+            ]}
+          />
+        </>
+      )}
+
+      {activeTab === 'intro' && (
+        <>
+          {/* Slide 7: Cases */}
+          <Slide id="student-cases" accentColor="#1f2937">
         <div className="max-w-6xl mx-auto">
           <SectionTitle title="学生案例" subtitle="成功见证 / Student Success" />
           <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-6">
@@ -1255,10 +1638,10 @@ export default function App() {
             ))}
           </div>
         </div>
-      </Slide>
+        </Slide>
 
-      {/* Final Slide: Contact */}
-      <Slide className="min-h-[70vh]" accentColor="#0ea5e9">
+        {/* Final Slide: Contact */}
+        <Slide className="min-h-[35vh]" accentColor="#0ea5e9">
         <div className="text-center">
           <motion.div 
             initial={{ scale: 0.9, opacity: 0 }} 
@@ -1286,13 +1669,16 @@ export default function App() {
               <span className="tracking-widest">www.topuni.com.cn</span>
             </a>
           </div>
-          <div className="mt-20 md:mt-32 pb-8 text-center">
+          <div className="mt-5 md:mt-8 pb-4 text-center">
             <p className="text-[10px] md:text-[12px] text-white/30 font-light tracking-widest">
-              © 2026 TopUni Global Academy All rights Reserved. &nbsp;&nbsp; 鄂ICP备2026009611号
+              © 2026 TopUni Global Academy All rights Reserved.<br />
+              <span className="block mt-1">鄂ICP备2026009611号</span>
             </p>
           </div>
         </div>
       </Slide>
+        </>
+      )}
     </div>
   );
 }
