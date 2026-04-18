@@ -16,14 +16,13 @@
   }
   
   body {
-    font-size: 16px;
-    @media (min-width: 768px) {
-      font-size: 18px;
-    }
+    font-size: 15px;
     line-height: 1.6;
     color: white;
     background: #003366;
     font-family: "Inter", sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
 }
 
@@ -74,6 +73,13 @@
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   filter: drop-shadow(0 4px 12px rgba(0,0,0,0.1));
+  letter-spacing: -0.02em;
+}
+
+.text-gold-gradient {
+  background: linear-gradient(to bottom, #b8860b 0%, #d4af37 50%, #8b6508 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
 .glass-card {
