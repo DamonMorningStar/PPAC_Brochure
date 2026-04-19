@@ -1462,7 +1462,7 @@ export default function App() {
                 从学术背景提升到顶尖名校规划，以专业精神筑梦未来全球领袖。
               </p>
 
-              <div className="grid grid-cols-4 md:grid-cols-4 gap-2 md:gap-8">
+              <div className="grid grid-cols-4 md:grid-cols-4 gap-2 md:gap-8 mb-[30px]">
                 {[
                   { v: "100+", t: "覆盖院校", s: "全球顶尖学府", i: <Globe size={20} className="text-gold" /> },
                   { v: "99%", t: "申请成功率", s: "历届录取保障", i: <CheckCircle2 size={20} className="text-gold" /> },
