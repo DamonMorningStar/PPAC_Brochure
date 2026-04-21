@@ -432,7 +432,6 @@ const TopHeader = ({ activeTab, setActiveTab }: { activeTab: string; setActiveTa
     { id: 'intro', name: '总介', icon: <Home size={18} /> },
     { id: 'undergrad', name: '本科项目' },
     { id: 'masters', name: '硕士项目' },
-    { id: 'academic', name: '学术加持' },
   ];
 
   return (
@@ -467,16 +466,16 @@ const TopHeader = ({ activeTab, setActiveTab }: { activeTab: string; setActiveTa
   );
 };
 
-const FloatingNav = ({ activeTab }: { activeTab: string }) => {
+const FloatingNav = ({ activeTab, setActiveTab }: { activeTab: string; setActiveTab: (tab: string) => void }) => {
   const [isOpen, setIsOpen] = React.useState(false);
 
-  if (activeTab === 'masters') return null;
+  if (activeTab === 'masters' || activeTab === 'academic') return null;
 
-  const getNavItems = (): { name: React.ReactNode; id: string; isExternal?: boolean }[] => {
+  const getNavItems = (): { name: React.ReactNode; id: string; isExternal?: boolean; tab?: string }[] => {
     switch (activeTab) {
       case 'intro':
         return [
-          { name: <Home size={22} />, id: "top" },
+          { name: "学术加持", tab: "academic", id: "service-summary" },
           { name: "核心竞争优势", id: "undergrad-advantages" },
           { name: "合作院校", id: "global-partners" },
           { name: "名师简介", id: "faculty" },
@@ -486,7 +485,7 @@ const FloatingNav = ({ activeTab }: { activeTab: string }) => {
         ];
       case 'undergrad':
         return [
-          { name: <Home size={22} />, id: "undergrad-path" },
+          { name: "学术加持", tab: "academic", id: "service-summary" },
           { name: "精英规划PPAC", id: "premium-planning" },
           { name: "高中升大二(新加坡)", id: "core-value" },
           { name: "初中升本科(新加坡)", id: "junior-undergrad-path" },
@@ -496,12 +495,13 @@ const FloatingNav = ({ activeTab }: { activeTab: string }) => {
         ];
       case 'academic':
         return [
-          { name: <Home size={22} />, id: "exams-certs" },
-          { name: "语言与竞赛", id: "exams-certs" },
+          { name: <Home size={22} />, id: "service-summary" },
+          { name: "成果展示", id: "service-summary" },
           { name: "英国", id: "pricing-uk" },
           { name: "澳洲", id: "pricing-au" },
           { name: "马来西亚", id: "pricing-my" },
           { name: "新加坡 and 香港", id: "pricing-hk-sg" },
+          { name: "语言与证书", id: "exams-certs" },
         ];
       default:
         return [];
@@ -510,13 +510,29 @@ const FloatingNav = ({ activeTab }: { activeTab: string }) => {
 
   const navItems = getNavItems();
 
-  const scrollTo = (id: string, isExternal?: boolean) => {
-    if (isExternal) {
-      window.open(id, '_blank');
+  const handleNavClick = (item: { id: string; isExternal?: boolean; tab?: string }) => {
+    if (item.isExternal) {
+      window.open(item.id, '_blank');
       setIsOpen(false);
       return;
     }
-    const element = document.getElementById(id);
+
+    if (item.tab) {
+      setActiveTab(item.tab);
+      setIsOpen(false);
+      // Wait for tab switch rendering then scroll
+      setTimeout(() => {
+        const element = document.getElementById(item.id);
+        if (element) {
+          element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        } else {
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+      }, 150);
+      return;
+    }
+
+    const element = document.getElementById(item.id);
     if (element) {
       element.scrollIntoView({ behavior: 'smooth' });
       setIsOpen(false);
@@ -569,7 +585,7 @@ const FloatingNav = ({ activeTab }: { activeTab: string }) => {
               {navItems.map((item, idx) => (
                 <motion.button
                   key={idx}
-                  onClick={() => scrollTo(item.id, item.isExternal)}
+                  onClick={() => handleNavClick(item)}
                   initial={{ opacity: 0, x: 20 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: idx * 0.05 }}
@@ -594,10 +610,14 @@ const FloatingNav = ({ activeTab }: { activeTab: string }) => {
 export default function App() {
   const [activeTab, setActiveTab] = React.useState('intro');
 
+  React.useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }, [activeTab]);
+
   return (
     <div className="no-scrollbar font-sans overflow-x-hidden bg-[#003366] pt-[72px] md:pt-[84px]">
       <TopHeader activeTab={activeTab} setActiveTab={setActiveTab} />
-      <FloatingNav activeTab={activeTab} />
+      <FloatingNav activeTab={activeTab} setActiveTab={setActiveTab} />
       
       {activeTab === 'intro' && (
         <>
@@ -853,8 +873,8 @@ export default function App() {
             <motion.h4 
               initial={{ opacity: 0, x: -20 }}
               whileInView={{ opacity: 1, x: 0 }}
-              className="font-display text-[42px] font-black mb-6 text-transparent bg-clip-text bg-gradient-to-b from-white via-gold to-gold/80 drop-shadow-[0_10px_10px_rgba(0,0,0,0.4)] filter contrast-125 tracking-tight"
-              style={{ WebkitTextStroke: '1px rgba(255,215,0,0.1)' }}
+              className="font-display text-[26px] md:text-[42px] font-black mb-6 text-transparent bg-clip-text bg-gradient-to-b from-white via-gold to-gold/80 drop-shadow-2xl filter contrast-125 tracking-tight leading-tight"
+              style={{ WebkitTextStroke: '0.5px rgba(255,215,0,0.05)' }}
             >
               TopUni 本科升学路径
             </motion.h4>
@@ -1252,7 +1272,7 @@ export default function App() {
             <motion.h4 
               initial={{ opacity: 0, x: -20 }}
               whileInView={{ opacity: 1, x: 0 }}
-              className="font-display text-[26px] md:text-[36px] font-black mb-6 text-transparent bg-clip-text bg-gradient-to-b from-white via-gold to-gold/80 drop-shadow-2xl filter contrast-125 tracking-tight leading-tight"
+              className="font-display text-[26px] md:text-[42px] font-black mb-6 text-transparent bg-clip-text bg-gradient-to-b from-white via-gold to-gold/80 drop-shadow-2xl filter contrast-125 tracking-tight leading-tight"
               style={{ WebkitTextStroke: '0.5px rgba(255,215,0,0.05)' }}
             >
               TopUni 硕士留学路径
@@ -1372,77 +1392,7 @@ export default function App() {
 
       {activeTab === 'academic' && (
         <>
-          <Slide id="exams-certs" accentColor="#8b5cf6">
-            <div className="max-w-6xl mx-auto">
-              <SectionTitle title="语言考试与国际证书" subtitle="学术加持 / Language & Certificates" />
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-center">
-                <div className="space-y-6">
-                  <motion.div 
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    className="p-6 glass-card rounded-2xl border-l-4 border-gold"
-                  >
-                    <p className="text-[14px] text-white font-medium leading-relaxed">
-                      我们不做交付不了结果的培训，我们是让学生努力了就有结果！
-                    </p>
-                    <p className="text-[14px] text-white/70 mt-4">
-                      多种语言考试管理和国际证书为学生的战力加码！
-                    </p>
-                  </motion.div>
-                  
-                  <div className="space-y-4">
-                    {[
-                      { t: "🇨🇦 加高", d: "OSSD 白名单实体加高，证书+成绩单+推荐信，OEN学籍正规可查" },
-                      { t: "🇺🇸 美高", d: "线上/线下，完整AP成绩单+推荐信，CEEB CODE可查" },
-                      { t: "🇬🇧 英高", d: "A level预估分+成绩单+推荐信" }
-                    ].map((item, i) => (
-                      <motion.div 
-                        key={i}
-                        initial={{ opacity: 0, x: -20 }}
-                        whileInView={{ opacity: 1, x: 0 }}
-                        transition={{ delay: i * 0.1 }}
-                        className="flex gap-4 p-4 glass-card rounded-xl border border-white/5"
-                      >
-                        <div className="text-gold font-bold text-[18px] md:text-[20px] shrink-0 tracking-wide">{item.t}</div>
-                        <div className="text-[14px] md:text-[16px] text-white/60 leading-relaxed">{item.d}</div>
-                      </motion.div>
-                    ))}
-                  </div>
-                </div>
-                
-                <motion.div 
-                  initial={{ opacity: 0, scale: 0.9 }}
-                  whileInView={{ opacity: 1, scale: 1 }}
-                  className="p-8 glass-card rounded-[2.5rem] border border-white/10 text-center relative overflow-hidden"
-                >
-                  <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-gold to-transparent"></div>
-                  <h4 className="font-display text-[24px] md:text-[32px] font-bold text-impact mb-8">考试辅助团队助力出分</h4>
-                  <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-                    {[
-                      { n: "雅思", i: <Languages className="w-4 h-4 md:w-5 md:h-5" /> },
-                      { n: "托福", i: <Globe className="w-4 h-4 md:w-5 md:h-5" /> },
-                      { n: "Duolingo", i: <Zap className="w-4 h-4 md:w-5 md:h-5" /> },
-                      { n: "GRE", i: <BarChart3 className="w-4 h-4 md:w-5 md:h-5" /> },
-                      { n: "ACT", i: <Monitor className="w-4 h-4 md:w-5 md:h-5" /> },
-                      { n: "SAT", i: <BookOpen className="w-4 h-4 md:w-5 md:h-5" /> },
-                      { n: "MUET", i: <FileText className="w-4 h-4 md:w-5 md:h-5" /> },
-                      { n: "国际竞赛", i: <Trophy className="w-4 h-4 md:w-5 md:h-5" /> }
-                    ].map((exam, i) => (
-                      <div key={i} className="py-4 bg-white/5 rounded-xl border border-white/5 text-gold font-bold text-[16px] md:text-[20px] shadow-sm flex items-center justify-center gap-2 px-2">
-                        <div className="text-gold/70">{exam.i}</div>
-                        <span className="whitespace-nowrap">{exam.n}</span>
-                      </div>
-                    ))}
-                  </div>
-                  <p className="text-[14px] md:text-[16px] text-white/40 mt-8 italic font-light">
-                    Professional Support Team for Guaranteed Success
-                  </p>
-                </motion.div>
-              </div>
-            </div>
-          </Slide>
-
-          <Slide id="service-summary" accentColor="#0ea5e9" minHeight="min-h-0" padding="px-4 pt-4 pb-2 md:px-8 md:pt-6 md:pb-4">
+          <Slide id="service-summary" accentColor="#0ea5e9" minHeight="min-h-0" padding="px-4 pt-10 pb-2 md:px-8 md:pt-20 md:pb-4">
             <div className="text-center max-w-5xl mx-auto">
               <motion.div
                 initial={{ opacity: 0, scale: 0.8 }}
@@ -1600,6 +1550,76 @@ export default function App() {
               }
             ]}
           />
+
+          <Slide id="exams-certs" accentColor="#8b5cf6">
+            <div className="max-w-6xl mx-auto">
+              <SectionTitle title="语言考试与国际证书" subtitle="学术加持 / Language & Certificates" />
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-center">
+                <div className="space-y-6">
+                  <motion.div 
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    className="p-6 glass-card rounded-2xl border-l-4 border-gold"
+                  >
+                    <p className="text-[14px] text-white font-medium leading-relaxed">
+                      我们不做交付不了结果的培训，我们是让学生努力了就有结果！
+                    </p>
+                    <p className="text-[14px] text-white/70 mt-4">
+                      多种语言考试管理和国际证书为学生的战力加码！
+                    </p>
+                  </motion.div>
+                  
+                  <div className="space-y-4">
+                    {[
+                      { t: "🇨🇦 加高", d: "OSSD 白名单实体加高，证书+成绩单+推荐信，OEN学籍正规可查" },
+                      { t: "🇺🇸 美高", d: "线上/线下，完整AP成绩单+推荐信，CEEB CODE可查" },
+                      { t: "🇬🇧 英高", d: "A level预估分+成绩单+推荐信" }
+                    ].map((item, i) => (
+                      <motion.div 
+                        key={i}
+                        initial={{ opacity: 0, x: -20 }}
+                        whileInView={{ opacity: 1, x: 0 }}
+                        transition={{ delay: i * 0.1 }}
+                        className="flex gap-4 p-4 glass-card rounded-xl border border-white/5"
+                      >
+                        <div className="text-gold font-bold text-[18px] md:text-[20px] shrink-0 tracking-wide">{item.t}</div>
+                        <div className="text-[14px] md:text-[16px] text-white/60 leading-relaxed">{item.d}</div>
+                      </motion.div>
+                    ))}
+                  </div>
+                </div>
+                
+                <motion.div 
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  whileInView={{ opacity: 1, scale: 1 }}
+                  className="p-8 glass-card rounded-[2.5rem] border border-white/10 text-center relative overflow-hidden"
+                >
+                  <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-gold to-transparent"></div>
+                  <h4 className="font-display text-[24px] md:text-[32px] font-bold text-impact mb-8">考试辅助团队助力出分</h4>
+                  <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+                    {[
+                      { n: "雅思", i: <Languages className="w-4 h-4 md:w-5 md:h-5" /> },
+                      { n: "托福", i: <Globe className="w-4 h-4 md:w-5 md:h-5" /> },
+                      { n: "Duolingo", i: <Zap className="w-4 h-4 md:w-5 md:h-5" /> },
+                      { n: "GRE", i: <BarChart3 className="w-4 h-4 md:w-5 md:h-5" /> },
+                      { n: "ACT", i: <Monitor className="w-4 h-4 md:w-5 md:h-5" /> },
+                      { n: "SAT", i: <BookOpen className="w-4 h-4 md:w-5 md:h-5" /> },
+                      { n: "MUET", i: <FileText className="w-4 h-4 md:w-5 md:h-5" /> },
+                      { n: "国际竞赛", i: <Trophy className="w-4 h-4 md:w-5 md:h-5" /> }
+                    ].map((exam, i) => (
+                      <div key={i} className="py-4 bg-white/5 rounded-xl border border-white/5 text-gold font-bold text-[16px] md:text-[20px] shadow-sm flex items-center justify-center gap-2 px-2">
+                        <div className="text-gold/70">{exam.i}</div>
+                        <span className="whitespace-nowrap">{exam.n}</span>
+                      </div>
+                    ))}
+                  </div>
+                  <p className="text-[14px] md:text-[16px] text-white/40 mt-8 italic font-light">
+                    Professional Support Team for Guaranteed Success
+                  </p>
+                </motion.div>
+              </div>
+            </div>
+          </Slide>
         </>
       )}
 
