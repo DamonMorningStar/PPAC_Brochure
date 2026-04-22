@@ -1399,129 +1399,6 @@ export default function App() {
         </div>
       </Slide>
 
-      <UniversityModule />
-
-      <AnimatePresence>
-        {selectedUniv && (
-          <>
-            <motion.div 
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              onClick={() => setSelectedUniv(null)}
-              className="fixed inset-0 bg-black/60 backdrop-blur-sm z-[1000] md:hidden"
-            />
-            <motion.div
-              initial={{ y: "100%", opacity: 0 }}
-              animate={{ y: 0, opacity: 1 }}
-              exit={{ y: "100%", opacity: 0 }}
-              className="fixed top-[10%] left-[5%] right-[5%] h-auto max-h-[70%] bg-[#001f3f] border border-gold/30 rounded-2xl z-[1001] md:hidden p-6 shadow-2xl flex flex-col"
-            >
-              <div className="h-full flex flex-col">
-                <div className="flex justify-between items-start mb-4">
-                  <div>
-                    <h3 className="text-white text-[20px] font-bold leading-tight">{selectedUniv.n}</h3>
-                    <p className="text-white/60 text-[12px] font-medium mt-1 uppercase tracking-wider">
-                      {UNIVERSITY_DESCRIPTIONS[selectedUniv.n]?.en || (selectedUniv.n.includes('马来西亚') ? "International Campus Malaysia" : "World Class University")}
-                    </p>
-                  </div>
-                  <button onClick={() => setSelectedUniv(null)} className="text-white/40 pt-1">
-                    <X size={24} />
-                  </button>
-                </div>
-                
-                <div className="inline-block mb-4 px-2 py-0.5 bg-gold/20 border border-gold/30 rounded text-gold text-[12px] font-bold font-mono w-fit">
-                  {selectedUniv.r}
-                </div>
-                
-                <div className="flex-1 overflow-y-auto pr-2 custom-scrollbar">
-                  <div className="space-y-4">
-                    <p className="text-white/80 text-[14px] leading-relaxed text-justify">
-                      {UNIVERSITY_DESCRIPTIONS[selectedUniv.n]?.desc || (selectedUniv.n.includes('马来西亚') ? UNIVERSITY_DESCRIPTIONS["马来西亚分校"].desc : `${UNIVERSITY_DESCRIPTIONS[selectedUniv.n]?.country || '海外'}知名大学。该校致力于为全球学子提供卓越的教育资源，在科研与教学领域均享有崇高的声誉，其学位受全球广泛认可。`)}
-                    </p>
-                    
-                    {UNIVERSITY_DESCRIPTIONS[selectedUniv.n]?.tuition && (
-                      <div className="pt-4">
-                        <div className="w-12 h-[2px] bg-gold/60 mb-4"></div>
-                        <div className="flex items-center gap-2">
-                          <span className="text-white/40 text-[12px]">预估学费/年：</span>
-                          <span className="text-gold font-bold text-[18px]">¥{UNIVERSITY_DESCRIPTIONS[selectedUniv.n].tuition}</span>
-                          <span className="text-gold/60 text-[12px] ml-1">RMB</span>
-                        </div>
-                      </div>
-                    )}
-                  </div>
-                </div>
-              </div>
-
-              {/* Close button outside bottom-left */}
-              <button 
-                onClick={() => setSelectedUniv(null)}
-                className="absolute -bottom-16 left-0 w-12 h-12 rounded-full border border-white/20 bg-white/10 flex items-center justify-center text-white backdrop-blur-md active:scale-95 transition-transform"
-              >
-                <X size={24} />
-              </button>
-            </motion.div>
-          </>
-        )}
-
-        {selectedCountryPartner && (
-          <>
-            <motion.div 
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              onClick={() => setSelectedCountryPartner(null)}
-              className="fixed inset-0 bg-black/60 backdrop-blur-sm z-[1000] md:hidden"
-            />
-            <motion.div
-              initial={{ y: "100%", opacity: 0 }}
-              animate={{ y: 0, opacity: 1 }}
-              exit={{ y: "100%", opacity: 0 }}
-              className="fixed top-[10%] left-[5%] right-[5%] h-auto max-h-[70%] bg-[#001f3f] border border-gold/30 rounded-2xl z-[1001] md:hidden p-6 shadow-2xl flex flex-col"
-            >
-              <div className="flex justify-between items-center mb-4 pb-2 border-b border-white/10">
-                <h3 className="text-white text-[20px] font-bold">{selectedCountryPartner.r}</h3>
-                <button onClick={() => setSelectedCountryPartner(null)} className="text-white/60">
-                  <X size={20} />
-                </button>
-              </div>
-              
-              <div className="flex-1 overflow-y-auto pr-2 custom-scrollbar">
-                <div className="grid grid-cols-1 gap-3">
-                  {selectedCountryPartner.s.map((school, sIdx) => {
-                    const match = school.match(/(.*)\s\((QS\s.*)\)/);
-                    if (match) {
-                      const [, name, rank] = match;
-                      return (
-                        <div key={sIdx} className="p-4 bg-white/5 rounded-xl border border-white/10 flex flex-col gap-1">
-                          <span className="text-white text-[15px] font-medium leading-tight">{name}</span>
-                          <span className="text-gold/80 font-mono text-[11px] tracking-wider">{rank}</span>
-                        </div>
-                      );
-                    }
-                    return (
-                      <div key={sIdx} className="p-4 bg-white/5 rounded-xl border border-white/10 text-white text-[15px] font-light">
-                        {school}
-                      </div>
-                    );
-                  })}
-                </div>
-              </div>
-              
-              <div className="mt-6 text-center">
-                 <button 
-                  onClick={() => setSelectedCountryPartner(null)}
-                  className="w-12 h-12 rounded-full border border-white/20 bg-white/10 flex items-center justify-center text-white mx-auto active:scale-95 transition-transform"
-                >
-                  <X size={24} />
-                </button>
-              </div>
-            </motion.div>
-          </>
-        )}
-      </AnimatePresence>
-
       <Slide id="service-reqs" accentColor="#0ea5e9">
         <div className="grid grid-cols-1 md:grid-cols-12 gap-12 md:gap-16">
           <div id="service-flow" className="col-span-1 md:col-span-7 scroll-mt-[72px] md:scroll-mt-[84px]">
@@ -2028,6 +1905,121 @@ export default function App() {
       </Slide>
         </>
       )}
+
+      <UniversityModule />
+
+      <AnimatePresence>
+        {selectedUniv && (
+          <>
+            <motion.div 
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setSelectedUniv(null)}
+              className="fixed inset-0 bg-black/60 backdrop-blur-sm z-[1000] md:hidden"
+            />
+            <motion.div
+              initial={{ y: "100%", opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              exit={{ y: "100%", opacity: 0 }}
+              className="fixed top-[10%] left-[5%] right-[5%] h-auto max-h-[70%] bg-[#001f3f] border border-gold/30 rounded-2xl z-[1001] md:hidden p-6 shadow-2xl flex flex-col"
+            >
+              <div className="h-full flex flex-col">
+                <div className="flex justify-between items-start mb-4">
+                  <div>
+                    <h3 className="text-white text-[20px] font-bold leading-tight">{selectedUniv.n}</h3>
+                    <p className="text-white/60 text-[12px] font-medium mt-1 uppercase tracking-wider">
+                      {UNIVERSITY_DESCRIPTIONS[selectedUniv.n]?.en || (selectedUniv.n.includes('马来西亚') ? "International Campus Malaysia" : "World Class University")}
+                    </p>
+                  </div>
+                </div>
+                
+                <div className="inline-block mb-4 px-2 py-0.5 bg-gold/20 border border-gold/30 rounded text-gold text-[12px] font-bold font-mono w-fit">
+                  {selectedUniv.r}
+                </div>
+                
+                <div className="flex-1 overflow-y-auto pr-2 custom-scrollbar">
+                  <div className="space-y-4">
+                    <p className="text-white/80 text-[14px] leading-relaxed text-justify">
+                      {UNIVERSITY_DESCRIPTIONS[selectedUniv.n]?.desc || (selectedUniv.n.includes('马来西亚') ? UNIVERSITY_DESCRIPTIONS["马来西亚分校"].desc : `${UNIVERSITY_DESCRIPTIONS[selectedUniv.n]?.country || '海外'}知名大学。该校致力于为全球学子提供卓越的教育资源，在科研与教学领域均享有崇高的声誉，其学位受全球广泛认可。`)}
+                    </p>
+                    
+                    {UNIVERSITY_DESCRIPTIONS[selectedUniv.n]?.tuition && (
+                      <div className="pt-4">
+                        <div className="w-12 h-[2px] bg-gold/60 mb-4"></div>
+                        <div className="flex items-center gap-2">
+                          <span className="text-white/40 text-[12px]">预估学费/年：</span>
+                          <span className="text-gold font-bold text-[18px]">¥{UNIVERSITY_DESCRIPTIONS[selectedUniv.n].tuition}</span>
+                          <span className="text-gold/60 text-[12px] ml-1">RMB</span>
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+          </>
+        )}
+
+        {selectedCountryPartner && (
+          <>
+            <motion.div 
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setSelectedCountryPartner(null)}
+              className="fixed inset-0 bg-black/60 backdrop-blur-sm z-[1000] md:hidden"
+            />
+            <motion.div
+              initial={{ y: "100%", opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              exit={{ y: "100%", opacity: 0 }}
+              className="fixed top-[10%] left-[5%] right-[5%] h-auto max-h-[70%] bg-[#001f3f] border border-gold/30 rounded-2xl z-[1001] md:hidden p-6 shadow-2xl flex flex-col"
+            >
+              <div className="flex justify-between items-center mb-4 pb-2 border-b border-white/10">
+                <h3 className="text-white text-[20px] font-bold">{selectedCountryPartner.r}</h3>
+              </div>
+              
+              <div className="flex-1 overflow-y-auto pr-2 custom-scrollbar">
+                <div className="grid grid-cols-1 gap-3">
+                  {selectedCountryPartner.s.map((school, sIdx) => {
+                    const match = school.match(/(.*)\s\((QS\s.*)\)/);
+                    if (match) {
+                      const [, name, rank] = match;
+                      const info = UNIVERSITY_DESCRIPTIONS[name] || 
+                                   Object.values(UNIVERSITY_DESCRIPTIONS).find(u => name.includes(u.en.split(' ')[0]) || name.includes(u.en.split(' of ')[1]));
+                      
+                      const enName = info?.en || (name.includes('大学') ? 
+                        name.replace('大学', ' University') : name + ' Academy');
+                      const description = info?.desc || `${name}是全球知名学府，在科研与教学领域均享有崇高的声誉，致力于培养具有国际视野的拔尖人才，其学位受全球广泛认可。`;
+
+                      return (
+                        <div key={sIdx} className="p-4 bg-white/5 rounded-xl border border-white/10 flex flex-col gap-1.5 shadow-sm">
+                          <div className="flex justify-between items-start gap-4">
+                            <span className="text-white text-[15px] font-bold leading-tight">{name}</span>
+                            <span className="text-gold font-mono text-[11px] tracking-wider shrink-0 pt-0.5">{rank}</span>
+                          </div>
+                          <div className="text-gold/60 text-[10px] font-medium leading-tight uppercase tracking-wide">
+                            {enName}
+                          </div>
+                          <p className="text-white/50 text-[12px] leading-snug line-clamp-2 font-light">
+                            {description.slice(0, 50)}{description.length > 50 ? '...' : ''}
+                          </p>
+                        </div>
+                      );
+                    }
+                    return (
+                      <div key={sIdx} className="p-4 bg-white/5 rounded-xl border border-white/10 text-white text-[15px] font-light">
+                        {school}
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+            </motion.div>
+          </>
+        )}
+      </AnimatePresence>
     </div>
   );
 }
