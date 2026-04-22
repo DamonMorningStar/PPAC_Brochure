@@ -405,7 +405,7 @@ const Slide = ({ children, accentColor = "#c5a059", className = "", id, padding 
   </section>
 );
 
-const SectionTitle = ({ title, subtitle }: { title: string, subtitle: string }) => (
+const SectionTitle = ({ title, subtitle }: { title: React.ReactNode, subtitle: string }) => (
   <div className="mb-10 md:mb-16 text-center">
     <motion.h2 
       initial={{ opacity: 0, y: 10 }}
@@ -488,20 +488,10 @@ const FloatingNav = ({ activeTab, setActiveTab }: { activeTab: string; setActive
           { name: "学术加持", tab: "academic", id: "service-summary" },
           { name: "精英规划PPAC", id: "premium-planning" },
           { name: "高中升大二(新加坡)", id: "core-value" },
-          { name: "初中升本科(新加坡)", id: "junior-undergrad-path" },
+          { name: "初中毕业升学(新加坡)", id: "junior-undergrad-path" },
           { name: "新加坡推荐院校", id: "sg-universities" },
           { name: "服务流程", id: "service-flow" },
           { name: "申请要求", id: "admission-reqs" },
-        ];
-      case 'academic':
-        return [
-          { name: <Home size={22} />, id: "service-summary" },
-          { name: "成果展示", id: "service-summary" },
-          { name: "英国", id: "pricing-uk" },
-          { name: "澳洲", id: "pricing-au" },
-          { name: "马来西亚", id: "pricing-my" },
-          { name: "新加坡 and 香港", id: "pricing-hk-sg" },
-          { name: "语言与证书", id: "exams-certs" },
         ];
       default:
         return [];
@@ -520,7 +510,6 @@ const FloatingNav = ({ activeTab, setActiveTab }: { activeTab: string; setActive
     if (item.tab) {
       setActiveTab(item.tab);
       setIsOpen(false);
-      // Wait for tab switch rendering then scroll
       setTimeout(() => {
         const element = document.getElementById(item.id);
         if (element) {
@@ -607,8 +596,157 @@ const FloatingNav = ({ activeTab, setActiveTab }: { activeTab: string; setActive
   );
 };
 
+const UNIVERSITY_DESCRIPTIONS: Record<string, { en: string; desc: string; country: string; tuition?: string }> = {
+  "伯明翰大学": {
+    en: "University of Birmingham",
+    country: "英国",
+    desc: "英国知名大学，是著名的红砖大学和罗素大学集团成员。作为一所世界百强名校，伯明翰大学在教育和科研领域享有崇高的国际声誉。学校商学院获得AACSB多重认证。其新加坡校区通过与知名机构合作，为学生提供原汁原味的英国顶尖课程，学位含金量深受全球认可，是通往国际职场的绝佳跳板。",
+    tuition: "13-15万",
+  },
+  "都柏林大学学院": {
+    en: "University College Dublin",
+    country: "爱尔兰",
+    desc: "爱尔兰知名大学，拥有超过160年的悠久历史，是爱尔兰规模最大、最具国际影响力的研究型大学。作为全球顶尖1%的名校，UCD商学院拥有“三皇冠”权威认证。新加坡校区的毕业生由UCD直接授予学位，在金融、管理及数字商务领域表现卓越，为学生提供了足不出亚洲即可获得欧洲顶级名校学位的机会。",
+    tuition: "12-14万",
+  },
+  "科廷大学": {
+    en: "Curtin University",
+    country: "澳洲",
+    desc: "澳洲知名大学，以其在研究和教育领域的卓越表现入选全球前1%精英大学。科廷大学新加坡校区作为直属分校，教研水准与澳洲主校区同步，其商科及传媒专业极具竞争力。校区地处亚洲金融中心，通过紧密结合行业需求的课程设置，源源不断地为全球各大金融机构及跨国企业输送具备国际视野的高素质人才。",
+    tuition: "15-17万",
+  },
+  "詹姆斯库克大学": {
+    en: "James Cook University",
+    country: "澳洲",
+    desc: "澳洲知名大学，名列全球顶尖1%精英大学。詹姆斯库克大学（JCU）新加坡校区是该校在海外的首个直属校区，获得新加坡教育信托星级认证（EduTrust Star）。学校在心理学、海洋科学及商业管理等领域极具研究深度。JCU秉承澳洲主校区的品质，为学生提供快捷、高质量的本硕博学位路径，学历获全球名企及政府机构的高度认可。",
+    tuition: "16-18万",
+  },
+  "伦敦城市大学": {
+    en: "City, University of London",
+    country: "英国",
+    desc: "英国知名大学，是伦敦大学联盟的重要成员，以其卓越的教育质量和与全球商业中心的紧密联系而享誉商界。伦敦城市大学旗下的商学院更是获得“三皇冠”认证的世界顶级商学院。通过与新加坡优质教育机构合作，学校为学子提供了高含金量的英国顶尖商科与传播类课程。名校学历、实战导向的课程设置，使其毕业生在快速迭代的国际职场中始终保持竞争优势。",
+    tuition: "12-14万",
+  },
+  "考文垂大学": {
+    en: "Coventry University",
+    country: "英国",
+    desc: "英国知名大学，以其实践导向的教学模式和极高的就业率著称。考文垂大学在工程、计算机和产品设计等领域具有行业领先地位。新加坡校区的课程设计与行业紧密挂钩，特别是在现代商业管理与计算机科学领域，为学生提供了丰富的实践演练机会。学校注重培养学生的创新思维与应用能力，助力学子在职业初创期建立核心竞争力。",
+    tuition: "10-12万",
+  },
+  "格林威治大学": {
+    en: "University of Greenwich",
+    country: "英国",
+    desc: "英国知名大学，拥有被列为世界文化遗产的唯美校址。学校在工程、商科及酒店管理等专业领域积累了深厚底蕴。其新加坡分校秉承总校卓越的教学传统，教学设施先进，师资力量雄厚。课程不仅传授专业理论，更注重培养学生的跨文化沟通能力。学生在此亦能享受到全方位的学术支持，为未来的全球化职业生涯打下坚实基础。",
+    tuition: "9-11万",
+  },
+  "皇家墨尔本理工": {
+    en: "RMIT University",
+    country: "澳洲",
+    desc: "澳洲知名大学，是澳洲历史最悠久的高等学府之一，也是公认的全球艺术与设计、建筑与商科教育的领军者。RMIT新加坡校区以其灵活的带薪实习项目与行业连接性闻名。学校致力于打破传统课堂界限，通过参与真实的项目案例，培养学生解决复杂问题的能力。其颁发的学位在全球创意产业及大型跨国咨询公司中均享有极高声望。",
+    tuition: "14-16万",
+  },
+  "澳洲国立大学": {
+    en: "The Australian National University",
+    country: "澳洲",
+    desc: "澳洲知名大学，是澳洲唯一的国立大学，常年稳居澳洲及全球高校前列。作为八大名校（Go8）之首，ANU在科研产出及学术声誉方面达到了世界顶尖水平。学校不仅拥有极其深厚的学术研究底蕴，更培养了多位诺贝尔奖得主及政商界领袖。其严谨的治学态度和卓越的师资力量，为追求卓越学术成就的全球学子提供了最顶尖的成长环境。",
+    tuition: "22-26万",
+  },
+  "悉尼大学": {
+    en: "The University of Sydney",
+    country: "澳洲",
+    desc: "澳洲知名大学，作为南半球学术殿堂的典范，素有“南半球牛津”的美誉。悉尼大学是澳洲首所大学，其历史悠久的校园与现代化的科研设施相得益彰。学校商学院拥有全球顶尖审计认证，法律、医学及人文等学科均处于世界领先地位。悉尼大学注重引领跨学科学术创新，旨在培养具有全球竞争力的未来领袖，其学位在国际主流金融街和科技企业中被广泛认可。",
+    tuition: "24-28万",
+  },
+  "蒙纳士大学": {
+    en: "Monash University",
+    country: "澳洲",
+    desc: "澳洲知名大学，是澳洲规模最大的顶尖研究型学府之一。蒙纳士大学作为八校联盟的一员，以其勇于挑战现状和追求创新的精神闻名于世。学校的药剂与药理学、工程、教育及商科均稳居全球顶尖行列。蒙纳士不仅提供严谨的学术路径，更强调通过丰富的全球交换生项目和行业实践，培养学生的社会公益责任感与极高的职场适应能力。",
+    tuition: "22-26万",
+  },
+  "新南威尔士大学": {
+    en: "UNSW Sydney",
+    country: "澳洲",
+    desc: "澳洲知名大学，以理工科见长，被誉为“南半球的硅谷”。UNSW在工程、可再生能源、计算机科学及商学领域展现出统治级的科研实力。学校紧邻悉尼中心商务区，深厚的行业连接使得学生在校期间即可参与一流的科研实验与企业实习。UNSW高度重视技术的实际转化，其培养的科技初创校友及金融行业高管数量在澳洲名列前茅，是理工及金融人才的首选。",
+    tuition: "24-28万",
+  },
+  "昆士兰大学": {
+    en: "The University of Queensland",
+    country: "澳洲",
+    desc: "澳洲知名大学，是世界著名的科学研究中心之一。位于风景优明的布里斯班，昆大校园以其学术严谨和令人叹为观止的古典建筑著称。学校在生物科学、农业、商学及政治学领域享有极高的国际话语权。昆大致力于通过一流的实验室资源和顶尖的师资团队，解决当今社会面临的重大科学难题。学生在此能获得扎实的学术基础及丰富的科研参与机会。",
+    tuition: "22-26万",
+  },
+  "阿德莱德大学": {
+    en: "The University of Adelaide",
+    country: "澳洲",
+    desc: "澳洲知名大学，作为澳洲八大名校成员，其在葡萄酒酿造、医学及工程学领域拥有世界顶尖的科研成果。学校历史悠久，培养了多位改变世界的杰出人物。阿德莱德大学通过小班化教学模式，确保每一位学生都能获得教授的悉心指导。学校与区域工业及国际研究机构保持高频互动，为学生提供了多样化的职业发展通道，让其在专业领域内具备持久的国际竞争力。",
+    tuition: "20-24万",
+  },
+  "西澳大学": {
+    en: "The University of Western Australia",
+    country: "澳洲",
+    desc: "澳洲知名大学，坐落于西澳州首府珀斯，拥有令人惊叹的滨水校区。作为八大名校之一，西澳大学在能源、矿产、海洋科学及医学研究等领域具备得天独厚的地理优势。通过跨学科的学习模式和深厚的科研预算投入，学校为学生提供了探索未知科学前沿的平台。其毕业生受到资源性产业及国际研究机构的特别青睐，在全球工程与科学领域占有重要一席。",
+    tuition: "20-24万",
+  },
+  "布里斯托大学": {
+    en: "University of Bristol",
+    country: "英国",
+    desc: "英国知名大学，是著名的“红砖大学”之一，以卓越的教学水平和科研实力在全球享有美誉。布大在工程、物理科学及社会科学领域具有举足轻重的地位。学校位于极具活力的创意城市布里斯托，将悠久的学术传统与现代化的教学设施完美融合。布大培养的学生普遍具有极强的逻辑分析能力和学术钻研精神，深受罗素大学集团及全球顶级律所、咨询公司的追捧。",
+    tuition: "22-26万",
+  },
+  "爱丁堡大学": {
+    en: "The University of Edinburgh",
+    country: "英国",
+    desc: "英国知名大学，作为苏格兰最高学府，其深厚的历史底蕴和卓越的学术成就使其常年置身全球高校前20。爱大在人工智能、生物医学及人文艺术领域引领着时代的风潮。在这座洋溢着学术氛围与中世纪气息的城市中，学生能够获得最前沿的知识传授及丰富的人文滋养。作为真正的全球性学府，爱大的学位是获取全球名企橄榄枝的“金字招牌”。",
+    tuition: "24-28万",
+  },
+  "伦敦国王学院": {
+    en: "King's College London",
+    country: "英国",
+    desc: "英国知名大学，地处伦敦心脏地带，是伦敦大学创校学院之一。KCL在医学体系、法学以及战争研究专业领域可谓世界之巅。由于地理位置优越，学生能够直接参与到国际政治、经济与文化中心的律动中，并享受伦敦极其丰富的博物馆与跨国企业资源。KCL旨在通过全方位的素质教育，培养具备审慎思辨能力和解决宏观复杂问题能力的复合型社会精英。",
+    tuition: "24-28万",
+  },
+  "南安普顿大学": {
+    en: "University of Southampton",
+    country: "英国",
+    desc: "英国知名大学，以顶尖的电子信息工程 and 计算机科学教育闻名全球。作为世界级的研究型学府，南安普顿大学在海洋学、航空航天及医疗护理领域也拥有非凡的造诣。学校特别强调科研的产业化转化，与空客、微软及波音等企业均有紧密的合作计划。在这里学习的学生能够获得先进的实验室技术支持，在科技前沿领域培养卓越的实践创新与工程解决能力。",
+    tuition: "20-24万",
+  },
+  "格拉斯哥大学": {
+    en: "University of Glasgow",
+    country: "英国",
+    desc: "英国知名大学，始建于1451年，是英语世界第四古老的大学。从亚当·斯密到维多利亚时代的巨匠，格大见证了人类思想的每一次飞跃。其在会计金融、临床医学及工程等专业领域表现尤为抢眼。格大不仅提供沉浸式的古典校园体验，更通过与时俱进的课程改革，确保教学内容始终处于行业最前沿，旨在打造具备全球影响力和历史使命感的青年领袖。",
+    tuition: "20-24万",
+  },
+  "马来西亚理科大学": {
+    en: "Universiti Sains Malaysia",
+    country: "马来西亚",
+    desc: "马来西亚知名大学，也是马来西亚最具影响力的顶级公立学府之一。USM在工程技术、生命科学及环境科学领域具有显著优势。作为马来自主办学最具实力的机构，USM拥有丰富的科研资源及多元化的学术环境。学校通过深厚的区域影响力及广泛的政府关联，为提供跨国研究合作与区域性实习机遇，是追求高性价比及独特亚洲经验学生的理想之选。",
+    tuition: "4-6万",
+  },
+  "马来西亚分校": {
+    en: "Monash/Nottingham/Southampton Malaysia",
+    country: "马来西亚",
+    desc: "这些院校作为国际名校的海外直属分校，完美继承了母校的教学大纲与评价标准。学生在马来西亚校区通过更具性价比的生活成本，可获得与主校区完全一致的学位证书。这些校区作为连接亚洲与西方教育的桥梁，拥有极高的国际化程度和一流的教研设施。其文凭受到中国教育部及全球主流雇主的全面认可，是极具策略性的留学规划路径。",
+    tuition: "8-12万",
+  }
+};
 export default function App() {
   const [activeTab, setActiveTab] = React.useState('intro');
+  const [selectedUniv, setSelectedUniv] = React.useState<{ n: string; r: string } | null>(null);
+  const [selectedCountryPartner, setSelectedCountryPartner] = React.useState<{ r: string; s: string[] } | null>(null);
+
+  const PARTNER_UNIVERSITIES = [
+    { r: "🇸🇬 新加坡", s: ["新加坡国立大学 (QS 8)", "南洋理工大学 (QS 26)", "新加坡管理大学 (QS 560)", "新加坡理工大学 (QS 559)", "都柏林大学学院 (QS 171)", "科廷大学 (QS 183)", "考文垂大学 (QS 580)", "纽卡斯尔大学 (QS 173)", "詹姆斯库克大学 (QS 415)", "伦敦城市大学 (QS 328)", "伯明翰大学 (QS 84)", "皇家墨尔本理工大学 (QS 140)", "东伦敦大学 (QS 1000)", "格林威治大学 (QS 690)"] },
+    { r: "🇭🇰 中国香港", s: ["香港大学 (QS 17)", "香港中文大学 (QS 36)", "香港科技大学 (QS 47)", "香港城市大学 (QS 62)", "香港理工大学 (QS 57)", "香港浸会大学 (QS 252)", "香港教育大学 (QS 1000+)", "岭南大学 (QS 1000+)", "香港都会大学 (QS 1000+)", "香港树仁大学 (QS 1000+)", "香港恒生大学 (QS 1000+)", "香港珠海学院 (QS 1000+)", "东华学院 (QS 1000+)", "香港高等教育科技学院 (QS 1000+)"] },
+    { r: "🇦🇺 澳大利亚", s: ["墨尔本大学 (QS 14)", "悉尼大学 (QS 19)", "新南威尔士大学 (QS 19)", "澳国立大学 (QS 34)", "莫纳什大学 (QS 42)", "昆士兰大学 (QS 43)", "阿德莱德大学 (QS 89)", "西澳大学 (QS 72)", "悉尼科技大学 (QS 90)", "科廷大学 (QS 183)", "纽卡斯尔大学 (QS 173)", "皇家墨尔本理工大学 (QS 140)"] },
+    { r: "🇬🇧 英国", s: ["伦敦大学学院 (QS 9)", "爱丁堡大学 (QS 22)", "曼彻斯特大学 (QS 32)", "伦敦国王学院 (QS 40)", "布里斯托大学 (QS 55)", "华威大学 (QS 67)", "格拉斯哥大学 (QS 76)", "南安普顿大学 (QS 81)", "伯明翰大学 (QS 84)", "杜伦大学 (QS 78)", "利兹大学 (QS 75)", "诺丁汉大学 (QS 100)"] },
+    { r: "🇲🇾 马来西亚", s: ["马来亚大学 (QS 60)", "马来西亚理科大学 (QS 137)", "马来西亚国立大学 (QS 159)", "马来西亚博特拉大学 (QS 158)", "思特雅大学 (QS 260)", "马来西亚城市大学 (QS 680)", "泰莱大学 (QS 284)", "双威大学 (QS 1000)", "世纪大学 (QS 1000)"] },
+    { r: "🇲🇴 澳门", s: ["澳门大学 (QS 285)", "澳门科技大学 (QS 440)", "澳门理工大学 (QS 900)", "澳门城市大学 (QS 1000+)", "澳门旅游大学 (QS 1000+)"] },
+    { r: "🇳🇿 新西兰", s: ["奥克兰大学 (QS 65)", "奥塔哥大学 (QS 214)", "怀卡托大学 (QS 235)", "梅西大学 (QS 239)", "惠灵顿维多利亚大学 (QS 244)", "坎特伯雷大学 (QS 256)", "林肯大学 (QS 371)", "奥克兰理工大学 (QS 412)"] },
+    { r: "🇨🇦 加拿大", s: ["多伦多大学 (QS 25)", "不列颠哥伦比亚大学 (QS 38)"] },
+    { r: "🇺🇸 美国", s: ["麻省理工学院 (QS 1)", "哈佛大学 (QS 4)", "斯坦福大学 (QS 5)", "加州理工学院 (QS 10)", "宾夕法尼亚大学 (QS 11)", "加州大学伯克利分校 (QS 12)", "康奈尔大学 (QS 16)", "芝加哥大学 (QS 21)", "普林斯顿大学 (QS 22)", "耶鲁大学 (QS 23)", "约翰霍普金斯大学 (QS 32)", "哥伦比亚大学 (QS 34)", "加州大学洛杉矶分校 (QS 42)", "纽约大学 (QS 43)", "密歇根大学安娜堡分校 (QS 44)", "西北大学 (QS 50)", "卡内基梅隆大学 (QS 58)", "杜克大学 (QS 61)", "德克萨斯大学奥斯坦分校 (QS 66)", "伊利诺伊大学香槟分校 (QS 69)", "加州大学圣地亚哥分校 (QS 72)", "华盛顿大学 (QS 76)", "布朗大学 (QS 79)", "宾夕法尼亚州立大学 (QS 89)", "普渡大学 (QS 99)", "波士顿大学 (QS 108)", "佐治亚理工学院 (QS 114)", "威斯康星大学麦迪逊分校 (QS 116)", "南加州大学 (QS 125)", "加州大学戴维斯分校 (QS 132)", "莱斯大学 (QS 141)", "密歇根州立大学 (QS 197)", "德州农工大学 (QS 154)", "北卡罗来纳大学教堂山分校 (QS 155)", "圣路易斯华盛顿大学 (QS 176)", "加州大学圣塔芭芭拉分校 (QS 178)", "埃默里大学 (QS 196)", "亚利桑那州立大学 (QS 200)", "明尼苏达大学双城分校 (QS 203)", "俄亥俄州立大学 (QS 208)", "佛罗里达大学 (QS 215)", "马里兰大学学院公园分校 (QS 223)", "罗切斯特大学 (QS 236)", "达特茅斯学院 (QS 243)", "范德堡大学 (QS 261)", "凯斯西储大学 (QS 275)", "马萨诸塞大学阿默斯特分校 (QS 275)", "匹兹堡大学 (QS 291)", "乔治城大学 (QS 301)", "亚利桑那大学 (QS 308)", "加州大学欧文分校 (QS 312)", "圣母大学 (QS 318)", "弗吉尼亚大学 (QS 322)", "科罗拉多大学博尔德分校 (QS 332)", "Summer School 美国在线/线下先修学分课程"] },
+    { r: "🇨🇳 中国内地", s: ["上海交通大学 3+1", "上海对外经贸 + RMIT 3+1", "上海对外经贸 + 英国中央兰开夏大学", "西交利物浦大学 - 蒙纳士 2+2 (定向班)", "西交利物浦大学 - 利物浦 2+2 (交换生)", "华东师范大学 3+1", "华东师范大学 2+2 伯明翰", "华东师范大学 2+2 麦考瑞", "上海财经大学 3+1", "上海财经大学 2+2", "武汉理工大学 3+1 (艺术)", "上海交通大学 - 诺丁汉 2+2", "四川大学 3+1", "中央财经大学 3+1", "首都师范大学 3+1", "对外经贸大学 3+1", "上海立信金融 3+1", "上外贤达 3+1", "上海立信金融 2+1", "上外贤达 2+1", "上大温哥华电影学院 2+2", "南京传媒学院 2+2", "华东政法大学 2+2", "上海大学 4+0", "上海理工大学中英 4+0", "北京理工大学 3+0", "沈阳师范大学 4+0", "北京理工大学 4+0"] }
+  ];
 
   React.useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -727,43 +865,52 @@ export default function App() {
                 <h4 className="font-display text-[24px] md:text-[32px] font-bold text-impact tracking-tight">全球主要合作院校分布</h4>
                 <Globe className="text-gold animate-slow-spin w-7 h-7 md:w-12 md:h-12 drop-shadow-glow" />
               </div>
-              <div className="columns-1 md:columns-2 gap-8 space-y-8">
-                {[
-                  { r: "🇸🇬 新加坡", s: ["新加坡国立大学 (QS 8)", "南洋理工大学 (QS 26)", "新加坡管理大学 (QS 560)", "新加坡理工大学 (QS 559)", "都柏林大学学院 (QS 171)", "科廷大学 (QS 183)", "考文垂大学 (QS 580)", "纽卡斯尔大学 (QS 173)", "詹姆斯库克大学 (QS 415)", "伦敦城市大学 (QS 328)", "伯明翰大学 (QS 84)", "皇家墨尔本理工大学 (QS 140)", "东伦敦大学 (QS 1000)", "格林威治大学 (QS 690)"] },
-                  { r: "🇭🇰 中国香港", s: ["香港大学 (QS 17)", "香港中文大学 (QS 36)", "香港科技大学 (QS 47)", "香港城市大学 (QS 62)", "香港理工大学 (QS 57)", "香港浸会大学 (QS 252)", "香港教育大学 (QS 1000+)", "岭南大学 (QS 1000+)", "香港都会大学 (QS 1000+)", "香港树仁大学 (QS 1000+)", "香港恒生大学 (QS 1000+)", "香港珠海学院 (QS 1000+)", "东华学院 (QS 1000+)", "香港高等教育科技学院 (QS 1000+)"] },
-                  { r: "🇦🇺 澳大利亚", s: ["墨尔本大学 (QS 14)", "悉尼大学 (QS 19)", "新南威尔士大学 (QS 19)", "澳国立大学 (QS 34)", "莫纳什大学 (QS 42)", "昆士兰大学 (QS 43)", "阿德莱德大学 (QS 89)", "西澳大学 (QS 72)", "悉尼科技大学 (QS 90)", "科廷大学 (QS 183)", "纽卡斯尔大学 (QS 173)", "皇家墨尔本理工大学 (QS 140)"] },
-                  { r: "🇬🇧 英国", s: ["伦敦大学学院 (QS 9)", "爱丁堡大学 (QS 22)", "曼彻斯特大学 (QS 32)", "伦敦国王学院 (QS 40)", "布里斯托大学 (QS 55)", "华威大学 (QS 67)", "格拉斯哥大学 (QS 76)", "南安普顿大学 (QS 81)", "伯明翰大学 (QS 84)", "杜伦大学 (QS 78)", "利兹大学 (QS 75)", "诺丁汉大学 (QS 100)"] },
-                  { r: "🇲🇾 马来西亚", s: ["马来亚大学 (QS 60)", "马来西亚理科大学 (QS 137)", "马来西亚国立大学 (QS 159)", "马来西亚博特拉大学 (QS 158)", "思特雅大学 (QS 260)", "马来西亚城市大学 (QS 680)", "泰莱大学 (QS 284)", "双威大学 (QS 1000)", "世纪大学 (QS 1000)"] },
-                  { r: "🇲🇴 澳门", s: ["澳门大学 (QS 285)", "澳门科技大学 (QS 440)", "澳门理工大学 (QS 900)", "澳门城市大学 (QS 1000+)", "澳门旅游大学 (QS 1000+)"] },
-                  { r: "🇳🇿 新西兰", s: ["奥克兰大学 (QS 65)", "奥塔哥大学 (QS 214)", "怀卡托大学 (QS 235)", "梅西大学 (QS 239)", "惠灵顿维多利亚大学 (QS 244)", "坎特伯雷大学 (QS 256)", "林肯大学 (QS 371)", "奥克兰理工大学 (QS 412)"] },
-                  { r: "🇨🇦 加拿大", s: ["多伦多大学 (QS 25)", "不列颠哥伦比亚大学 (QS 38)"] },
-                  { r: "🇺🇸 美国", s: ["麻省理工学院 (QS 1)", "哈佛大学 (QS 4)", "斯坦福大学 (QS 5)", "加州理工学院 (QS 10)", "宾夕法尼亚大学 (QS 11)", "加州大学伯克利分校 (QS 12)", "康奈尔大学 (QS 16)", "芝加哥大学 (QS 21)", "普林斯顿大学 (QS 22)", "耶鲁大学 (QS 23)", "约翰霍普金斯大学 (QS 32)", "哥伦比亚大学 (QS 34)", "加州大学洛杉矶分校 (QS 42)", "纽约大学 (QS 43)", "密歇根大学安娜堡分校 (QS 44)", "西北大学 (QS 50)", "卡内基梅隆大学 (QS 58)", "杜克大学 (QS 61)", "德克萨斯大学奥斯汀分校 (QS 66)", "伊利诺伊大学香槟分校 (QS 69)", "加州大学圣地亚哥分校 (QS 72)", "华盛顿大学 (QS 76)", "布朗大学 (QS 79)", "宾夕法尼亚州立大学 (QS 89)", "普渡大学 (QS 99)", "波士顿大学 (QS 108)", "佐治亚理工学院 (QS 114)", "威斯康星大学麦迪逊分校 (QS 116)", "南加州大学 (QS 125)", "加州大学戴维斯分校 (QS 132)", "莱斯大学 (QS 141)", "密歇根州立大学 (QS 197)", "德州农工大学 (QS 154)", "北卡罗来纳大学教堂山分校 (QS 155)", "圣路易斯华盛顿大学 (QS 176)", "加州大学圣塔芭芭拉分校 (QS 178)", "埃默里大学 (QS 196)", "亚利桑那州立大学 (QS 200)", "明尼苏达大学双城分校 (QS 203)", "俄亥俄州立大学 (QS 208)", "佛罗里达大学 (QS 215)", "马里兰大学学院公园分校 (QS 223)", "罗切斯特大学 (QS 236)", "达特茅斯学院 (QS 243)", "范德堡大学 (QS 261)", "凯斯西储大学 (QS 275)", "马萨诸塞大学阿默斯特分校 (QS 275)", "匹兹堡大学 (QS 291)", "乔治城大学 (QS 301)", "亚利桑那大学 (QS 308)", "加州大学欧文分校 (QS 312)", "圣母大学 (QS 318)", "弗吉尼亚大学 (QS 322)", "科罗拉多大学博尔德分校 (QS 332)", "Summer School 美国线上/线下先修学分课程"] },
-                  { r: "🇨🇳 中国内地", s: ["上海交通大学 3+1", "上海对外经贸 + RMIT 3+1", "上海对外经贸 + 英国中央兰开夏大学", "西交利物浦大学 - 蒙纳士 2+2 (定向班)", "西交利物浦大学 - 利物浦 2+2 (交换生)", "华东师范大学 3+1", "华东师范大学 2+2 伯明翰", "华东师范大学 2+2 麦考瑞", "上海财经大学 3+1", "上海财经大学 2+2", "武汉理工大学 3+1 (艺术)", "上海交通大学 - 诺丁汉 2+2", "四川大学 3+1", "中央财经大学 3+1", "首都师范大学 3+1", "对外经贸大学 3+1", "上海立信金融 3+1", "上外贤达 3+1", "上海立信金融 2+1", "上外贤达 2+1", "上大温哥华电影学院 2+2", "南京传媒学院 2+2", "华东政法大学 2+2", "上海大学 4+0", "上海理工大学中英 4+0", "北京理工大学 3+0", "沈阳师范大学 4+0", "北京理工大学 4+0"] }
-                ].map((item, idx) => (
-                  <div key={idx} className="break-inside-avoid space-y-2 mb-8">
-                    <h5 className="font-display text-gold text-[24px] font-bold border-b border-white/10 pb-1 md:pb-2 tracking-wider">{item.r}</h5>
-                    <div className="grid grid-cols-1 gap-x-4 gap-y-0.5">
-                      {item.s.map((school, sIdx) => {
-                        const match = school.match(/(.*)\s\((QS\s.*)\)/);
-                        if (match) {
-                          const [, name, rank] = match;
+              <div className="md:columns-2 gap-8 md:space-y-8">
+                {/* Mobile: Independent country buttons */}
+                <div className="flex flex-wrap gap-2 md:hidden mb-4">
+                  {PARTNER_UNIVERSITIES.map((item, idx) => (
+                    <motion.button
+                      key={idx}
+                      whileTap={{ scale: 0.95 }}
+                      onClick={() => setSelectedCountryPartner(item)}
+                      className="flex items-center gap-2 px-3 py-2 bg-white/5 border border-white/10 rounded-lg text-white hover:bg-gold/10 hover:border-gold/30 transition-all text-[14px]"
+                    >
+                      <span>{item.r}</span>
+                      <div className="w-5 h-5 rounded-full bg-gold/20 flex items-center justify-center">
+                        <ChevronRight size={12} className="text-gold" />
+                      </div>
+                    </motion.button>
+                  ))}
+                </div>
+
+                {/* Desktop: Column layout */}
+                <div className="hidden md:block space-y-8">
+                  {PARTNER_UNIVERSITIES.map((item, idx) => (
+                    <div key={idx} className="break-inside-avoid space-y-2 mb-8">
+                      <h5 className="font-display text-gold text-[24px] font-bold border-b border-white/10 pb-1 md:pb-2 tracking-wider">{item.r}</h5>
+                      <div className="grid grid-cols-1 gap-x-4 gap-y-0.5">
+                        {item.s.map((school, sIdx) => {
+                          const match = school.match(/(.*)\s\((QS\s.*)\)/);
+                          if (match) {
+                            const [, name, rank] = match;
+                            return (
+                              <div key={sIdx} className="text-[14px] text-white/70 flex items-center gap-1.5 md:gap-2 font-light leading-tight">
+                                <div className="w-1 h-1 bg-gold rounded-full shrink-0"></div> 
+                                <span>{name}</span>
+                                <span className="text-gold/60 font-mono text-[10px] ml-1">({rank})</span>
+                              </div>
+                            );
+                          }
                           return (
-                            <div key={sIdx} className="text-[14px] md:text-[14px] text-white/70 flex items-center gap-1.5 md:gap-2 font-light leading-tight">
-                              <div className="w-0.5 h-0.5 md:w-1 md:h-1 bg-gold rounded-full shrink-0"></div> 
-                              <span>{name}</span>
-                              <span className="text-gold/60 font-mono text-[11px] md:text-[10px] ml-1">({rank})</span>
+                            <div key={sIdx} className="text-[14px] text-white/70 flex items-center gap-1.5 font-light leading-tight">
+                              <div className="w-1 h-1 bg-gold rounded-full shrink-0"></div> {school}
                             </div>
                           );
-                        }
-                        return (
-                          <div key={sIdx} className="text-[14px] md:text-[14px] text-white/70 flex items-center gap-1.5 md:gap-2 font-light leading-tight">
-                            <div className="w-0.5 h-0.5 md:w-1 md:h-1 bg-gold rounded-full shrink-0"></div> {school}
-                          </div>
-                        );
-                      })}
+                        })}
+                      </div>
                     </div>
-                  </div>
-                ))}
+                  ))}
+                </div>
               </div>
             </div>
           </div>
@@ -917,7 +1064,9 @@ export default function App() {
                 <div className="w-8 h-8 md:w-16 md:h-16 bg-gold/20 rounded-lg md:rounded-2xl flex items-center justify-center text-gold mx-auto mb-3 md:mb-6 border border-gold/30">
                   {item.i}
                 </div>
-                <h5 className="text-white font-bold text-[20px] mb-1 md:mb-4">{item.t}</h5>
+                <h5 className="font-display text-transparent bg-clip-text bg-gradient-to-b from-[#b8860b] via-[#d4af37] to-[#8b6508] font-bold text-[11px] md:text-[20px] mb-1 md:mb-4 whitespace-nowrap">
+                  {item.t}
+                </h5>
                 <p className="text-white/60 text-[14px] leading-tight md:leading-relaxed">{item.d}</p>
               </motion.div>
             ))}
@@ -988,7 +1137,7 @@ export default function App() {
             </p>
             <div className="space-y-3 md:space-y-6">
               {[
-                "系统性学习商业管理核心知识 (Global Qualification)",
+                "系统性学习商业管理核心知识 ",
                 "完成可获得国际广泛认可的 120 学分文凭",
                 "为学生升学提供有力的学术资质支持"
               ].map((t, i) => (
@@ -1031,7 +1180,7 @@ export default function App() {
       <Slide id="core-value" accentColor="#0ea5e9">
             <div className="grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-16 items-center">
               <div className="md:col-span-8">
-                <SectionTitle title="高中先修学分，毕业直升大二" subtitle="核心价值 / Core Value" />
+                <SectionTitle title={<>高中先修大一学分<br/>出国直升本科大二</>} subtitle="核心价值 / Core Value" />
                 <div className="mb-6">
                   <h4 className="font-display italic text-transparent bg-clip-text bg-gradient-to-b from-[#b8860b] via-[#d4af37] to-[#8b6508] font-black text-[24px] mb-3 tracking-wider uppercase drop-shadow-sm">快、准、稳、省</h4>
                   <p className="text-white/70 text-[14px] leading-relaxed font-light">
@@ -1132,10 +1281,12 @@ export default function App() {
                   <div className="w-8 h-[2px] bg-gold"></div>
                   新加坡升学院校（学制2-2.5年，免升学服务费）
                 </h5>
-                <div className="grid grid-cols-2 md:grid-cols-6 gap-2 md:gap-3">
+                <div className="grid grid-cols-2 md:grid-cols-6 lg:grid-cols-8 gap-2 md:gap-3">
                   {[
                     { n: "伯明翰大学", r: "QS76" },
                     { n: "都柏林大学学院", r: "QS118" },
+                    { n: "詹姆斯库克大学", r: "QS445" },
+                    { n: "伦敦城市大学", r: "QS352" },
                     { n: "科廷大学", r: "QS170" },
                     { n: "考文垂大学", r: "QS541" },
                     { n: "格林威治大学", r: "QS630" },
@@ -1146,7 +1297,15 @@ export default function App() {
                       initial={{ opacity: 0, scale: 0.9 }}
                       whileInView={{ opacity: 1, scale: 1 }}
                       transition={{ delay: i * 0.05 }}
-                      className="glass-card p-2 md:p-3 rounded-xl border border-white/5 flex flex-col justify-center hover:border-gold/30 transition-all group"
+                      onClick={(e) => {
+                        if (window.innerWidth < 768) {
+                          const rect = e.currentTarget.getBoundingClientRect();
+                          const scrollTarget = window.pageYOffset + rect.top - (window.innerHeight * 0.8) + (rect.height / 2);
+                          window.scrollTo({ top: scrollTarget, behavior: 'smooth' });
+                          setSelectedUniv(u);
+                        }
+                      }}
+                      className="glass-card p-2 md:p-3 rounded-xl border border-white/5 flex flex-col justify-center hover:border-gold/30 transition-all group cursor-pointer"
                     >
                       <div className="text-white text-[12px] md:text-[14px] font-bold group-hover:text-gold transition-colors leading-tight">{u.n}</div>
                       <div className="text-gold font-mono text-[10px] md:text-[12px] opacity-80">{u.r}</div>
@@ -1185,7 +1344,15 @@ export default function App() {
                       initial={{ opacity: 0, scale: 0.9 }}
                       whileInView={{ opacity: 1, scale: 1 }}
                       transition={{ delay: i * 0.02 }}
-                      className="glass-card p-2 md:p-3 rounded-xl border border-white/5 flex flex-col justify-center hover:border-gold/30 transition-all group"
+                      onClick={(e) => {
+                        if (window.innerWidth < 768) {
+                          const rect = e.currentTarget.getBoundingClientRect();
+                          const scrollTarget = window.pageYOffset + rect.top - (window.innerHeight * 0.8) + (rect.height / 2);
+                          window.scrollTo({ top: scrollTarget, behavior: 'smooth' });
+                          setSelectedUniv(u);
+                        }
+                      }}
+                      className="glass-card p-2 md:p-3 rounded-xl border border-white/5 flex flex-col justify-center hover:border-gold/30 transition-all group cursor-pointer"
                     >
                       <div className="text-white text-[12px] md:text-[14px] font-bold group-hover:text-gold transition-colors leading-tight">{u.n}</div>
                       <div className="text-gold font-mono text-[10px] md:text-[12px] opacity-80">{u.r}</div>
@@ -1233,6 +1400,127 @@ export default function App() {
       </Slide>
 
       <UniversityModule />
+
+      <AnimatePresence>
+        {selectedUniv && (
+          <>
+            <motion.div 
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setSelectedUniv(null)}
+              className="fixed inset-0 bg-black/60 backdrop-blur-sm z-[1000] md:hidden"
+            />
+            <motion.div
+              initial={{ y: "100%", opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              exit={{ y: "100%", opacity: 0 }}
+              className="fixed top-[10%] left-[5%] right-[5%] h-auto max-h-[70%] bg-[#001f3f] border border-gold/30 rounded-2xl z-[1001] md:hidden p-6 shadow-2xl flex flex-col"
+            >
+              <div className="h-full flex flex-col">
+                <div className="flex justify-between items-start mb-4">
+                  <div>
+                    <h3 className="text-white text-[20px] font-bold leading-tight">{selectedUniv.n}</h3>
+                    <p className="text-white/60 text-[12px] font-medium mt-1 uppercase tracking-wider">
+                      {UNIVERSITY_DESCRIPTIONS[selectedUniv.n]?.en || (selectedUniv.n.includes('马来西亚') ? "International Campus Malaysia" : "World Class University")}
+                    </p>
+                  </div>
+                  <button onClick={() => setSelectedUniv(null)} className="text-white/40 pt-1">
+                    <X size={24} />
+                  </button>
+                </div>
+                
+                <div className="inline-block mb-4 px-2 py-0.5 bg-gold/20 border border-gold/30 rounded text-gold text-[12px] font-bold font-mono w-fit">
+                  {selectedUniv.r}
+                </div>
+                
+                <div className="flex-1 overflow-y-auto pr-2 custom-scrollbar">
+                  <div className="space-y-4">
+                    <p className="text-white/80 text-[14px] leading-relaxed text-justify">
+                      {UNIVERSITY_DESCRIPTIONS[selectedUniv.n]?.desc || (selectedUniv.n.includes('马来西亚') ? UNIVERSITY_DESCRIPTIONS["马来西亚分校"].desc : `${UNIVERSITY_DESCRIPTIONS[selectedUniv.n]?.country || '海外'}知名大学。该校致力于为全球学子提供卓越的教育资源，在科研与教学领域均享有崇高的声誉，其学位受全球广泛认可。`)}
+                    </p>
+                    
+                    {UNIVERSITY_DESCRIPTIONS[selectedUniv.n]?.tuition && (
+                      <div className="pt-4">
+                        <div className="w-12 h-[2px] bg-gold/60 mb-4"></div>
+                        <div className="flex items-center gap-2">
+                          <span className="text-white/40 text-[12px]">预估学费/年：</span>
+                          <span className="text-gold font-bold text-[18px]">¥{UNIVERSITY_DESCRIPTIONS[selectedUniv.n].tuition}</span>
+                          <span className="text-gold/60 text-[12px] ml-1">RMB</span>
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                </div>
+              </div>
+
+              {/* Close button outside bottom-left */}
+              <button 
+                onClick={() => setSelectedUniv(null)}
+                className="absolute -bottom-16 left-0 w-12 h-12 rounded-full border border-white/20 bg-white/10 flex items-center justify-center text-white backdrop-blur-md active:scale-95 transition-transform"
+              >
+                <X size={24} />
+              </button>
+            </motion.div>
+          </>
+        )}
+
+        {selectedCountryPartner && (
+          <>
+            <motion.div 
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setSelectedCountryPartner(null)}
+              className="fixed inset-0 bg-black/60 backdrop-blur-sm z-[1000] md:hidden"
+            />
+            <motion.div
+              initial={{ y: "100%", opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              exit={{ y: "100%", opacity: 0 }}
+              className="fixed top-[10%] left-[5%] right-[5%] h-auto max-h-[70%] bg-[#001f3f] border border-gold/30 rounded-2xl z-[1001] md:hidden p-6 shadow-2xl flex flex-col"
+            >
+              <div className="flex justify-between items-center mb-4 pb-2 border-b border-white/10">
+                <h3 className="text-white text-[20px] font-bold">{selectedCountryPartner.r}</h3>
+                <button onClick={() => setSelectedCountryPartner(null)} className="text-white/60">
+                  <X size={20} />
+                </button>
+              </div>
+              
+              <div className="flex-1 overflow-y-auto pr-2 custom-scrollbar">
+                <div className="grid grid-cols-1 gap-3">
+                  {selectedCountryPartner.s.map((school, sIdx) => {
+                    const match = school.match(/(.*)\s\((QS\s.*)\)/);
+                    if (match) {
+                      const [, name, rank] = match;
+                      return (
+                        <div key={sIdx} className="p-4 bg-white/5 rounded-xl border border-white/10 flex flex-col gap-1">
+                          <span className="text-white text-[15px] font-medium leading-tight">{name}</span>
+                          <span className="text-gold/80 font-mono text-[11px] tracking-wider">{rank}</span>
+                        </div>
+                      );
+                    }
+                    return (
+                      <div key={sIdx} className="p-4 bg-white/5 rounded-xl border border-white/10 text-white text-[15px] font-light">
+                        {school}
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+              
+              <div className="mt-6 text-center">
+                 <button 
+                  onClick={() => setSelectedCountryPartner(null)}
+                  className="w-12 h-12 rounded-full border border-white/20 bg-white/10 flex items-center justify-center text-white mx-auto active:scale-95 transition-transform"
+                >
+                  <X size={24} />
+                </button>
+              </div>
+            </motion.div>
+          </>
+        )}
+      </AnimatePresence>
 
       <Slide id="service-reqs" accentColor="#0ea5e9">
         <div className="grid grid-cols-1 md:grid-cols-12 gap-12 md:gap-16">
