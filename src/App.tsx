@@ -246,18 +246,18 @@ const UniversityModule = () => {
         subtitle="名校直通 / Recommended Universities" 
       />
       
-      <div className="flex flex-nowrap md:flex-wrap gap-2.5 mb-8 overflow-x-auto no-scrollbar pb-2 -mx-4 px-4 md:mx-0 md:px-0">
+      <div className="flex flex-wrap gap-2 md:gap-2.5 mb-8">
         {UNIVERSITY_DATA.map((uni, idx) => (
           <button
             key={idx}
             onClick={() => { setActiveUni(idx); setExpandedMajor(null); }}
-            className={`px-4 py-2 md:px-5 md:py-2.5 rounded-full font-bold transition-all text-[14px] whitespace-nowrap shrink-0 border shadow-sm ${
+            className={`px-3 py-1.5 md:px-5 md:py-2.5 rounded-full font-bold transition-all text-[13px] md:text-[14px] whitespace-nowrap shrink-0 border shadow-sm w-fit ${
               activeUni === idx 
                 ? "bg-gradient-to-b from-[#ffffff] via-[#d4af37] to-[#8b6508] text-blue-900 border-white/40 shadow-[0_8px_20px_rgba(212,175,55,0.3)] scale-105" 
                 : "bg-gradient-to-b from-[#475569] via-[#1e293b] to-[#0f172a] text-white/60 border-white/5 hover:border-white/20"
             }`}
           >
-            {uni.name}
+            {uni.name.replace(/\(新加坡(校区|分校)\)/, '')}
           </button>
         ))}
       </div>
@@ -1075,7 +1075,7 @@ export default function App() {
       </Slide>
 
       <Slide id="premium-planning" className="relative" accentColor="#0ea5e9" padding="px-4 py-3 md:px-8 md:py-5">
-        <div className="absolute inset-0 opacity-5 mix-blend-overlay">
+        <div className="absolute inset-0 opacity-5 mix-blend-overlay hidden md:block">
           <img src="https://images.unsplash.com/photo-1541339907198-e08756ebafe1?auto=format&fit=crop&q=80&w=2000" className="w-full h-full object-cover" referrerPolicy="no-referrer" />
         </div>
         <motion.div 
@@ -1180,7 +1180,7 @@ export default function App() {
       <Slide id="core-value" accentColor="#0ea5e9">
             <div className="grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-16 items-center">
               <div className="md:col-span-8">
-                <SectionTitle title={<>高中先修大一学分<br/>出国直升本科大二</>} subtitle="核心价值 / Core Value" />
+                <SectionTitle title={<>高中先修大一学分<br/>出国直升本科大二<br/>0.5+1.5</>} subtitle="核心价值 / Core Value" />
                 <div className="mb-6">
                   <h4 className="font-display italic text-transparent bg-clip-text bg-gradient-to-b from-[#b8860b] via-[#d4af37] to-[#8b6508] font-black text-[24px] mb-3 tracking-wider uppercase drop-shadow-sm">快、准、稳、省</h4>
                   <p className="text-white/70 text-[14px] leading-relaxed font-light">
@@ -1248,7 +1248,7 @@ export default function App() {
       <Slide id="junior-undergrad-path" accentColor="#0ea5e9">
             <div className="grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-16 items-center">
               <div className="md:col-span-8">
-                <SectionTitle title="初中毕业直升新加坡本科" subtitle="Academic Curriculum" />
+                <SectionTitle title={<>初中毕业直升世界名校本科<br/>国内3个月+新加坡6个月</>} subtitle="Academic Curriculum" />
             <div className="mb-6">
               <h4 className="font-display italic text-transparent bg-clip-text bg-gradient-to-b from-[#b8860b] via-[#d4af37] to-[#8b6508] font-black text-[24px] mb-3 tracking-wider uppercase drop-shadow-sm">Premium Planning</h4>
               <div className="space-y-3 md:space-y-6">
@@ -1294,9 +1294,6 @@ export default function App() {
                   ].map((u, i) => (
                     <motion.div 
                       key={i}
-                      initial={{ opacity: 0, scale: 0.9 }}
-                      whileInView={{ opacity: 1, scale: 1 }}
-                      transition={{ delay: i * 0.05 }}
                       onClick={(e) => {
                         if (window.innerWidth < 768) {
                           const rect = e.currentTarget.getBoundingClientRect();
@@ -1341,9 +1338,6 @@ export default function App() {
                   ].map((u, i) => (
                     <motion.div 
                       key={i}
-                      initial={{ opacity: 0, scale: 0.9 }}
-                      whileInView={{ opacity: 1, scale: 1 }}
-                      transition={{ delay: i * 0.02 }}
                       onClick={(e) => {
                         if (window.innerWidth < 768) {
                           const rect = e.currentTarget.getBoundingClientRect();
@@ -1394,74 +1388,6 @@ export default function App() {
                 <div className="text-[16px] md:text-[24px] font-black text-impact mb-0.5 md:mb-1 text-center md:text-left underline decoration-gold/30 underline-offset-4">中留服认证</div>
                 <div className="text-white/60 text-[10px] md:text-[14px] uppercase tracking-widest font-medium text-center md:text-left">教育部官方认证</div>
               </motion.div>
-            </div>
-          </div>
-        </div>
-      </Slide>
-
-      <Slide id="service-reqs" accentColor="#0ea5e9">
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-12 md:gap-16">
-          <div id="service-flow" className="col-span-1 md:col-span-7 scroll-mt-[72px] md:scroll-mt-[84px]">
-            <SectionTitle title="全流程管家式服务清单" subtitle="服务体系 / Service Ecosystem" />
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-10">
-              {[
-                { t: "入学准备", s: ["选校规划", "选课规划", "课程跟进", "递交申请", "办理签证", "学分认证"] },
-                { t: "学习支持", s: ["入学报到与注册", "建立沟通群组", "学业咨询", "邮箱托管"] },
-                { t: "生活保障", s: ["接机服务", "本地顾问", "特殊协助"] },
-                { t: "活动与技能提升", s: ["节日活动", "学习深造", "实习就业"] }
-              ].map((cat, i) => (
-                <div key={i} className="p-4 md:p-10 glass-card rounded-xl md:rounded-[2.5rem] border border-white/10">
-                  <h4 className="font-display text-gold text-[28px] font-bold mb-4 md:mb-8 flex items-center gap-2 md:gap-4">
-                    <div className="w-2 h-2 md:w-3 md:h-3 bg-cyan-400 rounded-full shadow-[0_0_10px_rgba(34,211,238,0.5)]"></div>
-                    {cat.t}
-                  </h4>
-                  <div className="flex flex-wrap gap-2 md:gap-4">
-                    {cat.s.map((item, idx) => (
-                      <span key={idx} className="text-[14px] bg-white/10 px-2 md:px-6 py-1 md:py-3 rounded-lg md:rounded-2xl border border-white/10 text-white/90 font-medium hover:bg-white/20 transition-all hover:scale-105 cursor-default shadow-sm">{item}</span>
-                    ))}
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-          <div id="admission-reqs" className="col-span-1 md:col-span-5 scroll-mt-[72px] md:scroll-mt-[84px]">
-            <SectionTitle title="申请要求" subtitle="准入标准 / Requirements" />
-            <div className="space-y-4 md:space-y-6">
-              {[
-                { t: "学历背景", d: "高中在读或同等学历及以上学生", i: <GraduationCap className="w-5 h-5 md:w-6 md:h-6" /> },
-                { t: "综合素质", d: "身体健康，学习成绩良好，有较好团队合作精神", i: <Users className="w-5 h-5 md:w-6 md:h-6" /> },
-                { t: "语言能力", d: "英语能够进行沟通交流", i: <Globe className="w-5 h-5 md:w-6 md:h-6" /> },
-                { t: "独立能力", d: "有良好的学习能力和独立自主的生活能力", i: <Zap className="w-5 h-5 md:w-6 md:h-6" /> }
-              ].map((item, i) => (
-                <motion.div 
-                  key={i} 
-                  whileHover={{ x: 10 }}
-                  className="flex items-center gap-4 md:gap-6 p-4 md:p-6 glass-card rounded-xl md:rounded-2xl"
-                >
-                  <div className="w-10 h-10 md:w-14 md:h-14 bg-white/10 text-gold flex items-center justify-center rounded-xl md:rounded-2xl shrink-0 border border-white/10">{item.i}</div>
-                  <div>
-                    <h5 className="font-display text-[20px] font-bold text-white mb-0.5 md:mb-1">{item.t}</h5>
-                    <p className="text-[14px] text-white/50 font-light">{item.d}</p>
-                  </div>
-                </motion.div>
-              ))}
-
-              <motion.a
-                href="https://p.topuni.com.cn/"
-                target="_blank"
-                rel="noopener noreferrer"
-                whileHover={{ scale: 1.02, y: -2 }}
-                whileTap={{ scale: 0.98 }}
-                className="mt-8 w-full py-5 px-8 rounded-2xl font-display font-black text-[20px] tracking-[0.2em] text-[#003366] 
-                           bg-gradient-to-b from-[#ffffff] via-[#e2e8f0] to-[#cbd5e1]
-                           shadow-[0_10px_25px_rgba(0,0,0,0.4),inset_0_2px_1px_rgba(255,255,255,1)]
-                           border border-white/40 flex items-center justify-center gap-3
-                           relative overflow-hidden group"
-              >
-                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/60 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000 ease-in-out"></div>
-                <Search size={22} className="text-[#003366]/70" />
-                费用查询
-              </motion.a>
             </div>
           </div>
         </div>
@@ -1907,6 +1833,74 @@ export default function App() {
       )}
 
       <UniversityModule />
+
+      <Slide id="service-reqs" accentColor="#0ea5e9">
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-12 md:gap-16">
+          <div id="service-flow" className="col-span-1 md:col-span-7 scroll-mt-[72px] md:scroll-mt-[84px]">
+            <SectionTitle title="全流程管家式服务清单" subtitle="服务体系 / Service Ecosystem" />
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-10">
+              {[
+                { t: "入学准备", s: ["选校规划", "选课规划", "课程跟进", "递交申请", "办理签证", "学分认证"] },
+                { t: "学习支持", s: ["入学报到与注册", "建立沟通群组", "学业咨询", "邮箱托管"] },
+                { t: "生活保障", s: ["接机服务", "本地顾问", "特殊协助"] },
+                { t: "活动与技能提升", s: ["节日活动", "学习深造", "实习就业"] }
+              ].map((cat, i) => (
+                <div key={i} className="p-4 md:p-10 glass-card rounded-xl md:rounded-[2.5rem] border border-white/10">
+                  <h4 className="font-display text-gold text-[20px] font-bold mb-4 md:mb-8 flex items-center gap-2 md:gap-4">
+                    <div className="w-2 h-2 md:w-3 md:h-3 bg-cyan-400 rounded-full shadow-[0_0_10px_rgba(34,211,238,0.5)]"></div>
+                    {cat.t}
+                  </h4>
+                  <div className="flex flex-wrap gap-2 md:gap-4">
+                    {cat.s.map((item, idx) => (
+                      <span key={idx} className="text-[14px] bg-white/10 px-2 md:px-6 py-1 md:py-3 rounded-lg md:rounded-2xl border border-white/10 text-white/90 font-medium hover:bg-white/20 transition-all hover:scale-105 cursor-default shadow-sm">{item}</span>
+                    ))}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+          <div id="admission-reqs" className="col-span-1 md:col-span-5 scroll-mt-[72px] md:scroll-mt-[84px]">
+            <SectionTitle title="申请要求" subtitle="准入标准 / Requirements" />
+            <div className="space-y-4 md:space-y-6">
+              {[
+                { t: "学历背景", d: "高中在读或同等学历及以上学生", i: <GraduationCap className="w-5 h-5 md:w-6 md:h-6" /> },
+                { t: "综合素质", d: "身体健康，学习成绩良好，有较好团队合作精神", i: <Users className="w-5 h-5 md:w-6 md:h-6" /> },
+                { t: "语言能力", d: "英语能够进行沟通交流", i: <Globe className="w-5 h-5 md:w-6 md:h-6" /> },
+                { t: "独立能力", d: "有良好的学习能力和独立自主的生活能力", i: <Zap className="w-5 h-5 md:w-6 md:h-6" /> }
+              ].map((item, i) => (
+                <motion.div 
+                  key={i} 
+                  whileHover={{ x: 10 }}
+                  className="flex items-center gap-4 md:gap-6 p-4 md:p-6 glass-card rounded-xl md:rounded-2xl"
+                >
+                  <div className="w-10 h-10 md:w-14 md:h-14 bg-white/10 text-gold flex items-center justify-center rounded-xl md:rounded-2xl shrink-0 border border-white/10">{item.i}</div>
+                  <div>
+                    <h5 className="font-display text-[20px] font-bold text-white mb-0.5 md:mb-1">{item.t}</h5>
+                    <p className="text-[14px] text-white/50 font-light">{item.d}</p>
+                  </div>
+                </motion.div>
+              ))}
+
+              <motion.a
+                href="https://p.topuni.com.cn/"
+                target="_blank"
+                rel="noopener noreferrer"
+                whileHover={{ scale: 1.02, y: -2 }}
+                whileTap={{ scale: 0.98 }}
+                className="mt-8 w-full py-5 px-8 rounded-2xl font-display font-black text-[20px] tracking-[0.2em] text-[#003366] 
+                           bg-gradient-to-b from-[#ffffff] via-[#e2e8f0] to-[#cbd5e1]
+                           shadow-[0_10px_25px_rgba(0,0,0,0.4),inset_0_2px_1px_rgba(255,255,255,1)]
+                           border border-white/40 flex items-center justify-center gap-3
+                           relative overflow-hidden group"
+              >
+                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/60 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000 ease-in-out"></div>
+                <Search size={22} className="text-[#003366]/70" />
+                费用查询
+              </motion.a>
+            </div>
+          </div>
+        </div>
+      </Slide>
 
       <AnimatePresence>
         {selectedUniv && (
