@@ -1126,31 +1126,72 @@ export default function App() {
               </div>
             </div>
 
-            <div className="mt-8">
-              <h5 className="font-display text-white font-bold text-[18px] mb-4 flex items-center gap-3">
-                <div className="w-8 h-[2px] bg-gold"></div>
-                升学院校 (新加坡校区，学制 2-2.5年)
-              </h5>
-              <div className="grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-4">
-                {[
-                  { n: "伯明翰大学", r: "QS76" },
-                  { n: "都柏林大学学院", r: "QS118" },
-                  { n: "科廷大学", r: "QS170" },
-                  { n: "考文垂大学", r: "QS541" },
-                  { n: "格林威治大学", r: "QS630" },
-                  { n: "皇家墨尔本理工", r: "QS125" }
-                ].map((u, i) => (
-                  <motion.div 
-                    key={i}
-                    initial={{ opacity: 0, scale: 0.9 }}
-                    whileInView={{ opacity: 1, scale: 1 }}
-                    transition={{ delay: i * 0.05 }}
-                    className="glass-card p-3 md:p-4 rounded-xl border border-white/5 flex flex-col justify-center hover:border-gold/30 transition-all group"
-                  >
-                    <div className="text-white text-[14px] font-bold group-hover:text-gold transition-colors">{u.n}</div>
-                    <div className="text-gold font-mono text-[14px] opacity-80">{u.r}</div>
-                  </motion.div>
-                ))}
+            <div className="mt-8 space-y-8">
+              <div>
+                <h5 className="font-display text-white font-bold text-[18px] mb-4 flex items-center gap-3">
+                  <div className="w-8 h-[2px] bg-gold"></div>
+                  新加坡升学院校（学制2-2.5年，免升学服务费）
+                </h5>
+                <div className="grid grid-cols-2 md:grid-cols-6 gap-2 md:gap-3">
+                  {[
+                    { n: "伯明翰大学", r: "QS76" },
+                    { n: "都柏林大学学院", r: "QS118" },
+                    { n: "科廷大学", r: "QS170" },
+                    { n: "考文垂大学", r: "QS541" },
+                    { n: "格林威治大学", r: "QS630" },
+                    { n: "皇家墨尔本理工", r: "QS125" }
+                  ].map((u, i) => (
+                    <motion.div 
+                      key={i}
+                      initial={{ opacity: 0, scale: 0.9 }}
+                      whileInView={{ opacity: 1, scale: 1 }}
+                      transition={{ delay: i * 0.05 }}
+                      className="glass-card p-2 md:p-3 rounded-xl border border-white/5 flex flex-col justify-center hover:border-gold/30 transition-all group"
+                    >
+                      <div className="text-white text-[12px] md:text-[14px] font-bold group-hover:text-gold transition-colors leading-tight">{u.n}</div>
+                      <div className="text-gold font-mono text-[10px] md:text-[12px] opacity-80">{u.r}</div>
+                    </motion.div>
+                  ))}
+                </div>
+              </div>
+
+              <div>
+                <h5 className="font-display text-white font-bold text-[18px] mb-4 flex items-center gap-3">
+                  <div className="w-8 h-[2px] bg-gold"></div>
+                  其他升学院校（学制3-4年，不含升学服务费）
+                </h5>
+                <div className="grid grid-cols-2 md:grid-cols-6 gap-2 md:gap-3">
+                  {[
+                    { n: "澳洲国立大学", r: "QS30" },
+                    { n: "悉尼大学", r: "QS18" },
+                    { n: "蒙纳士大学", r: "QS37" },
+                    { n: "新南威尔士大学", r: "QS19" },
+                    { n: "昆士兰大学", r: "QS40" },
+                    { n: "阿德莱德大学", r: "QS82" },
+                    { n: "西澳大学", r: "QS77" },
+                    { n: "布里斯托大学", r: "QS54" },
+                    { n: "爱丁堡大学", r: "QS27" },
+                    { n: "伦敦国王学院", r: "QS40" },
+                    { n: "南安普顿大学", r: "QS80" },
+                    { n: "伯明翰大学", r: "QS80" },
+                    { n: "格拉斯哥大学", r: "QS78" },
+                    { n: "马来西亚理科大学", r: "QS146" },
+                    { n: "蒙纳士大学马来西亚", r: "QS37" },
+                    { n: "诺丁汉大学马来西亚", r: "QS108" },
+                    { n: "南安普顿大学马来西亚", r: "QS80" }
+                  ].map((u, i) => (
+                    <motion.div 
+                      key={i}
+                      initial={{ opacity: 0, scale: 0.9 }}
+                      whileInView={{ opacity: 1, scale: 1 }}
+                      transition={{ delay: i * 0.02 }}
+                      className="glass-card p-2 md:p-3 rounded-xl border border-white/5 flex flex-col justify-center hover:border-gold/30 transition-all group"
+                    >
+                      <div className="text-white text-[12px] md:text-[14px] font-bold group-hover:text-gold transition-colors leading-tight">{u.n}</div>
+                      <div className="text-gold font-mono text-[10px] md:text-[12px] opacity-80">{u.r}</div>
+                    </motion.div>
+                  ))}
+                </div>
               </div>
             </div>
           </div>
